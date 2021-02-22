@@ -1,0 +1,24 @@
+
+# POST http://localhost:8080/posts/
+# content-type: application/json
+
+# {
+#   "title": "Lorem ipsum",
+#   "body": "Dolor sit amet, consectetur adipiscing elit",
+#   "author": "Admin"
+# }
+
+# ###
+
+# GET http://localhost:8080/posts/
+# ###
+
+# PATCH  http://localhost:8080/posts/5f4fb21ed14b8a05be244f0f
+# content-type: application/json
+
+# {
+#   "title": "New title"
+# }
+# ###
+
+# DELETE http://localhost:8080/posts/5f4fb21ed14b8a05be244f0f
