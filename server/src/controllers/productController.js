@@ -21,8 +21,17 @@ exports.newProduct = async (req, res, next) => {
 // Get all Products  => /api/v1/product/
 
 exports.getProducts = async (req, res, next) => {
-  res.status(200).json({
-    success: true,
-    message: "Display all products from database",
-  });
+  try {
+    let products = await Product.find({})
+    res.status(200).json({
+      success: true,
+      count: products.length,
+      products,
+    })
+  } catch (error) {
+      res.status(400).json({
+          success: false,
+          error: error.message
+      })
+  }
 };
