@@ -1,6 +1,6 @@
 const Product = require("../models/product.model");
 
-// Create new product => /api/v1/product/
+// Create new product => /api/v1/product/ GET
 exports.newProduct = async (req, res, next) => {
   try {
     const product = await Product.create(req.body);
@@ -18,7 +18,7 @@ exports.newProduct = async (req, res, next) => {
   }
 };
 
-// Get all Products  => /api/v1/product/
+// Get all Products  => /api/v1/product/ POST
 
 exports.getProducts = async (req, res, next) => {
   try {
@@ -35,3 +35,21 @@ exports.getProducts = async (req, res, next) => {
       })
   }
 };
+
+// get sinle product => /api/v1/product/{id} GET
+
+exports.getSingleProduct = async (req, res, next) => {
+    try {
+       
+        let product = await Product.findById(req.params.id)
+        res.status(200).json({
+            success: true,
+            product
+        })
+    } catch (error) {
+        res.status(404).json({
+            success: false,
+            error: error.message
+        })
+    }
+}
