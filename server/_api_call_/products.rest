@@ -52,3 +52,6 @@ content-type: application/json
   "reviews": []
 
 }
+
+### 
+DELETE http://localhost:8080/api/v1/admin/products/6033d6a5407902059fe5b702
