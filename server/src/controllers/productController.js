@@ -53,3 +53,23 @@ exports.getSingleProduct = async (req, res, next) => {
         })
     }
 }
+
+// edit product => /api/v1/product/{id} PUT
+
+exports.updateProduct = async (req, res, next) => {
+  console.log("Body", req.body);
+  try {
+    let product = await Product.findByIdAndUpdate(req.params.id , req.body)
+    res.status(200).json({
+      success:true,
+      product
+    })
+  } catch (error) {
+    res.status(400).json({
+      success:false,
+      error: error.message
+    })
+    
+  }
+
+}

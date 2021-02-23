@@ -32,4 +32,23 @@ GET http://localhost:8080/api/v1/products/6033d69b407902059fe5b700
 
 ###
 
+PUT http://localhost:8080/api/v1/admin/products/6033d69b407902059fe5b700
+content-type: application/json
 
+{
+  "name": "222Lorem ",
+  "price": "12223",
+  "description": "lorem 2222ipsum dolor sir4444444444mmet work",
+  "ratings": "3223",
+  "images": [
+      {
+          "public_id": "http://localhost:8080/jfdsjfjsdfjsdjfjsdfj",
+          "url": "http://localhost:8080/fjdsfjdfj"
+      }
+  ],
+  "category": "Sport",
+  "seller": "Markus",
+  "stock": 4,
+  "reviews": []
+
+}
