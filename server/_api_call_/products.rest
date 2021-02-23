@@ -1,7 +1,6 @@
 
 
 GET http://localhost:8080/api/v1/products/
-
 ###
 
 POST http://localhost:8080/api/v1/products/
@@ -27,18 +26,18 @@ content-type: application/json
 
 ###
 
-GET http://localhost:8080/api/v1/products/6033d69b407902059fe5b700
+GET http://localhost:8080/api/v1/products/6034e701c84fd9012c3efbd
 
 
 ###
 
-PUT http://localhost:8080/api/v1/admin/products/6033d69b407902059fe5b700
+PUT http://localhost:8080/api/v1/admin/products/6033df5f39385b07401a0f80
 content-type: application/json
 
 {
   "name": "222Lorem ",
   "price": "12223",
-  "description": "lorem 2222ipsum dolor sir4444444444mmet work",
+  "description": "lorem 2222ipsum dolor sir4444444444mmet worsssssddddddk",
   "ratings": "3223",
   "images": [
       {
@@ -46,7 +45,7 @@ content-type: application/json
           "url": "http://localhost:8080/fjdsfjdfj"
       }
   ],
-  "category": "Sport",
+  "category": "Spodrt",
   "seller": "Markus",
   "stock": 4,
   "reviews": []
@@ -54,4 +53,4 @@ content-type: application/json
 }
 
 ### 
-DELETE http://localhost:8080/api/v1/admin/products/6033d6a5407902059fe5b702
+DELETE http://localhost:8080/api/v1/admin/products/6033df5f39385b07401a0f80

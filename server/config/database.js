@@ -1,5 +1,5 @@
-const mongoose = require('mongoose');
-const dotenv = require('dotenv');
+const mongoose = require("mongoose");
+const dotenv = require("dotenv");
 dotenv.config();
 
 // mongoose options
@@ -10,25 +10,22 @@ const options = {
   useUnifiedTopology: true,
   autoIndex: false,
   poolSize: 10,
-  bufferMaxEntries: 0
+  bufferMaxEntries: 0,
 };
 
 // mongodb environment variables
-const {
-    MONGO_HOSTNAME,
-    MONGO_DB,
-    MONGO_PORT
-} = process.env;
+const { MONGO_HOSTNAME, MONGO_DB, MONGO_PORT } = process.env;
 
 const dbConnectionURL = {
-    'LOCALURL': `mongodb://${MONGO_HOSTNAME}:${MONGO_PORT}/${MONGO_DB}`
-    // mongodb+srv://dbUser:<password>@cluster0.7bkd7.mongodb.net/<dbname>?retryWrites=true&w=majority
-    //'mongodb://mongo:27017/myDB';
+  LOCALURL: `mongodb://${MONGO_HOSTNAME}:${MONGO_PORT}/${MONGO_DB}`,
+  // mongodb+srv://dbUser:<password>@cluster0.7bkd7.mongodb.net/<dbname>?retryWrites=true&w=majority
+  //'mongodb://mongo:27017/myDB';
 };
-mongoose.connect(dbConnectionURL.LOCALURL, options)
-const db = mongoose.connection
-db.on('error', console.error.bind(console, 'Mongodb Connection Error:' + dbConnectionURL.LOCALURL))
-db.once('open', () => {
-     // we're connected !
-     console.log('###### ======== Mongodb Connection Successful ========= ########')
+mongoose.connect(dbConnectionURL.LOCALURL, options);
+const db = mongoose.connection;
+db.once("open", () => {
+  // we're connected !
+  console.log(
+    "###### ======== Mongodb Connection Successful ========= ########"
+  );
 });
