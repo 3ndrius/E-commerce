@@ -1,14 +1,18 @@
 
 
-GET http://localhost:8080/api/v1/products/
+GET http://localhost:8080/api/v1/products
+###
+
+GET http://localhost:8080/api/v1/products?keyword=Torem&price[gte]=1&price[lte]=333
+
 ###
 
 POST http://localhost:8080/api/v1/products/
 content-type: application/json
 
 {
-  "name": "Lorem ip34324sum",
-  "price": "123",
+  "name": "Torem and mol",
+  "price": "33",
   "description": "lorem ipsum dolor sir emmet",
   "ratings": "333",
   "images": [
@@ -17,9 +21,9 @@ content-type: application/json
           "url": "http://localhost:8080/fjdsfjdfj"
       }
   ],
-  "category": "Electronic",
+  "category": "Laptop",
   "seller": "Johny",
-  "stock": 424,
+  "stock": 999,
   "reviews": []
 
 }
@@ -35,7 +39,7 @@ PUT http://localhost:8080/api/v1/admin/products/6033df5f39385b07401a0f80
 content-type: application/json
 
 {
-  "name": "222Lorem ",
+  "name": "222Lem ",
   "price": "12223",
   "description": "lorem 2222ipsum dolor sir4444444444mmet worsssssddddddk",
   "ratings": "3223",
