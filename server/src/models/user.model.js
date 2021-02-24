@@ -1,23 +1,25 @@
 const mongoose = require('mongoose')
 const validator = require('validator')
+const bcrypt = require('bcryptjs')
+const jwt = require('jsonwebtoken')
 
 const userSchema = new mongoose.Schema({
     
     name: {
         type: String,
         required: [true, "Please enter user name"],
-        maxLength: [30, "Your name cannot be more than 30 characters"]
+        maxlength: [30, "Your name cannot be more than 30 characters"]
     },
     email: {
         type: String,
-        required: [true, "Please enter your email address"],
+        required: [true, "Email adress cannot be empty"],
         unique: true,
-        validate:[validator.isEmail, "Please enter a valid email address"]
+        validate: [validator.isEmail, "Please enter a valid email address"]
     },
     password: {
         type: String,
         required: [true, "Please enter your password"],
-        minLength: [8, "Your password must be at least 8 characters long"],
+        minlength: [8, "Your password must be at least 8 characters long"],
         select: false
     },
     avatar: {
@@ -35,12 +37,27 @@ const userSchema = new mongoose.Schema({
         default: 'user'
     },
     createdAt: {
-        type: String,
-        default: date.now
+        type: Date,
+        default: Date.now
     },
     resetPasswordToken: String,
     resetPasswordExpires: Date
-
 })
+
+// encrypt password before save 
+userSchema.pre('save', async function (next) {
+    if(!this.isModified('password'))  next()
+    this.password = await bcrypt.hash(this.password, 10)
+})
+
+// store jwt
+
+userSchema.methods.getJwtToken = function() {
+
+    return jwt.sign({ id: this._id }, process.env.JWT_SECRET, {
+        expiresIn: process.env.JWT_EXPIRE_TIME
+    })
+}
+
 
 module.exports = mongoose.model('User', userSchema )

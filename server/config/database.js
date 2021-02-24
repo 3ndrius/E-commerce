@@ -8,7 +8,7 @@ const options = {
   useFindAndModify: false,
   useCreateIndex: true,
   useUnifiedTopology: true,
-  autoIndex: false,
+  autoIndex:true,
   poolSize: 10,
   bufferMaxEntries: 0,
 };
