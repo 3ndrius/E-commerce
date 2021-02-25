@@ -35,10 +35,17 @@ exports.loginUser = catchErrorAsync ( async (req, res, next) =>{
 
     if(!isPasswordCorrect) return next(createError.Unauthorized('Your password is incorrect'))
 
-    const token = await user.getJwtToken()
+   sendToken(user, 200, res)
+})
 
+exports.logoutUser = catchErrorAsync (async (req,res,next) => {
+
+    res.cookie('token', null, {
+        expires: new Date(Date.now()),
+        httpOnly:true
+    })
     res.status(200).json({
         success:true,
-        token
+        message: "Logout"
     })
 })
