@@ -3,6 +3,7 @@ const createError = require("http-errors");
 const catchErrorAsync = require("../../middlewares/catchErrorAsync");
 const sendToken = require("../../utils/jwtToken");
 const sendEmail = require("../../utils/sendEmail");
+const crypto  = require('crypto');
 
 // register user => /api/v1/register
 exports.registerUser = catchErrorAsync(async (req, res, next) => {
@@ -90,3 +91,25 @@ exports.forgotPassword = catchErrorAsync(async (req, res, next) => {
     return next(createError.InternalServerError("Server error occured!"));
   }
 });
+
+exports.resetPassword = catchErrorAsync(async (req, res, next) => {
+
+  const resetPasswordToken = crypto.createHash('sha256').update(req.params.token).digest('hex');
+
+  const user = await User.findOne({ 
+    resetPasswordToken,
+    resetPasswordExpires: {$gt: Date.now()} 
+
+  })
+  if(!user) return next(createError.BadRequest("Token is invalid or expired"))
+
+  if(req.body.password !== req.body.confirmPassword) return next(createError.BadRequest("Provided password are not same"))
+
+  user.password = req.body.password;
+  user.resetPasswordToken = undefined;
+  user.resetPasswordExpires = undefined;
+
+  await user.save();
+  
+  sendToken(user, 200, res);
+})
