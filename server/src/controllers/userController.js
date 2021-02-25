@@ -24,3 +24,25 @@ exports.registerUser =  catchErrorAsync( async (req, res, next) => {
         token
     })
 })
+
+exports.loginUser = catchErrorAsync ( async (req, res, next) =>{
+
+    const { email, password } = req.body
+    
+    if(!email && !password)  return next(createError.NotFound("Please enter your email or password"))
+
+    const user = await User.findOne({email}).select('+password')
+
+    if(!user) return next(createError.Unauthorized('Your email or password are not correct'))
+
+    const isPasswordCorrect = await user.comparePassword(password)
+
+    if(!isPasswordCorrect) return next(createError.Unauthorized('Your password is incorrect'))
+
+    const token = await user.getJwtToken()
+
+    res.status(200).json({
+        success:true,
+        token
+    })
+})

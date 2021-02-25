@@ -46,12 +46,18 @@ const userSchema = new mongoose.Schema({
 
 // encrypt password before save 
 userSchema.pre('save', async function (next) {
+
     if(!this.isModified('password'))  next()
     this.password = await bcrypt.hash(this.password, 10)
 })
 
-// store jwt
+// check password
+userSchema.methods.comparePassword = async function(providedPassword) {
+    
+    return await bcrypt.compare(providedPassword, this.password)
+}
 
+// store jwt
 userSchema.methods.getJwtToken = function() {
 
     return jwt.sign({ id: this._id }, process.env.JWT_SECRET, {
