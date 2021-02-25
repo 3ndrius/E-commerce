@@ -4,9 +4,9 @@ POST http://localhost:8080/api/v1/register
 content-type: application/json
 
 {
- "name": "Markus",
- "email": "markus12@email.com",
- "password": "password2"
+ "name": "Tomas",
+ "email": "tomas1@email.com",
+ "password": "password23"
 
 }
 ###
@@ -15,7 +15,7 @@ POST http://localhost:8080/api/v1/login
 content-type: application/json
 
 {
- "email": "markus12@email.com",
- "password": "password2"
+ "email": "markus132@email.com",
+ "password": "password23"
 
 }

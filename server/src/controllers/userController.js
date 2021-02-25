@@ -2,6 +2,7 @@
 const User = require('../models/user.model')
 const createError = require('http-errors')
 const catchErrorAsync = require('../../middlewares/catchErrorAsync')
+const sendToken = require('../../utils/jwtToken')
 
 // register user => /api/v1/register 
 exports.registerUser =  catchErrorAsync( async (req, res, next) => {
@@ -17,12 +18,7 @@ exports.registerUser =  catchErrorAsync( async (req, res, next) => {
             url: "https://res.cloudinary.com/dunx5etc6/image/upload/v1614170534/avatars/matrix-neo-man-white-512_cmkac9.webp"
         }
     })
-    const token = user.getJwtToken()
-
-    res.status(201).json({
-        success: true,
-        token
-    })
+    sendToken(user, 200, res)
 })
 
 exports.loginUser = catchErrorAsync ( async (req, res, next) =>{
