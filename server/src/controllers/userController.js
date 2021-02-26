@@ -173,3 +173,20 @@ exports.getUserDetails = catchErrorAsync(async (req, res, next) => {
     user: singleUser,
   });
 });
+
+// update user  /api/v1/admin/users/:id
+exports.updateUser = catchErrorAsync(async (req, res, next) => {
+  const newProfile = {
+    name: req.body.name,
+    email: req.body.email,
+    role: req.body.role
+  };
+  const user = await User.findByIdAndUpdate(req.params.id, newProfile, {
+    new: true,
+    runValidators: true,
+    useFindAndModify: false,
+  });
+  res.status(200).json({
+    success: true,
+  });
+});
