@@ -17,10 +17,11 @@ app.get("/", function (req, res) {
 // routes imports
 const products = require("./src/routes/product")
 const user = require("./src/routes/user")
-
+const order = require("./src/routes/order")
 // define routes
 app.use("/api/v1", products)
 app.use("/api/v1", user)
+app.use("/api/v1", order)
 app.use(errors)
 
 module.exports = app

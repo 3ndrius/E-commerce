@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 const orderSchema = new mongoose.Schema({
   shippingInfo: {
-    adress: {
+    address: {
       type: String,
       required: true,
     },
@@ -21,7 +21,7 @@ const orderSchema = new mongoose.Schema({
     country: {
       type: String,
       required: true,
-    },
+    }
   },
   user: {
     type: mongoose.Schema.Types.ObjectId,
@@ -49,9 +49,9 @@ const orderSchema = new mongoose.Schema({
       product: {
         type: mongoose.Schema.Types.ObjectId,
         required: true,
-        ref: "Product",
-      },
-    },
+        ref: "Product"
+      }
+    }
   ],
   paymentInfo: {
     id: {
@@ -59,11 +59,11 @@ const orderSchema = new mongoose.Schema({
     },
     status: {
       type: String,
-    },
+    }
   },
   paidAt: {
       type: Date
-  }
+  },
   itemsPrice: {
     type: Number,
     required: true,

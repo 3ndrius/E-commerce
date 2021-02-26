@@ -1,0 +1,36 @@
+
+
+//create order  
+
+### 
+POST http://localhost:8080/api/v1/order 
+content-type: application/json
+
+{
+  "shippingInfo":{
+    "address": "33 Avenu Street ",
+    "city": "Berlin",
+    "phoneNo": "555-55555-55",
+    "postalCode": "544-44",
+    "country": "Germany"
+    },
+  "orderItems": [
+      {
+      "name": "Apple Macbook",
+      "quantity": 3,
+      "image": "http://cloud.google.com",
+      "price": 3330.00,
+      "product": "60365b55d99aa80021e4824a"
+      }
+  ],
+  "paymentInfo": {
+    "id":"60365b55d99aa80021e4824a",
+    "status": "Succeeded"
+  },
+  "itemsPrice": 3300.00,
+  "taxPrice": 12.00,
+  "shippingPrice": 22.00,
+  "totalPrice": 3333.00,
+  "orderStatus": "Delivered"
+
+}
