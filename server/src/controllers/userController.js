@@ -53,6 +53,18 @@ exports.logoutUser = catchErrorAsync(async (req, res, next) => {
     message: "Logout",
   });
 });
+
+exports.getUserProfile = catchErrorAsync(async (req, res, next) => {
+
+  const user = await User.findById(req.user.id);
+
+  res.status(200).json({
+    success: true,
+    user
+  })
+})
+
+
 //restore password
 exports.forgotPassword = catchErrorAsync(async (req, res, next) => {
   const user = await User.findOne({ email: req.body.email });
