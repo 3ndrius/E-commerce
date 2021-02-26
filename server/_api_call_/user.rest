@@ -81,10 +81,10 @@ GET http://localhost:8080/api/v1/admin/users
 
 ###
 
-GET http://localhost:8080/api/v1/admin/users/60365b69d99aa80021e4824c
+GET http://localhost:8080/api/v1/admin/users/603767c7ed01c00125c4cfb9
 
 ###
-PUT http://localhost:8080/api/v1/admin/users/60365b69d99aa80021e4824c
+PUT http://localhost:8080/api/v1/admin/users/603767c7ed01c00125c4cfb9
 content-type: application/json
 
 {
@@ -92,3 +92,5 @@ content-type: application/json
     "email": "emdai33l@email.com",
     "role": "user"
 }
+###
+DELETE http://localhost:8080/api/v1/admin/users/603767c7ed01c00125c4cfb9
