@@ -3,7 +3,7 @@ const createError = require("http-errors");
 const catchErrorAsync = require("../../middlewares/catchErrorAsync");
 const sendToken = require("../../utils/jwtToken");
 const sendEmail = require("../../utils/sendEmail");
-const crypto  = require('crypto');
+const crypto = require("crypto");
 
 // register user => /api/v1/register
 exports.registerUser = catchErrorAsync(async (req, res, next) => {
@@ -55,15 +55,24 @@ exports.logoutUser = catchErrorAsync(async (req, res, next) => {
 });
 
 exports.getUserProfile = catchErrorAsync(async (req, res, next) => {
-
   const user = await User.findById(req.user.id);
 
   res.status(200).json({
     success: true,
-    user
-  })
-})
+    user,
+  });
+});
 
+exports.updatePassword = catchErrorAsync(async (req, res, next) => {
+  const user = await User.findById(req.user.id).select("+password");
+
+  const istMatchPassword = await user.comparePassword(req.body.oldPassword);
+  if (!istMatchPassword)
+    return next(createError.BadRequest("Provided password is not correct"));
+  user.password = req.body.password;
+  await user.save();
+  sendToken(user, 200, res);
+});
 
 //restore password
 exports.forgotPassword = catchErrorAsync(async (req, res, next) => {
@@ -84,7 +93,7 @@ exports.forgotPassword = catchErrorAsync(async (req, res, next) => {
   const message = `Your password reset token is: \n\n${resetUrl}\n\n If u have not requested this email then ignore this message. `;
 
   try {
-   await sendEmail({
+    await sendEmail({
       email: user.email,
       subject: "E-commerce password recovery",
       message,
@@ -92,9 +101,8 @@ exports.forgotPassword = catchErrorAsync(async (req, res, next) => {
 
     res.status(200).json({
       success: true,
-      message: `Email sent to: ${user.email}`
+      message: `Email sent to: ${user.email}`,
     });
-
   } catch (error) {
     user.resetPasswordToken = undefined;
     user.resetPasswordExpires = undefined;
@@ -105,23 +113,25 @@ exports.forgotPassword = catchErrorAsync(async (req, res, next) => {
 });
 
 exports.resetPassword = catchErrorAsync(async (req, res, next) => {
+  const resetPasswordToken = crypto
+    .createHash("sha256")
+    .update(req.params.token)
+    .digest("hex");
 
-  const resetPasswordToken = crypto.createHash('sha256').update(req.params.token).digest('hex');
-
-  const user = await User.findOne({ 
+  const user = await User.findOne({
     resetPasswordToken,
-    resetPasswordExpires: {$gt: Date.now()} 
+    resetPasswordExpires: { $gt: Date.now() },
+  });
+  if (!user) return next(createError.BadRequest("Token is invalid or expired"));
 
-  })
-  if(!user) return next(createError.BadRequest("Token is invalid or expired"))
-
-  if(req.body.password !== req.body.confirmPassword) return next(createError.BadRequest("Provided password are not same"))
+  if (req.body.password !== req.body.confirmPassword)
+    return next(createError.BadRequest("Provided password are not same"));
 
   user.password = req.body.password;
   user.resetPasswordToken = undefined;
   user.resetPasswordExpires = undefined;
 
   await user.save();
-  
+
   sendToken(user, 200, res);
-})
+});

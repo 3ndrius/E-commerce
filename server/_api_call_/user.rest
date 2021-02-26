@@ -16,7 +16,7 @@ content-type: application/json
 
 {
  "email": "tester2@gmail.com",
- "password": "test12345"
+ "password": "testtest12"
 
 }
 
@@ -38,8 +38,17 @@ content-type: application/json
 {
  "email": "tester2@gmail.com"
 }
-### 
 
+### 
+PUT http://localhost:8080/api/v1/password/update
+content-type: application/json
+
+{
+ "oldPassword": "test12345",
+ "password": "testtest123"
+}
+
+###
 PUT http://localhost:8080/api/v1/password/reset/e2a9a93e120f9a7948b29f1c0a990a80c46f81cb
 content-type: application/json
 
