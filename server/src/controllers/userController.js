@@ -80,7 +80,7 @@ exports.updateProfile = catchErrorAsync(async (req, res, next) => {
   console.log(req.body.email);
   const newProfile = {
     name: req.body.name,
-    email: req.body.email
+    email: req.body.email,
   };
   const user = await User.findByIdAndUpdate(req.user.id, newProfile, {
     new: true,
@@ -88,8 +88,8 @@ exports.updateProfile = catchErrorAsync(async (req, res, next) => {
     useFindAndModify: false,
   });
   res.status(200).json({
-    success: true
-  })
+    success: true,
+  });
 });
 
 //restore password
@@ -152,4 +152,24 @@ exports.resetPassword = catchErrorAsync(async (req, res, next) => {
   await user.save();
 
   sendToken(user, 200, res);
+});
+
+exports.getAllUsers = catchErrorAsync(async (req, res, next) => {
+  const users = await User.find();
+  res.status(200).json({
+    success: true,
+    users,
+  });
+});
+
+exports.getUserDetails = catchErrorAsync(async (req, res, next) => {
+  const singleUser = await User.findById(req.params.id);
+
+  if (!singleUser)
+    return next(createError.NotFound(`User with ${req.params.id} not found`));
+
+  res.status(200).json({
+    success: true,
+    user: singleUser,
+  });
 });
