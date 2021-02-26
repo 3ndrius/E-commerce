@@ -34,9 +34,13 @@ content-type: application/json
   "orderStatus": "Delivered"
 
 }
+
 ###
 GET http://localhost:8080/api/v1/orders
 
 
 ###
 GET http://localhost:8080/api/v1/order/603934aae0cbd8051c19ada5
+
+###
+GET http://localhost:8080/api/v1/admin/orders
