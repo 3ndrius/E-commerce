@@ -34,3 +34,28 @@ exports.newOrder = catchErrorAsync(async (req, res, next) => {
   })
   
 });
+
+// show user's order  /api/v1/orders/
+
+exports.myOrders = catchErrorAsync(async (req, res, next) => {
+
+  const orders = await Order.find({user: req.user.id});
+
+  res.status(200).json({
+    success: true,
+    orders,
+    count: orders.length
+  })
+})
+
+// show specific order item /api/v1/order/:id
+
+exports.getSingleOrder = catchErrorAsync(async (req, res, next) => {
+  const order = await Order.findById(req.params.id).populate('user', 'name email');
+  if(!order) return next(createError.NotFound("That order not exists"))
+
+  res.status(200).json({
+    success:true,
+    order
+  })
+})
