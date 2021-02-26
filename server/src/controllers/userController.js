@@ -74,6 +74,24 @@ exports.updatePassword = catchErrorAsync(async (req, res, next) => {
   sendToken(user, 200, res);
 });
 
+//update profile
+
+exports.updateProfile = catchErrorAsync(async (req, res, next) => {
+  console.log(req.body.email);
+  const newProfile = {
+    name: req.body.name,
+    email: req.body.email
+  };
+  const user = await User.findByIdAndUpdate(req.user.id, newProfile, {
+    new: true,
+    runValidators: true,
+    useFindAndModify: false,
+  });
+  res.status(200).json({
+    success: true
+  })
+});
+
 //restore password
 exports.forgotPassword = catchErrorAsync(async (req, res, next) => {
   const user = await User.findOne({ email: req.body.email });

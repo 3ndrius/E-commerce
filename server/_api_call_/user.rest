@@ -4,9 +4,9 @@ POST http://localhost:8080/api/v1/register
 content-type: application/json
 
 {
- "name": "author",
- "email": "tester2@gmail.com",
- "password": "testtesttest"
+ "name": "Markus",
+ "email": "markus2@gmail.com",
+ "password": "qwertyuio"
 
 }  
 ###
@@ -15,8 +15,8 @@ POST http://localhost:8080/api/v1/login
 content-type: application/json
 
 {
- "email": "tester2@gmail.com",
- "password": "testtest12"
+ "email": "markus2@gmail.com",
+ "password": "qwertyuio"
 
 }
 
@@ -47,8 +47,16 @@ content-type: application/json
  "oldPassword": "test12345",
  "password": "testtest123"
 }
+### 
+PUT http://localhost:8080/api/v1/me/update
+content-type: application/json
 
+{
+    "name": "Rob",
+    "email": "rob@example.com"
+}
 ###
+
 PUT http://localhost:8080/api/v1/password/reset/e2a9a93e120f9a7948b29f1c0a990a80c46f81cb
 content-type: application/json
 
