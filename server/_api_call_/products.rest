@@ -44,7 +44,6 @@ content-type: application/json
   "name": "222Lem ",
   "price": "12223",
   "description": "lorem 2222ipsum dolor sir4444444444mmet worsssssddddddk",
-  "ratings": "3223",
   "images": [
       {
           "public_id": "http://localhost:8080/jfdsjfjsdfjsdjfjsdfj",
@@ -60,3 +59,22 @@ content-type: application/json
 
 ### 
 DELETE http://localhost:8080/api/v1/admin/products/6033df5f39385b07401a0f80
+
+### GET
+
+PUT http://localhost:8080/api/v1/reviews
+content-type: application/json
+
+{
+  "ratings": 5,
+  "comment": "All fine",
+  "productId": "60365b55d99aa80021e4824a"
+}
+
+###
+GET http://localhost:8080/api/v1/reviews?id=60365b55d99aa80021e4824a
+
+###
+
+DELETE http://localhost:8080/api/v1/reviews?productId=60365b55d99aa80021e4824a&id=603a447d569d6403d4f92eba
+
