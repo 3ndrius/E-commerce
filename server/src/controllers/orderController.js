@@ -5,7 +5,7 @@ const Order = require("../models/order.model");
 const createError = require("http-errors");
 const catchErrorAsync = require("../../middlewares/catchErrorAsync");
 
-// new order  /api/v1/order POST 
+// new order  /api/v1/order POST
 exports.newOrder = catchErrorAsync(async (req, res, next) => {
   const {
     orderItems,
@@ -26,39 +26,40 @@ exports.newOrder = catchErrorAsync(async (req, res, next) => {
     totalPrice,
     paymentInfo,
     paidAt: Date.now(),
-    user: req.user._id
+    user: req.user._id,
   });
   res.status(200).json({
-      success: true,
-      order
-  })
-  
+    success: true,
+    order,
+  });
 });
 
 // show user's order  /api/v1/orders/
 
 exports.myOrders = catchErrorAsync(async (req, res, next) => {
-
-  const orders = await Order.find({user: req.user.id});
+  const orders = await Order.find({ user: req.user.id });
 
   res.status(200).json({
     success: true,
     orders,
-    count: orders.length
-  })
-})
+    count: orders.length,
+  });
+});
 
 // show specific order item /api/v1/order/:id
 
 exports.getSingleOrder = catchErrorAsync(async (req, res, next) => {
-  const order = await Order.findById(req.params.id).populate('user', 'name email');
-  if(!order) return next(createError.NotFound("That order not exists"))
+  const order = await Order.findById(req.params.id).populate(
+    "user",
+    "name email"
+  );
+  if (!order) return next(createError.NotFound("That order not exists"));
 
   res.status(200).json({
-    success:true,
-    order
-  })
-})
+    success: true,
+    order,
+  });
+});
 
 // show all orders -admin  /api/v1/admin/orders
 
@@ -66,38 +67,53 @@ exports.allOrders = catchErrorAsync(async (req, res, next) => {
   const orders = await Order.find();
 
   let totalAmount = 0;
-  orders.forEach(order => totalAmount += order.totalPrice)
+  orders.forEach((order) => (totalAmount += order.totalPrice));
 
   res.status(200).json({
-    success:true,
+    success: true,
     orders,
-    totalAmount
-  })
-})
+    totalAmount,
+  });
+});
 
 // update order   => /api/v1/orders/:id PUT  ADMIN
 exports.updateOrder = catchErrorAsync(async (req, res, next) => {
-
   const orders = await Order.findById(req.params.id);
 
-  if(orders.orderStatus === "Delivered") return next(createError.BadRequest("Your order has already been completed"));
+  if (orders.orderStatus === "Delivered")
+    return next(
+      createError.BadRequest("Your order has already been completed")
+    );
 
-  orders.orderItems.forEach(async item => {
-    await updateStock(item.product, item.quantity)
-  })
+  orders.orderItems.forEach(async (item) => {
+    await updateStock(item.product, item.quantity);
+  });
 
   orders.orderStatus = req.body.order;
   orders.deliveredAt = Date.now();
-  
+
   await orders.save();
 
   res.status(200).json({
-    success: true
-  })
-})
+    success: true,
+  });
+});
 
-async function updateStock(id, quantity)  {
+async function updateStock(id, quantity) {
   const product = await Product.findById(id);
   product.stock = product.stock - quantity;
-  await product.save({ validateBeforeSave: false});
+  await product.save({ validateBeforeSave: false });
 }
+
+// delete order  /api/v1/orders/:id  ADMIN - DELETE
+exports.deleteOrder = catchErrorAsync(async (req, res, next) => {
+  const order = await Order.findById(req.params.id);
+  if (!order)
+    return next(createError.NotFound(`Order with: ${req.params.id} not found`));
+
+  await order.remove();
+
+  res.status(200).json({
+    success: true
+  });
+});
