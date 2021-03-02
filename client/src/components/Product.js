@@ -8,7 +8,7 @@ import CardMedia from "@material-ui/core/CardMedia";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
-import { Rating } from "@material-ui/lab";
+import { Rating } from "@material-ui/core";
 import ShoppingCartOutlinedIcon from "@material-ui/icons/ShoppingCartOutlined";
 import RemoveRedEyeOutlinedIcon from "@material-ui/icons/RemoveRedEyeOutlined";
 
@@ -31,7 +31,7 @@ export default function ImgMediaCard() {
   const [value, setValue] = React.useState(2);
 
   return (
-    <Card className={classes.root} elevation={0} outlined>
+    <Card className={classes.root} elevation={0} outlined="true" >
       <CardActionArea>
         <CardMedia
           component="img"

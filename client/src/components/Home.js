@@ -7,6 +7,8 @@ import Grid from '@material-ui/core/Grid';
 import Product from './Product'
 import Button from '@material-ui/core/Button';
 import Meta from './layout/Meta'
+import { useDispatch, useSelector } from 'react-redux'
+import { requestAllProduct } from '../actions/productActions'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -19,8 +21,16 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function AutoGrid() {
+export default function Home() {
   const classes = useStyles();
+
+ const dispatch = useDispatch();
+  const state = useSelector((state) => state);
+  
+  React.useEffect(() => {
+    dispatch(requestAllProduct())
+  },[])
+
 
   return (
     <div className={classes.root}>
