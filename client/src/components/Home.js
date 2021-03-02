@@ -6,6 +6,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Product from './Product'
 import Button from '@material-ui/core/Button';
+import Meta from './layout/Meta'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -23,6 +24,7 @@ export default function AutoGrid() {
 
   return (
     <div className={classes.root}>
+        <Meta title="Best store" />
         <Container  >
             <Typography className={classes.title} variant="h3" spacing="3" component="h2" >
                 Latest Product:
