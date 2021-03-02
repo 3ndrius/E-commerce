@@ -13,14 +13,14 @@ POST http://localhost:8080/api/v1/products/
 content-type: application/json
 
 {
-  "name": "Macbook Pro 12",
+  "name": "Nike Performaddddnce REVOLUTION 22",
   "price": "12",
   "description": "lorem ipsum dolor sir emmet",
-  "ratings": "333",
+  "ratings": "3",
   "images": [
       {
           "public_id": "http://localhost:8080/jfdsjfjsdfjsdjfjsdfj",
-          "url": "http://localhost:8080/fjdsfjdfj"
+          "url": " https://media.gq-magazine.co.uk/photos/5eda54b0ed80d8890ee2ee4c/master/w_1920,c_limit/20200605-nike-06.jpg"
       }
   ],
   "category": "Laptop",
@@ -37,7 +37,7 @@ GET http://localhost:8080/api/v1/products/60365b55d99aa80021e4824a
 
 ###
 
-PUT http://localhost:8080/api/v1/admin/products/6033df5f39385b07401a0f80
+PUT http://localhost:8080/api/v1/admin/products/6037a099be5f4d02c8e3ae3d
 content-type: application/json
 
 {
@@ -58,7 +58,7 @@ content-type: application/json
 }
 
 ### 
-DELETE http://localhost:8080/api/v1/admin/products/6033df5f39385b07401a0f80
+DELETE http://localhost:8080/api/v1/admin/products/6037a573d5dbe003469db820
 
 ### GET
 

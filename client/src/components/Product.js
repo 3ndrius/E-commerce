@@ -11,6 +11,7 @@ import Box from "@material-ui/core/Box";
 import { Rating } from "@material-ui/core";
 import ShoppingCartOutlinedIcon from "@material-ui/icons/ShoppingCartOutlined";
 import RemoveRedEyeOutlinedIcon from "@material-ui/icons/RemoveRedEyeOutlined";
+import {Link} from 'react-router-dom'
 
 const useStyles = makeStyles({
   root: {
@@ -23,9 +24,10 @@ const useStyles = makeStyles({
     padding: 0,
     margin: 0,
   },
+
 });
 
-export default function ImgMediaCard() {
+export default function ImgMediaCard({ product }) {
   const classes = useStyles();
 
   const [value, setValue] = React.useState(2);
@@ -37,13 +39,12 @@ export default function ImgMediaCard() {
           component="img"
           alt="Contemplative Reptile"
           height="240"
-          image="https://static.nike.com/a/images/c_limit,w_592,f_auto/t_product_v1/8159f77b-b1ad-4906-9434-bd9120ab7cf7/react-infinity-run-flyknit-mens-running-shoe-zX42Nc.jpg"
+          image={product && product.images[0].url}
           title="Contemplative Reptile"
         />
         <CardContent>
           <Typography gutterBottom variant="h5" component="h2">
-            Symbiosis NIKE WOMEN'S NIKE AIR MAX 97 SHOE kolor CZARNY
-            (921733-001)
+            <Link to={`/product/${product._id}`}>{product.name}</Link>
           </Typography>
         </CardContent>
       </CardActionArea>
@@ -56,8 +57,9 @@ export default function ImgMediaCard() {
         >
           <Rating
             name="simple-controlled"
-            value={value}
+            value={product.ratings}
             onChange={(event, newValue) => {
+              console.log(event, newValue, "ratings");
               setValue(newValue);
             }}
           />
@@ -66,13 +68,15 @@ export default function ImgMediaCard() {
       <CardContent>
         <Typography variant="h5" component="h6" gutterBottom>
           {" "}
-          $ 199.99
+          $ {product.price}
         </Typography>
       </CardContent>
       <CardActions>
-        <Button color="secondary" variant="outlined">
+       <Link to={`/products/${product._id}`} >
+         <Button color="secondary" variant="outlined">
           View details
         </Button>
+         </Link>
         <Button color="secondary" variant="outlined">
           Add to cart
         </Button>
