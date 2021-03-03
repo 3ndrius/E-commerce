@@ -15,3 +15,26 @@ a{
   text-decoration:none;
   color: rgb(17, 17, 17)
 }
+.pagination{
+  display: flex;
+  width:100%;
+  max-width: 400px;
+  justify-content:space-between;
+  list-style-type: none;
+  align-self: center;
+}
+.pagination li {
+  border:1px solid rgb(177, 177, 177);
+  padding: 9px 15px;
+  border-radius: 5px;
+
+}
+.pagination li a {
+  color: rgb(36, 36, 36);
+ 
+}
+.pagination-active {
+  background-color:rgb(112, 112, 112);
+  
+}
+

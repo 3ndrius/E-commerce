@@ -31,6 +31,7 @@ exports.getProducts = catchErrorAsync(async (req, res, next) => {
     productCount,
     count: products.length,
     products,
+    resPerPage,
   });
 });
 // get sinle product => /api/v1/product/{id} GET

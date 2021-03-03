@@ -1,16 +1,16 @@
-import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import CircularProgress from '@material-ui/core/CircularProgress';
+import React from "react";
+import { makeStyles } from "@material-ui/core/styles";
+import CircularProgress from "@material-ui/core/CircularProgress";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    display: 'flex',
+    display: "flex",
     width: "100%",
-    justifyContent:"center",
+    justifyContent: "center",
     alignItems: "center",
     padingTop: "20%",
     height: "100%",
-    '& > * + *': {
+    "& > * + *": {
       marginLeft: theme.spacing(2),
     },
   },

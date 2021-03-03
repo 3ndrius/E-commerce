@@ -11,6 +11,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { requestAllProduct } from "../actions/productActions";
 import Loader from "./layout/Loader";
 import { toast } from "react-toastify";
+import Box from "@material-ui/core/Box";
+import Pagination from "react-js-pagination";
+
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -20,25 +23,35 @@ const useStyles = makeStyles((theme) => ({
     paddingTop: 10,
     paddingBottom: 10,
   },
+  box: {
+    margin: 50,
+    display: "flex",
+    flexDirection: "column",
+  },
 }));
 
 export default function Home() {
   const classes = useStyles();
   const dispatch = useDispatch();
+  const [currentPage, setCurrentPage] = React.useState(1);
 
-  const { products, loading, productCount, error } = useSelector(
+  const handlePageChange = (pageNumber) => {
+    setCurrentPage(pageNumber);
+    dispatch(requestAllProduct(pageNumber));
+  };
+
+  const { products, loading, productsCount, resPerPage, error } = useSelector(
     (state) => state.products
   );
   React.useEffect(() => {
-    if (error)
-      return toast.error(error);
-    dispatch(requestAllProduct());
+    if (error) return toast.error(error);
+    dispatch(requestAllProduct(currentPage || 1));
   }, [dispatch, toast, error]);
 
   return (
     <div className={classes.root}>
       <Meta title="Best store" />
-      <Container>
+      <Container className={classes.container}>
         <Typography
           className={classes.title}
           variant="h3"
@@ -59,6 +72,23 @@ export default function Home() {
             })}
           {loading && <Loader />}
         </Grid>
+        {productsCount >= resPerPage && (
+          <Box className={classes.box}>
+            <Pagination
+              activePage={currentPage}
+              itemsCountPerPage={resPerPage}
+              totalItemsCount={productsCount}
+              onChange={handlePageChange}
+              nextPageText={"Next"}
+              prevPageText={"Prev"}
+              firstPageText={"First"}
+              lastPageText={"Last"}
+              itemClass="pagination-nav"
+              linkClass="pagination-link"
+              activeClass="pagination-active"
+            />
+          </Box>
+        )}
       </Container>
     </div>
   );

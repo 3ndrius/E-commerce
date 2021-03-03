@@ -2,7 +2,7 @@
 // action creator
 import * as types from '../constants/productConstants'
 
-export const requestAllProduct = () => ({ type: types.ALL_PRODUCT_REQUEST})
+export const requestAllProduct = (product) => ({ type: types.ALL_PRODUCT_REQUEST, payload: product})
 export const requestAllProductSuccess = products => ({type: types.ALL_PRODUCT_SUCCESS, payload: products})
 export const requestAllProductFail = error => ({type: types.ALL_PRODUCT_FAIL, payload: error})
 

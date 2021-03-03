@@ -9,9 +9,9 @@ import {
 } from "../actions/productActions";
 import { ALL_PRODUCT_REQUEST, SINGLE_PRODUCT_REQUEST } from "../constants/productConstants";
 
-function* getProducts() {
+function* getProducts(action) {
   try {
-    const { data } = yield call(apiCall.get, "products");
+    const { data } = yield call(apiCall.get, `products/?page=${action.payload}`);
     yield delay(1000);
     yield put(requestAllProductSuccess(data));
   } catch (error) {
