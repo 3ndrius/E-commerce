@@ -9,8 +9,8 @@ import Button from "@material-ui/core/Button";
 import Meta from "./layout/Meta";
 import { useDispatch, useSelector } from "react-redux";
 import { requestAllProduct } from "../actions/productActions";
-import Loader from './layout/Loader'
-
+import Loader from "./layout/Loader";
+import { toast } from "react-toastify";
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -24,16 +24,16 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Home() {
   const classes = useStyles();
-
   const dispatch = useDispatch();
 
-  React.useEffect(() => {
-    dispatch(requestAllProduct());
-  }, [dispatch]);
   const { products, loading, productCount, error } = useSelector(
     (state) => state.products
   );
-  console.log(products);
+  React.useEffect(() => {
+    if (error)
+      return toast.error(error);
+    dispatch(requestAllProduct());
+  }, [dispatch, toast, error]);
 
   return (
     <div className={classes.root}>
@@ -56,9 +56,7 @@ export default function Home() {
                   <Product product={product} />
                 </Grid>
               );
-            })
-             
-          }
+            })}
           {loading && <Loader />}
         </Grid>
       </Container>
