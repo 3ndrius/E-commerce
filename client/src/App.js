@@ -5,7 +5,7 @@ import { theme } from "./theme/customTheme";
 import Header from "./components/layout/Header";
 import Loader from "./components/layout/Loader"
 const Home = (lazy(() => (import('./components/Home'))))
-
+const ProductDetail = (lazy(() => (import('./components/ProductDetails'))))
 
 
 function App() {
@@ -13,7 +13,8 @@ function App() {
       <ThemeProvider theme={theme}>
         <Header />
         <Suspense fallback>
-        <Route path="/" component={Home} />
+        <Route path="/" exact component={Home} />
+        <Route path="/product/:id" component={ProductDetail} />
         </Suspense>
       </ThemeProvider>
  

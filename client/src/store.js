@@ -4,10 +4,11 @@ import { createStore, applyMiddleware, compose, combineReducers } from "redux";
 import { composeWithDevTools } from 'redux-devtools-extension'
 // imports
 import rootSaga from "./sagas";
-import { productReducer } from './reducers/productReducers'
+import { singleProductReducer, productReducer } from './reducers/productReducers'
 
 const reducer = combineReducers({
-  products: productReducer
+  products: productReducer,
+  product: singleProductReducer,
 });
 
 const sagaMiddleware = createSagaMiddleware();

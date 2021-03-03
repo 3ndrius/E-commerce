@@ -57,9 +57,8 @@ export default function ImgMediaCard({ product }) {
         >
           <Rating
             name="simple-controlled"
-            value={product.ratings}
+            value={product && product.ratings}
             onChange={(event, newValue) => {
-              console.log(event, newValue, "ratings");
               setValue(newValue);
             }}
           />
@@ -72,7 +71,7 @@ export default function ImgMediaCard({ product }) {
         </Typography>
       </CardContent>
       <CardActions>
-       <Link to={`/products/${product._id}`} >
+       <Link to={`/product/${product._id}`} >
          <Button color="secondary" variant="outlined">
           View details
         </Button>
