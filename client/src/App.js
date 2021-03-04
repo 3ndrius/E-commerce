@@ -14,6 +14,7 @@ function App() {
         <Header />
         <Suspense fallback>
         <Route path="/" exact component={Home} />
+        <Route path="/search/:keyword" component={Home} />
         <Route path="/product/:id" component={ProductDetail} />
         </Suspense>
       </ThemeProvider>

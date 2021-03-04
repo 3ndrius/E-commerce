@@ -1,4 +1,4 @@
-import { takeEvery, call, put, delay } from "redux-saga/effects";
+import { takeEvery, takeLatest, call, put, delay } from "redux-saga/effects";
 import apiCall from "../helpers/apiCall";
 import {
   requestAllProductSuccess,
@@ -10,9 +10,14 @@ import {
 import { ALL_PRODUCT_REQUEST, SINGLE_PRODUCT_REQUEST } from "../constants/productConstants";
 
 function* getProducts(action) {
+  console.log("clicked", action.payload.category);
   try {
-    const { data } = yield call(apiCall.get, `products/?page=${action.payload}`);
-    yield delay(1000);
+    yield delay(1000)
+    let link = `products/?keyword=${action.payload.keyword}&page=${action.payload.product}&price[gte]=${action.payload.price[0]}&price[lte]=${action.payload.price[1]}`;
+    if(action.payload.category) {
+    link = `products/?keyword=${action.payload.keyword}&page=${action.payload.product}&price[gte]=${action.payload.price[0]}&price[lte]=${action.payload.price[1]}&category=${action.payload.category}`
+    }
+    const { data } = yield call(apiCall.get, link);
     yield put(requestAllProductSuccess(data));
   } catch (error) {
     yield put(requestAllProductFail(error));
@@ -20,7 +25,7 @@ function* getProducts(action) {
 }
 
 export function* getProductsSaga() {
-  yield takeEvery("ALL_PRODUCT_REQUEST", getProducts);
+  yield takeLatest("ALL_PRODUCT_REQUEST", getProducts);
 }
 
  // single product 

@@ -15,7 +15,7 @@ import {Link} from 'react-router-dom'
 
 const useStyles = makeStyles({
   root: {
-    maxWidth: "500px",
+    maxWidth: "580px",
     minWidth: "280px",
     marginBottom: 20,
     backgroundColor: "#f00",
@@ -38,7 +38,7 @@ export default function ImgMediaCard({ product }) {
         <CardMedia
           component="img"
           alt="Contemplative Reptile"
-          height="240"
+          height="280"
           image={product && product.images[0].url}
           title="Contemplative Reptile"
         />
