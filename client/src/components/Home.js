@@ -9,14 +9,15 @@ import Button from "@material-ui/core/Button";
 import Meta from "./layout/Meta";
 import { useDispatch, useSelector } from "react-redux";
 import { requestAllProduct } from "../actions/productActions";
+import { Rating } from "@material-ui/core";
 // import Loader from "./layout/Loader";
 import { toast } from "react-toastify";
 import Box from "@material-ui/core/Box";
 import Pagination from "react-js-pagination";
 import Slider from "@material-ui/core/Slider";
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
+import List from "@material-ui/core/List";
+import ListItem from "@material-ui/core/ListItem";
+import ListItemText from "@material-ui/core/ListItemText";
 import Loader from "react-loader-spinner";
 
 const useStyles = makeStyles((theme) => ({
@@ -51,8 +52,8 @@ const useStyles = makeStyles((theme) => ({
     height: 150,
   },
   itemText: {
-    padding:"2px 0 0 15px",
-    cursor:"pointer"
+    padding: "2px 0 0 15px",
+    cursor: "pointer",
   },
   loading: {
     position: "fixed",
@@ -62,9 +63,8 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
-    zIndex:999,
-  }
-
+    zIndex: 999,
+  },
 }));
 
 const marks = [
@@ -87,6 +87,7 @@ export default function Home({ match }) {
   const dispatch = useDispatch();
   const [currentPage, setCurrentPage] = React.useState(1);
   const [price, setPrice] = React.useState([0, 10000]);
+  const [rating, setRating] = React.useState(1);
 
   const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
@@ -105,34 +106,45 @@ export default function Home({ match }) {
     "Home",
   ];
 
-  const { products, loading, productsCount, resPerPage, error, filteredProductsCount } = useSelector(
-    (state) => state.products
-  );
+  const {
+    products,
+    loading,
+    productsCount,
+    resPerPage,
+    error,
+    filteredProductsCount,
+  } = useSelector((state) => state.products);
   const keyword = match.params.keyword || "";
   React.useEffect(() => {
     if (error) return toast.error(error);
-    dispatch(requestAllProduct(currentPage, keyword, price, category));
-  }, [dispatch, toast, error, keyword, price, currentPage, category]);
+    dispatch(requestAllProduct(currentPage, keyword, price, category, rating));
+  }, [dispatch, toast, error, keyword, price, currentPage, category, rating]);
 
   let count = productsCount;
-  if(keyword) count = filteredProductsCount;
+  if (keyword) count = filteredProductsCount;
   return (
     <div className={classes.root}>
       <Meta title="Best store" />
       <Grid className={classes.container} container alignItems="center">
-         {loading && <div className={classes.loading}> 
+        {loading && (
+          <div className={classes.loading}>
             <Loader
-        type="Bars"
-        color="#00BFFF"
-        height={100}
-        width={100}
-        timeout={500} //3 secs
-      />
-         </div> }
-         {products?.length < 1 && !loading && <Grid item sm={12} align="center">No products...</Grid>}
+              type="Bars"
+              color="#00BFFF"
+              height={100}
+              width={100}
+              timeout={500} //3 secs
+            />
+          </div>
+        )}
+        {products?.length < 1 && !loading && (
+          <Grid item sm={12} align="center">
+            No products...
+          </Grid>
+        )}
         {keyword ? (
-          <Grid container spacing={12}>
-            <Grid item xs={12} md={3} lg={2} >
+          <Grid container spacing={10}>
+            <Grid item xs={12} md={3} lg={2}>
               <div className={classes.slide}>
                 <Typography id="track-inverted-range-slider" gutterBottom>
                   Price range:
@@ -149,17 +161,32 @@ export default function Home({ match }) {
                   valueLabelDisplay="auto"
                 />
               </div>
-             
-             <List className={classes.list}>
+
+              <List className={classes.list}>
                 {categories.map((cat, index) => {
-                return (
-                <ListItem key={index} id={cat} className={classes.item}>
-                  <ListItemText className={classes.itemText} primary={cat}  onClick={() => setCategory(cat)}/>
-                </ListItem>
-    
-              )
-              })}
-             </List>
+                  return (
+                    <ListItem key={index} id={cat} className={classes.item}>
+                      <ListItemText
+                        className={classes.itemText}
+                        primary={cat}
+                        onClick={() => setCategory(cat)}
+                      />
+                    </ListItem>
+                  );
+                })}
+              </List>
+
+              <List>
+                {[5, 4, 3, 2, 1].map((item) => {
+                  return (
+                    <ListItem key={item} onClick={() => setRating(item)}>
+                      <Box component="fieldset" borderColor="transparent">
+                        <Rating name="read-only" value={item} readOnly />
+                      </Box>
+                    </ListItem>
+                  );
+                })}
+              </List>
             </Grid>
             <Grid item container xs={12} md={9} lg={10}>
               {products &&
@@ -178,7 +205,7 @@ export default function Home({ match }) {
                   );
                 })}
             </Grid>
-          </Grid> 
+          </Grid>
         ) : (
           <Grid item container xs={12} align="center">
             {products &&
@@ -198,8 +225,8 @@ export default function Home({ match }) {
               })}
           </Grid>
         )}
-       
-        {resPerPage <= count  && (
+
+        {resPerPage <= count && (
           <Box className={classes.box}>
             <Pagination
               activePage={currentPage}

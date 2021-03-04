@@ -13,9 +13,9 @@ function* getProducts(action) {
   console.log("clicked", action.payload.category);
   try {
     yield delay(1000)
-    let link = `products/?keyword=${action.payload.keyword}&page=${action.payload.product}&price[gte]=${action.payload.price[0]}&price[lte]=${action.payload.price[1]}`;
+    let link = `products/?keyword=${action.payload.keyword}&page=${action.payload.product}&price[gte]=${action.payload.price[0]}&price[lte]=${action.payload.price[1]}&ratings[gte]=${action.payload.rating}`;
     if(action.payload.category) {
-    link = `products/?keyword=${action.payload.keyword}&page=${action.payload.product}&price[gte]=${action.payload.price[0]}&price[lte]=${action.payload.price[1]}&category=${action.payload.category}`
+    link = `products/?keyword=${action.payload.keyword}&page=${action.payload.product}&price[gte]=${action.payload.price[0]}&price[lte]=${action.payload.price[1]}&category=${action.payload.category}&ratings[gte]=${action.payload.rating}`
     }
     const { data } = yield call(apiCall.get, link);
     yield put(requestAllProductSuccess(data));
