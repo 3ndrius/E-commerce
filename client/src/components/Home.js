@@ -9,7 +9,7 @@ import Button from "@material-ui/core/Button";
 import Meta from "./layout/Meta";
 import { useDispatch, useSelector } from "react-redux";
 import { requestAllProduct } from "../actions/productActions";
-import Loader from "./layout/Loader";
+// import Loader from "./layout/Loader";
 import { toast } from "react-toastify";
 import Box from "@material-ui/core/Box";
 import Pagination from "react-js-pagination";
@@ -17,6 +17,7 @@ import Slider from "@material-ui/core/Slider";
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
+import Loader from "react-loader-spinner";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -52,6 +53,16 @@ const useStyles = makeStyles((theme) => ({
   itemText: {
     padding:"2px 0 0 15px",
     cursor:"pointer"
+  },
+  loading: {
+    position: "fixed",
+    top: "50%",
+    left: "0",
+    right: "0",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    zIndex:999,
   }
 
 }));
@@ -109,7 +120,15 @@ export default function Home({ match }) {
     <div className={classes.root}>
       <Meta title="Best store" />
       <Grid className={classes.container} container alignItems="center">
-         {loading && <Loader />}
+         {loading && <div className={classes.loading}> 
+            <Loader
+        type="Bars"
+        color="#00BFFF"
+        height={100}
+        width={100}
+        timeout={500} //3 secs
+      />
+         </div> }
          {products?.length < 1 && !loading && <Grid item sm={12} align="center">No products...</Grid>}
         {keyword ? (
           <Grid container spacing={12}>
