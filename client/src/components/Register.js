@@ -11,8 +11,22 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import { Link } from 'react-router-dom'
+import { makeStyles } from "@material-ui/core/styles";
 
+ const useStyles = makeStyles((theme) => ({
+        input: {
+
+        },
+        large: {
+            height:30,
+
+        }
+    }))
 export default function SignUp() {
+ const classes = useStyles();  
+ const onChange = () => {
+
+ }
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
@@ -80,6 +94,34 @@ export default function SignUp() {
                 id="password"
                 autoComplete="current-password"
               />
+            </Grid>
+            <Grid xs={6}>
+    <input
+          color="primary"
+          accept="image/*"
+          type="file"
+          onChange={onChange}
+          id="icon-button-file"
+          style={{ display: 'none', }}
+        />
+        <label htmlFor="icon-button-file">
+          <Button
+            variant="contained"
+            component="span"
+            className={classes.button}
+            size="large"
+            color="primary"
+          > Upload
+                          </Button>
+        </label>
+            </Grid>
+            <Grid xs={6}>
+ <Avatar
+        alt="Remy Sharp"
+        src="/static/images/avatar/1.jpg"
+        className={classes.large}
+      />
+
             </Grid>
           </Grid>
           <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
