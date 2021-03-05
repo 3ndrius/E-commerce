@@ -1,7 +1,8 @@
 const app = require("./app");
 const dotenv = require("dotenv");
-const cors = require("cors");
+//const cors = require("cors");
 const logger = require("morgan");
+const cloudinary = require("cloudinary")
 
 // handle uncaught exeption
 process.on("uncaughtException", (error) => {
@@ -13,12 +14,19 @@ process.on("uncaughtException", (error) => {
 // const cookieParser = require('cookie-parser');
 
 // Configuration
-app.use(logger("dev"));
-app.use(cors()); // app.use(cors({origin: "http://localhost:3000", credentials: true}));
+//app.use(logger("dev"));
+//app.use(cors()); // app.use(cors({origin: "http://localhost:3000", credentials: true}));
 
 // database import
 dotenv.config();
 require("./config/database");
+
+// cloudinary config 
+cloudinary.config({ 
+  claud_name: process.env.CLAUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_SECRET_KEY
+})
 
 // server running
 const server = app.listen(process.env.APP_PORT, function () {

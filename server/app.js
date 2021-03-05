@@ -4,13 +4,14 @@ const app = express()
 const errors = require("./middlewares/error")
 const cookieParser = require('cookie-parser')
 const cors = require('cors')
-
+const bodyParser = require('body-parser')
 const CLIENT_BUILD_PATH = path.join(__dirname, "../client/build")
 
 app.use(express.static(CLIENT_BUILD_PATH))
 app.use(express.json())
 app.use(cookieParser())
 app.use(cors({origin: "http://localhost:3000", credentials: true}));
+app.use(bodyParser.urlencoded({ extended: true }))
 
 app.get("/", function (req, res) {
   res.sendFile(path.join(CLIENT_BUILD_PATH, "index.html"))

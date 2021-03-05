@@ -4,19 +4,23 @@ const catchErrorAsync = require("../../middlewares/catchErrorAsync");
 const sendToken = require("../../utils/jwtToken");
 const sendEmail = require("../../utils/sendEmail");
 const crypto = require("crypto");
+const cloudinary = require('cloudinary');
 
 // register user => /api/v1/register
 exports.registerUser = catchErrorAsync(async (req, res, next) => {
   const { name, email, password } = req.body;
-
+  const result = await.cloudinary.uploader.upload(req.body.avatar, {
+    folder: "avatars",
+     width: 150,
+     crop: 'scale'
+  });
   const user = await User.create({
     name,
     email,
     password,
     avatar: {
-      public_id: "avatars/matrix-neo-man-white-512_cmkac9",
-      url:
-        "https://res.cloudinary.com/dunx5etc6/image/upload/v1614170534/avatars/matrix-neo-man-white-512_cmkac9.webp",
+      public_id: result.public_id,
+      url:result.secure_url
     },
   });
   sendToken(user, 200, res);
@@ -179,7 +183,7 @@ exports.updateUser = catchErrorAsync(async (req, res, next) => {
   const newProfile = {
     name: req.body.name,
     email: req.body.email,
-    role: req.body.role
+    role: req.body.role,
   };
   const user = await User.findByIdAndUpdate(req.params.id, newProfile, {
     new: true,
@@ -191,13 +195,13 @@ exports.updateUser = catchErrorAsync(async (req, res, next) => {
   });
 });
 // delete single user   /api/v1/admin/users/:id
-exports.deleteUser = catchErrorAsync( async (req, res, next ) => {
-
+exports.deleteUser = catchErrorAsync(async (req, res, next) => {
   const user = await User.findById(req.params.id);
-  if(!user) return next(createError.NotFound(`User with ${req.params.id} not found`))
+  if (!user)
+    return next(createError.NotFound(`User with ${req.params.id} not found`));
 
   await user.remove();
   res.status(200).json({
-    success: true
-  })
-})
+    success: true,
+  });
+});
