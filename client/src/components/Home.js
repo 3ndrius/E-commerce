@@ -150,13 +150,13 @@ export default function Home({ match }) {
                   Price range:
                 </Typography>
                 <Slider
-                  defaultValue={[100, 500]}
+                  defaultValue={[0, 1000]}
                   aria-labelledby="discrete-slider-custom"
                   step={10}
                   marks={marks}
                   getAriaValueText={valuetext}
                   min={0}
-                  max={1500}
+                  max={1000}
                   onChange={(e) => setPrice(e.target.value)}
                   valueLabelDisplay="auto"
                 />

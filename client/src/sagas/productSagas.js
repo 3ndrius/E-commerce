@@ -10,7 +10,6 @@ import {
 import { ALL_PRODUCT_REQUEST, SINGLE_PRODUCT_REQUEST } from "../constants/productConstants";
 
 function* getProducts(action) {
-  console.log("clicked", action.payload.category);
   try {
     yield delay(1000)
     let link = `products/?keyword=${action.payload.keyword}&page=${action.payload.product}&price[gte]=${action.payload.price[0]}&price[lte]=${action.payload.price[1]}&ratings[gte]=${action.payload.rating}`;
