@@ -6,7 +6,7 @@ import Header from "./components/layout/Header";
 const Home = (lazy(() => (import('./components/Home'))))
 const ProductDetail = (lazy(() => (import('./components/ProductDetails'))))
 const Login = (lazy(() => (import('./components/Login'))))
-
+const Register = (lazy(() => (import('./components/Register'))))
 
 function App() {
   return (
@@ -17,6 +17,7 @@ function App() {
         <Route path="/search/:keyword" component={Home} />
         <Route path="/product/:id" component={ProductDetail} />
         <Route path="/login" component={Login} />
+        <Route path="/register" component={Register} />
         </Suspense>
       </ThemeProvider>
  

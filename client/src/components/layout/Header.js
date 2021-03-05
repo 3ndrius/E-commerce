@@ -1,6 +1,6 @@
 import * as React from "react";
 import { alpha, makeStyles } from "@material-ui/core/styles";
-import { Route, Link} from 'react-router-dom'
+import { Route , Link} from 'react-router-dom'
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import IconButton from "@material-ui/core/IconButton";
@@ -85,8 +85,8 @@ export default function PrimarySearchAppBar({history}) {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <MenuItem onClick={handleMenuClose}>Login</MenuItem>
-      <MenuItem onClick={handleMenuClose}>Register</MenuItem>
+      <MenuItem onClick={handleMenuClose}><Link to={'/login'}>Login</Link></MenuItem>
+      <MenuItem onClick={handleMenuClose}><Link to={'/register'}>Register</Link></MenuItem>
     </Menu>
   );
 
@@ -132,7 +132,7 @@ export default function PrimarySearchAppBar({history}) {
         >
           <AccountCircleOutlinedIcon />
         </IconButton>
-        <p>Login</p>
+        <p>User</p>
       </MenuItem>
     </Menu>
   );
