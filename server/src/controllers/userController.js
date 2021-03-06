@@ -12,8 +12,6 @@ exports.registerUser = catchErrorAsync(async (req, res, next) => {
 
    if (!name && !email && !password)
     return next(createError.BadRequest("All fields are required"));
-
-  if(req.body.avatar) return next(createError.BadRequest("Upload avatars failed"));
  
   const result = await cloudinary.uploader.upload(req.body.avatar, {
     folder: "avatars",

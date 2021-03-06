@@ -12,12 +12,10 @@ const Login = (lazy(() => (import('./components/Login'))))
 const Register = (lazy(() => (import('./components/Register'))))
 function App() {
   const dispatch = useDispatch();
-  const { isAuthenticated } = useSelector(state => state.auth);
 
   React.useEffect(() => {
-    // dispatch(requestLoadUser());
     store.dispatch(requestLoadUser())
-  },[])
+  },[dispatch])
   return (
       <ThemeProvider theme={theme}>
         <Header />

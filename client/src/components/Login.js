@@ -21,6 +21,12 @@ const Login = ({ history }) => {
   );
   const dispatch = useDispatch();
 
+  React.useEffect(() => {
+    if (isAuthenticated) history.push("/");
+
+    if (error) toast.error(error);
+  }, [error, loading, isAuthenticated, toast, dispatch]);
+  
   const handleChange = (e) => {
     setUser({ ...user, [e.target.id]: e.target.value });
   };
@@ -28,11 +34,6 @@ const Login = ({ history }) => {
     e.preventDefault();
     dispatch(requestLoginUser(user));
   };
-  React.useEffect(() => {
-    if (isAuthenticated) history.push("/");
-
-    if (error) toast.error(error);
-  }, [error, loading, isAuthenticated, toast, dispatch]);
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
