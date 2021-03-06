@@ -8,3 +8,7 @@ export const requestLoginUserFail = (error) => ({type: types.LOGIN_FAIL, payload
 export const requestRegisterUser = (user) => ({type: types.REGISTER_REQUEST, payload: user})
 export const requestRegisterUserSuccess = (user) => ({type: types.REGISTER_SUCCESS, payload: user})
 export const requestRegisterUserFail = (error) => ({type: types.REGISTER_FAIL, payload: error})
+
+export const requestLoadUser = () => ({type: types.LOAD_USER_REQUEST})
+export const requestLoadUserSuccess = (user) => ({type: types.LOAD_USER_SUCCESS, payload: user})
+export const requestLoadUserFail = (error) => ({type: types.LOAD_USER_FAIL, payload: error})

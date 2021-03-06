@@ -5,8 +5,15 @@ import {
   requestLoginUserFail,
   requestRegisterUserFail,
   requestRegisterUserSuccess,
+  requestLoadUserFail,
+  requetLoadUserSuccess,
 } from "../actions/userActions";
-import { LOGIN_REQUEST, REGISTER_REQUEST } from "../constants/userConstants";
+import {
+  LOGIN_REQUEST,
+  REGISTER_REQUEST,
+  LOAD_USER_REQUEST,
+} from "../constants/userConstants";
+
 import apiCall from "../helpers/apiCall";
 
 function* loginUser(action) {
@@ -29,7 +36,7 @@ export function* loginUserSaga() {
 function* registerUser(action) {
   const config = { headers: { "Content-Type": "multipart/form-data" } };
   try {
-    const res = yield call(apiCall.post, "register",action.payload, config);
+    const res = yield call(apiCall.post, "register", action.payload, config);
     yield put(requestRegisterUserSuccess(res));
   } catch (error) {
     yield put(requestRegisterUserFail(error));
@@ -37,5 +44,18 @@ function* registerUser(action) {
 }
 
 export function* registerUserSaga() {
-    yield takeEvery("REGISTER_REQUEST", registerUser)
+  yield takeEvery("REGISTER_REQUEST", registerUser);
+}
+
+function* loadUser() {
+  try {
+    const res = yield call(apiCall.get, "me");
+    yield put(requestLoginUserSuccess(res));
+  } catch (error) {
+    yield put(requestLoadUserFail(error));
+  }
+}
+
+export function* loadUserSaga() {
+  yield takeEvery("LOAD_USER_REQUEST", loadUser);
 }
