@@ -1,6 +1,7 @@
 import * as React from "react";
 import { alpha, makeStyles } from "@material-ui/core/styles";
 import { Route , Link} from 'react-router-dom'
+import Avatar from "@material-ui/core/Avatar";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import IconButton from "@material-ui/core/IconButton";
@@ -16,6 +17,7 @@ import MoreIcon from "@material-ui/icons/MoreVert";
 import FavoriteBorderOutlinedIcon from "@material-ui/icons/FavoriteBorderOutlined";
 import ShoppingCartOutlinedIcon from "@material-ui/icons/ShoppingCartOutlined";
 import Search from './Search'
+import { useDispatch, useSelector } from 'react-redux';
 
 const useStyles = makeStyles((theme) => ({
   grow: {
@@ -46,6 +48,9 @@ const useStyles = makeStyles((theme) => ({
 export default function PrimarySearchAppBar({history}) {
 
   const classes = useStyles();
+
+  const { loading, user, isAuthenticated } = useSelector(state => state.auth)
+  
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
 
@@ -85,8 +90,19 @@ export default function PrimarySearchAppBar({history}) {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
+      {isAuthenticated ?  
+       <React.Fragment>
+      <MenuItem onClick={handleMenuClose}><Link to={'/profil'}>Profil</Link></MenuItem>
+      <MenuItem onClick={handleMenuClose}><Link to={'/orders'}>Orders</Link></MenuItem>
+      {(user && user.role === 'admin')  &&
+      <MenuItem onClick={handleMenuClose}><Link to={'/dashboard'}>Dashboard</Link></MenuItem> }
+      </React.Fragment> 
+      :
+      <React.Fragment>
       <MenuItem onClick={handleMenuClose}><Link to={'/login'}>Login</Link></MenuItem>
       <MenuItem onClick={handleMenuClose}><Link to={'/register'}>Register</Link></MenuItem>
+      </React.Fragment> 
+ }
     </Menu>
   );
 
@@ -108,20 +124,10 @@ export default function PrimarySearchAppBar({history}) {
       onClose={handleMobileMenuClose}
     >
       <MenuItem>
-        <IconButton aria-label="show 4 new mails" color="inherit">
-          <Badge badgeContent={4} color="secondary">
-            <MailIcon />
-          </Badge>
-        </IconButton>
-        <p>Messages</p>
+     <p>Login</p>
       </MenuItem>
       <MenuItem>
-        <IconButton aria-label="show 11 new notifications" color="inherit">
-          <Badge badgeContent={11} color="secondary">
-            <NotificationsIcon />
-          </Badge>
-        </IconButton>
-        <p>Notifications</p>
+                <p>Register</p>
       </MenuItem>
       <MenuItem onClick={handleProfileMenuOpen}>
         <IconButton
@@ -130,7 +136,7 @@ export default function PrimarySearchAppBar({history}) {
           aria-haspopup="true"
           color="inherit"
         >
-          <AccountCircleOutlinedIcon />
+          { isAuthenticated ? <Avatar src={user.avatar.url} alt={`avatar-${user.name}`} />  : <AccountCircleOutlinedIcon /> }
         </IconButton>
         <p>User</p>
       </MenuItem>
@@ -174,7 +180,8 @@ export default function PrimarySearchAppBar({history}) {
               onClick={handleProfileMenuOpen}
               color="inherit"
             >
-              <AccountCircleOutlinedIcon />
+
+          { isAuthenticated ? <Avatar src={user.avatar.url} alt={`avatar-${user.name}`} />  : <AccountCircleOutlinedIcon /> }
             </IconButton>
 
             <IconButton aria-label="show 4 new mails" color="inherit">
