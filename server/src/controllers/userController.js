@@ -9,6 +9,11 @@ var cloudinary = require('cloudinary').v2;
 // register user => /api/v1/register
 exports.registerUser = catchErrorAsync(async (req, res, next) => {
   const { name, email, password } = req.body;
+
+   if (!name && !email && !password)
+    return next(createError.BadRequest("All fields are required"));
+
+  if(req.body.avatar) return next(createError.BadRequest("Upload avatars failed"));
  
   const result = await cloudinary.uploader.upload(req.body.avatar, {
     folder: "avatars",
@@ -59,7 +64,7 @@ exports.logoutUser = catchErrorAsync(async (req, res, next) => {
     message: "Logout",
   });
 });
-
+// get user profile  - api/v1/me  GET
 exports.getUserProfile = catchErrorAsync(async (req, res, next) => {
   const user = await User.findById(req.user.id);
 
