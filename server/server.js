@@ -2,8 +2,7 @@ const app = require("./app");
 const dotenv = require("dotenv");
 //const cors = require("cors");
 const logger = require("morgan");
-const cloudinary = require("cloudinary")
-
+var cloudinary = require('cloudinary').v2;
 // handle uncaught exeption
 process.on("uncaughtException", (error) => {
   console.log(`Error: ${error.message}`);
@@ -23,7 +22,7 @@ require("./config/database");
 
 // cloudinary config 
 cloudinary.config({ 
-  claud_name: process.env.CLAUDINARY_CLOUD_NAME,
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
   api_key: process.env.CLOUDINARY_API_KEY,
   api_secret: process.env.CLOUDINARY_SECRET_KEY
 })

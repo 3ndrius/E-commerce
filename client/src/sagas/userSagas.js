@@ -27,16 +27,9 @@ export function* loginUserSaga() {
 }
 
 function* registerUser(action) {
-  console.log(action, "saga");
-  const body = {
-    "avatar": action.payload.avatar,
-    "name": action.payload.name,
-    "email": action.payload.email,
-    "password": action.payload.password
-  };
   const config = { headers: { "Content-Type": "multipart/form-data" } };
   try {
-    const res = yield call(apiCall.post, "register", body, config);
+    const res = yield call(apiCall.post, "register",action.payload, config);
     yield put(requestRegisterUserSuccess(res));
   } catch (error) {
     yield put(requestRegisterUserFail(error));

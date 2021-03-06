@@ -6,17 +6,17 @@ const cookieParser = require('cookie-parser')
 const cors = require('cors')
 const bodyParser = require('body-parser')
 const fileUpload = require('express-fileupload')
-const CLIENT_BUILD_PATH = path.join(__dirname, "../client/build")
+// const CLIENT_BUILD_PATH = path.join(__dirname, "../client/build")
 
-app.use(express.static(CLIENT_BUILD_PATH))
+// app.use(express.static(CLIENT_BUILD_PATH))
 app.use(express.json())
 app.use(cookieParser())
 app.use(cors({origin: "http://localhost:3000", credentials: true}));
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(fileUpload())
-app.get("/", function (req, res) {
-  res.sendFile(path.join(CLIENT_BUILD_PATH, "index.html"))
-})
+// app.get("/", function (req, res) {
+//   res.sendFile(path.join(CLIENT_BUILD_PATH, "index.html"))
+// })
 
 // routes imports
 const products = require("./src/routes/product")

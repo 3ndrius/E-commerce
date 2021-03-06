@@ -1,17 +1,16 @@
 
 
 POST http://localhost:8080/api/v1/register
-content-type: application/json
+content-type: multipart/form-data
 
 {
- "name": "RaphalJunior",
- "email": "rpaJudnior@gmail.com",
+ "name": "RaphaldJunior",
+ "email": "rpaJor@gmail.com",
  "password": "justpassword",
  "avatar": {
-     "public_id": "fhfhsdfhsdhf",
+    
      "url": "jfdjfsjk"
- }                                  
-
+ }  
 }  
 ###
 // regular user
