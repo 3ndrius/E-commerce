@@ -27,7 +27,9 @@ export function* loginUserSaga() {
 }
 
 function* registerUser(action) {
+  console.log(action, "saga");
   const body = {
+    "avatar": action.payload.avatar,
     "name": action.payload.name,
     "email": action.payload.email,
     "password": action.payload.password
@@ -42,5 +44,5 @@ function* registerUser(action) {
 }
 
 export function* registerUserSaga() {
-    takeEvery("REGISTER_REQUEST", registerUser)
+    yield takeEvery("REGISTER_REQUEST", registerUser)
 }

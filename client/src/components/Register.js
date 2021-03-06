@@ -8,11 +8,13 @@ import Checkbox from '@material-ui/core/Checkbox';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
+import { useDispatch, useSelector } from 'react-redux';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import { Link } from 'react-router-dom'
 import { makeStyles } from "@material-ui/core/styles";
-
+import { toast } from 'react-toastify'
+import { requestRegisterUser } from '../actions/userActions'
  const useStyles = makeStyles((theme) => ({
         input: {
 
@@ -22,11 +24,42 @@ import { makeStyles } from "@material-ui/core/styles";
 
         }
     }))
-export default function SignUp() {
+export default function SignUp({ history }) {
  const classes = useStyles();  
- const onChange = () => {
+ const [user, setUser] = React.useState({name: '', email:'', password: '', avatar: null})
+
+ const dispatch = useDispatch();
+ const { error, isAuthenticated, loading } = useSelector(state => state.auth);
+
+
+ const onChange = (e) => {
+   const reader = new FileReader();
+   reader.onload = () => {
+     if(reader.readyState === 2) 
+     {
+       setUser({...user, avatar:reader.result})
+     }
+   }
+   reader.readAsDataURL(e.target.files[0])
 
  }
+ const handleRegister = (e) => {
+   e.preventDefault();
+   console.log("click");
+    dispatch(requestRegisterUser(user))
+
+ }
+ React.useEffect(() => {
+   if(error) toast.error(error);
+
+   if(isAuthenticated) history.push('/')
+ }, [dispatch])
+
+ const handleForm = (e) => {
+  setUser({...user, [e.target.id]: e.target.value})
+  console.log(user);
+ }
+ 
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
@@ -59,12 +92,13 @@ export default function SignUp() {
                 name="firstName"
                 required
                 fullWidth
-                id="firstName"
+                id="name"
+                onChange={handleForm}
                 label="First Name"
                 autoFocus
               />
             </Grid>
-            <Grid item xs={12} sm={6}>
+            {/* <Grid item xs={12} sm={6}>
               <TextField
                 required
                 fullWidth
@@ -73,11 +107,12 @@ export default function SignUp() {
                 name="lastName"
                 autoComplete="lname"
               />
-            </Grid>
+            </Grid> */}
             <Grid item xs={12}>
               <TextField
                 required
                 fullWidth
+                onChange={handleForm}
                 id="email"
                 label="Email Address"
                 name="email"
@@ -91,11 +126,12 @@ export default function SignUp() {
                 name="password"
                 label="Password"
                 type="password"
+                onChange={handleForm}
                 id="password"
                 autoComplete="current-password"
               />
             </Grid>
-            <Grid xs={6}>
+            <Grid item xs={6}>
     <input
           color="primary"
           accept="image/*"
@@ -115,16 +151,16 @@ export default function SignUp() {
                           </Button>
         </label>
             </Grid>
-            <Grid xs={6}>
+            <Grid item xs={6}>
  <Avatar
         alt="Remy Sharp"
-        src="/static/images/avatar/1.jpg"
+        src={user.avatar}
         className={classes.large}
       />
 
             </Grid>
           </Grid>
-          <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
+          <Button type="submit" onClick={handleRegister} fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
             Sign Up
           </Button>
           <Grid container justifyContent="flex-end">

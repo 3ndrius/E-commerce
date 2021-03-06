@@ -11,10 +11,10 @@ process.on("uncaughtException", (error) => {
   process.exit(1);
 });
 
-// const cookieParser = require('cookie-parser');
+ const cookieParser = require('cookie-parser');
 
 // Configuration
-//app.use(logger("dev"));
+app.use(logger("dev"));
 //app.use(cors()); // app.use(cors({origin: "http://localhost:3000", credentials: true}));
 
 // database import

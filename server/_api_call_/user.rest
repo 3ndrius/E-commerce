@@ -6,7 +6,11 @@ content-type: application/json
 {
  "name": "RaphalJunior",
  "email": "rpaJudnior@gmail.com",
- "password": "justpassword"
+ "password": "justpassword",
+ "avatar": {
+     "public_id": "fhfhsdfhsdhf",
+     "url": "jfdjfsjk"
+ }                                  
 
 }  
 ###
