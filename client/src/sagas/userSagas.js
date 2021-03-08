@@ -6,12 +6,15 @@ import {
   requestRegisterUserFail,
   requestRegisterUserSuccess,
   requestLoadUserFail,
-  requetLoadUserSuccess,
+  requestLoadUserSuccess,
+  requestLogoutUserFail,
+  requestLogoutUserSuccess
 } from "../actions/userActions";
 import {
   LOGIN_REQUEST,
   REGISTER_REQUEST,
   LOAD_USER_REQUEST,
+  LOGOUT_REQUEST
 } from "../constants/userConstants";
 
 import apiCall from "../helpers/apiCall";
@@ -50,7 +53,7 @@ export function* registerUserSaga() {
 function* loadUser() {
   try {
     const res = yield call(apiCall.get, "me");
-    yield put(requestLoginUserSuccess(res));
+    yield put(requestLoadUserSuccess(res));
   } catch (error) {
     yield put(requestLoadUserFail(error));
   }
@@ -58,4 +61,17 @@ function* loadUser() {
 
 export function* loadUserSaga() {
   yield takeEvery("LOAD_USER_REQUEST", loadUser);
+}
+
+function* logoutUser() {
+  console.log("saga click");
+  try {
+    yield call(apiCall.get, 'logout');
+    yield put(requestLogoutUserSuccess());
+  } catch (error) {
+    yield put(requestLogoutUserFail(error))
+  }
+}
+export function* logoutUserSaga() {
+  yield takeEvery("LOGOUT_REQUEST", logoutUser)
 }

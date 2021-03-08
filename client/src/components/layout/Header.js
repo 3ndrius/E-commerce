@@ -18,6 +18,7 @@ import FavoriteBorderOutlinedIcon from "@material-ui/icons/FavoriteBorderOutline
 import ShoppingCartOutlinedIcon from "@material-ui/icons/ShoppingCartOutlined";
 import Search from './Search'
 import { useDispatch, useSelector } from 'react-redux';
+import { requestLogoutUser } from '../../actions/userActions'
 
 const useStyles = makeStyles((theme) => ({
   grow: {
@@ -48,7 +49,7 @@ const useStyles = makeStyles((theme) => ({
 export default function PrimarySearchAppBar({history}) {
 
   const classes = useStyles();
-
+  const dispatch = useDispatch();
   const { loading, user, isAuthenticated } = useSelector(state => state.auth)
   
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -64,6 +65,9 @@ export default function PrimarySearchAppBar({history}) {
     setMobileMoreAnchorEl(null);
   };
 
+  const handleClick = () => {
+    dispatch(requestLogoutUser())
+  }
   const handleMenuClose = () => {
     setAnchorEl(null);
     handleMobileMenuClose();
@@ -72,8 +76,7 @@ export default function PrimarySearchAppBar({history}) {
   const handleMobileMenuOpen = (event) => {
     setMobileMoreAnchorEl(event.currentTarget);
   };
-
-  const menuId = "primary-search-account-menu";
+   const menuId = "primary-search-account-menu";
   const renderMenu = (
     <Menu
       anchorEl={anchorEl}
@@ -94,6 +97,7 @@ export default function PrimarySearchAppBar({history}) {
        <React.Fragment>
       <MenuItem onClick={handleMenuClose}><Link to={'/profil'}>Profil</Link></MenuItem>
       <MenuItem onClick={handleMenuClose}><Link to={'/orders'}>Orders</Link></MenuItem>
+      <MenuItem onClick={handleMenuClose} onClick={handleClick}>Logout</MenuItem>
       {(user && user.role === 'admin')  &&
       <MenuItem onClick={handleMenuClose}><Link to={'/dashboard'}>Dashboard</Link></MenuItem> }
       </React.Fragment> 
