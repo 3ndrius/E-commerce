@@ -13,6 +13,7 @@ import MenuIcon from "@material-ui/icons/Menu";
 import MailIcon from "@material-ui/icons/Mail";
 import AccountCircleOutlinedIcon from "@material-ui/icons/AccountCircleOutlined";
 import NotificationsIcon from "@material-ui/icons/Notifications";
+import Box from "@material-ui/core/Box"
 import MoreIcon from "@material-ui/icons/MoreVert";
 import FavoriteBorderOutlinedIcon from "@material-ui/icons/FavoriteBorderOutlined";
 import ShoppingCartOutlinedIcon from "@material-ui/icons/ShoppingCartOutlined";
@@ -94,18 +95,18 @@ export default function PrimarySearchAppBar({history}) {
       onClose={handleMenuClose}
     >
       {isAuthenticated ?  
-       <React.Fragment>
+    <Box>
       <MenuItem onClick={handleMenuClose}><Link to={'/profil'}>Profil</Link></MenuItem>
       <MenuItem onClick={handleMenuClose}><Link to={'/orders'}>Orders</Link></MenuItem>
       <MenuItem onClick={handleMenuClose} onClick={handleClick}>Logout</MenuItem>
       {(user && user.role === 'admin')  &&
       <MenuItem onClick={handleMenuClose}><Link to={'/dashboard'}>Dashboard</Link></MenuItem> }
-      </React.Fragment> 
+      </Box>
       :
-      <React.Fragment>
+      <Box>
       <MenuItem onClick={handleMenuClose}><Link to={'/login'}>Login</Link></MenuItem>
       <MenuItem onClick={handleMenuClose}><Link to={'/register'}>Register</Link></MenuItem>
-      </React.Fragment> 
+    </Box>
  }
     </Menu>
   );
