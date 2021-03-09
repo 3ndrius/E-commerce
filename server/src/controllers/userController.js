@@ -4,29 +4,29 @@ const catchErrorAsync = require("../../middlewares/catchErrorAsync");
 const sendToken = require("../../utils/jwtToken");
 const sendEmail = require("../../utils/sendEmail");
 const crypto = require("crypto");
-var cloudinary = require('cloudinary').v2;
+var cloudinary = require("cloudinary").v2;
 
 // register user => /api/v1/register
 exports.registerUser = catchErrorAsync(async (req, res, next) => {
   const { name, email, password } = req.body;
 
-   if (!name && !email && !password)
+  if (!name && !email && !password)
     return next(createError.BadRequest("All fields are required"));
- 
+
   const result = await cloudinary.uploader.upload(req.body.avatar, {
     folder: "avatars",
-     width: 150,
-     crop: 'scale'
+    width: 150,
+    crop: "scale",
   });
-  
+
   const user = await User.create({
     name,
     email,
     password,
     avatar: {
       public_id: result.public_id,
-      url:result.secure_url
-    }
+      url: result.secure_url,
+    },
   });
   sendToken(user, 200, res);
 });
@@ -86,11 +86,25 @@ exports.updatePassword = catchErrorAsync(async (req, res, next) => {
 //update profile
 
 exports.updateProfile = catchErrorAsync(async (req, res, next) => {
-  console.log(req.body.email);
   const newProfile = {
     name: req.body.name,
     email: req.body.email,
   };
+  if (req.body.avatar !== "") {
+    const user = await User.findById(req.user.id);
+    const image_id = user.avatar.public_id;
+    const response = await cloudinary.uploader.destroy(image_id);
+    const result = await cloudinary.uploader.upload(req.body.avatar, {
+      folder: "avatars",
+      width: 150,
+      crop: "scale",
+    });
+    newProfile.avatar = {
+      public_id: result.public_id,
+      url: result.secure_url,
+    };
+  }
+
   const user = await User.findByIdAndUpdate(req.user.id, newProfile, {
     new: true,
     runValidators: true,
