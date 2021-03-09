@@ -98,7 +98,7 @@ export default function PrimarySearchAppBar({history}) {
     >
       {isAuthenticated ?  
     <Box>
-      <MenuItem onClick={handleMenuClose}><Link to={'/profil'}>Profil</Link></MenuItem>
+      <MenuItem onClick={handleMenuClose}><Link to={'/profile'}>Profile</Link></MenuItem>
       <MenuItem onClick={handleMenuClose}><Link to={'/orders'}>Orders</Link></MenuItem>
       {(user && user.role === 'admin')  &&
       <MenuItem onClick={handleMenuClose}><Link to={'/dashboard'}>Dashboard</Link></MenuItem> }
