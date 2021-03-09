@@ -64,7 +64,6 @@ export function* loadUserSaga() {
 }
 
 function* logoutUser() {
-  console.log("saga click");
   try {
     yield call(apiCall.get, 'logout');
     yield put(requestLogoutUserSuccess());

@@ -20,6 +20,7 @@ import ShoppingCartOutlinedIcon from "@material-ui/icons/ShoppingCartOutlined";
 import Search from './Search'
 import { useDispatch, useSelector } from 'react-redux';
 import { requestLogoutUser } from '../../actions/userActions'
+import { toast } from 'react-toastify'
 
 const useStyles = makeStyles((theme) => ({
   grow: {
@@ -66,8 +67,9 @@ export default function PrimarySearchAppBar({history}) {
     setMobileMoreAnchorEl(null);
   };
 
-  const handleClick = () => {
+  const handleLogout = () => {
     dispatch(requestLogoutUser())
+    toast.success("Logout success");
   }
   const handleMenuClose = () => {
     setAnchorEl(null);
@@ -98,9 +100,9 @@ export default function PrimarySearchAppBar({history}) {
     <Box>
       <MenuItem onClick={handleMenuClose}><Link to={'/profil'}>Profil</Link></MenuItem>
       <MenuItem onClick={handleMenuClose}><Link to={'/orders'}>Orders</Link></MenuItem>
-      <MenuItem onClick={handleMenuClose} onClick={handleClick}>Logout</MenuItem>
       {(user && user.role === 'admin')  &&
       <MenuItem onClick={handleMenuClose}><Link to={'/dashboard'}>Dashboard</Link></MenuItem> }
+      <MenuItem onClick={handleMenuClose} onClick={handleLogout}>Logout</MenuItem>
       </Box>
       :
       <Box>
@@ -129,21 +131,41 @@ export default function PrimarySearchAppBar({history}) {
       onClose={handleMobileMenuClose}
     >
       <MenuItem>
-     <p>Login</p>
+      
+      <IconButton
+          color="inherit"
+          >
+             <Badge badgeContent={17} color="secondary">
+                <FavoriteBorderOutlinedIcon />
+              </Badge>
+        </IconButton>
+              <Typography variant="paragraph">
+                Favorites
+              </Typography>
+            
       </MenuItem>
+
       <MenuItem>
-                <p>Register</p>
-      </MenuItem>
+      <IconButton
+          color="inherit"
+          >
+            <Badge badgeContent={4} color="secondary">
+                <ShoppingCartOutlinedIcon />
+              </Badge>
+        </IconButton>
+              <Typography variant="paragraph">
+                ShopCart
+              </Typography>
+            </MenuItem>
       <MenuItem onClick={handleProfileMenuOpen}>
         <IconButton
-          aria-label="account of current user"
-          aria-controls="primary-search-account-menu"
-          aria-haspopup="true"
           color="inherit"
-        >
-          { isAuthenticated ? <Avatar src={user.avatar.url} alt={`avatar-${user.name}`} />  : <AccountCircleOutlinedIcon /> }
+          >
+             { isAuthenticated ? <Avatar src={user.avatar.url} alt={`avatar-${user.name}`} />  : <AccountCircleOutlinedIcon /> }
         </IconButton>
-        <p>User</p>
+          <Typography variant="paragraph">
+            Account
+          </Typography>
       </MenuItem>
     </Menu>
   );
