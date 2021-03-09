@@ -10,10 +10,11 @@ import Box from "@material-ui/core/Box";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import Container from "@material-ui/core/Container";
-import { requestLoginUser } from "../actions/userActions";
+import { requestLoginUser, clearErrors } from "../actions/userActions";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { Link } from 'react-router-dom'
+
 const Login = ({ history }) => {
   const [user, setUser] = React.useState({ email: "", password: "" });
   const { error, loading, isAuthenticated } = useSelector(
@@ -24,7 +25,7 @@ const Login = ({ history }) => {
   React.useEffect(() => {
     if (isAuthenticated) history.push("/");
 
-    if (error) toast.error(error);
+    if (error) {toast.error(error); dispatch(clearErrors())}
   }, [error, loading, isAuthenticated, toast, dispatch]);
   
   const handleChange = (e) => {

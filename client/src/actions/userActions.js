@@ -16,3 +16,12 @@ export const requestLoadUserFail = (error) => ({type: types.LOAD_USER_FAIL, payl
 export const requestLogoutUser = () => ({type: types.LOGOUT_REQUEST})
 export const requestLogoutUserSuccess = () => ({type: types.LOGOUT_SUCCESS})
 export const requestLogoutUserFail = (error) => ({type: types.LOGOUT_FAIL, payload: error})
+
+export const requestUpdateUserProfile = (user) => ({type: types.UPDATE_USER_PROFILE, payload: user});
+export const requestUpdateUserProfileSuccess = (success) => ({type: types.UPDATE_USER_PROFILE_SUCCESS, payload: success})
+export const requestUpdateUserProfileReset = () => ({type: types.UPDATE_USER_PROFILE_RESET})
+export const requestUpdateUserProfileFail = (error) => ({type: types.UPDATE_USER_PROFILE_FAIL, payload: error})
+
+
+
+export const clearErrors = () => ({type: types.CLEAR_ERROR})

@@ -11,9 +11,13 @@ import {
   LOAD_USER_FAIL,
   LOGOUT_SUCCESS,
   LOGOUT_FAIL,
+  UPDATE_USER_PROFILE,
+  UPDATE_USER_PROFILE_SUCCESS,
+  UPDATE_USER_PROFILE_RESET,
+  UPDATE_USER_PROFILE_FAIL,
 } from "../constants/userConstants";
-
-export const authReducer = (state = {}, action) => {
+const initialState = {};
+export const authReducer = (state = initialState, action) => {
   switch (action.type) {
     case LOGIN_REQUEST:
     case REGISTER_REQUEST:
@@ -22,7 +26,7 @@ export const authReducer = (state = {}, action) => {
         ...state,
         loading: true,
         isAuthenticated: false,
-        error: null
+        error: null,
       };
     case LOGIN_SUCCESS:
     case REGISTER_SUCCESS:
@@ -35,38 +39,63 @@ export const authReducer = (state = {}, action) => {
       };
     case LOGIN_FAIL:
     case REGISTER_FAIL:
+    case LOAD_USER_FAIL:
       return {
         ...state,
         loading: false,
         isAuthenticated: false,
-        error: action.payload.message
+        error: action.payload,
       };
-      case LOAD_USER_FAIL:
-        return {
-          ...state,
-          loading: false,
-          isAuthenticated: false,
-          error: null
-        }
-        case LOGOUT_SUCCESS: 
-        return {
-          ...state,
-          user: null,
-          loading: false,
-          isAuthenticated: false,
-          error: null
-        }
-        case LOGOUT_FAIL:
-          return {
-            ...state,
-            loading: false,
-            error: action.payload.message
-          }
+    case LOGOUT_SUCCESS:
+      return {
+        ...state,
+        user: null,
+        loading: false,
+        isAuthenticated: false,
+        error: null,
+      };
+    case LOGOUT_FAIL:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload.message,
+      };
     case CLEAR_ERROR:
       return {
         ...state,
         error: null,
       };
+    default:
+      return state;
+  }
+};
+
+export const userReducer = (state = {}, action) => {
+  switch (action.type) {
+    case "UPDATE_USER_PROFILE":
+      return {
+        ...state,
+        loading: true,
+      };
+    case "UPDATE_USER_PROFILE_SUCCESS":
+      return {
+        ...state,
+        loading: false,
+        isUpdated: action.payload.data.success,
+      };
+    case "UPDATE_USER_PROFILE_RESET":
+      return {
+        ...state,
+        isUpdated: false,
+      };
+
+    case "UPDATE_USER_PROFILE_FAIL":
+      return {
+        ...state,
+        loading: false,
+        error: action.payload,
+      };
+
     default:
       return state;
   }

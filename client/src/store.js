@@ -5,11 +5,12 @@ import { composeWithDevTools } from 'redux-devtools-extension'
 // imports
 import rootSaga from "./sagas";
 import { singleProductReducer, productReducer } from './reducers/productReducers'
-import { authReducer } from './reducers/userReducres'
+import { authReducer, userReducer } from './reducers/userReducres'
 const reducer = combineReducers({
   products: productReducer,
   product: singleProductReducer,
   auth: authReducer,
+  user: userReducer
 });
 
 const sagaMiddleware = createSagaMiddleware();

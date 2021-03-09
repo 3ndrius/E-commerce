@@ -8,6 +8,8 @@ import Avatar from '@material-ui/core/Avatar';
 import Container from '@material-ui/core/Container';
 import Button from '@material-ui/core/Button';
 import { useSelector } from 'react-redux';
+import { toast } from 'react-toastify'
+import { Link } from 'react-router-dom'
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -28,9 +30,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function CSSGrid() {
+export default function Profile() {
   const classes = useStyles();
-    const { user, isAuthenticated, loading } = useSelector(state => state.auth);
+    const { user } = useSelector(state => state.auth);
 
   return (
     <Container>
@@ -54,7 +56,7 @@ export default function CSSGrid() {
           </Paper>
         </Grid>
         <Grid item xs={6} my={2}>
-          <Button color="primary" variant="contained">Update profil</Button>
+          <Link to="/profile/update" ><Button color="primary" variant="contained">Update profil</Button></Link>
         </Grid>
         <Grid item xs={6} my={2}>
          {( user && user.role !== 'admin') &&  <Button variant="contained" mr={2} color="primary">My orders</Button>}

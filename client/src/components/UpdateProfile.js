@@ -14,23 +14,29 @@ import Container from "@material-ui/core/Container";
 import { Link } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import { toast } from "react-toastify";
-import { requestRegisterUser, clearErrors } from "../actions/userActions";
+import {
+  requestUpdateUserProfile,
+  clearErrors,
+  requestLoadUser,
+  requestUpdateUserProfileReset,
+} from "../actions/userActions";
 const useStyles = makeStyles((theme) => ({
   large: {
     width: theme.spacing(7),
     height: theme.spacing(7),
   },
 }));
-export default function SignUp({ history }) {
+export default function ProfileUpdate({ history }) {
   const classes = useStyles();
 
-  const [user, setUser] = React.useState({ name: "", email: "", password: "" });
-  const [avatar, setAvatar] = React.useState(null);
+  const { user } = useSelector((state) => state.auth);
+  const { isUpdated, loading, error } = useSelector((state) => state.user);
+
+  const [name, setName] = React.useState("");
+  const [email, setEmail] = React.useState("");
+  const [avatar, setAvatar] = React.useState("");
 
   const dispatch = useDispatch();
-  const { error, isAuthenticated, loading } = useSelector(
-    (state) => state.auth
-  );
 
   const onChange = (e) => {
     const reader = new FileReader();
@@ -41,30 +47,35 @@ export default function SignUp({ history }) {
     };
     reader.readAsDataURL(e.target.files[0]);
   };
-  const handleForm = (e) => {
-    setUser({ ...user, [e.target.id]: e.target.value });
-  };
-
-  const handleRegister = (e) => {
+  const handleUpdate = (e) => {
     e.preventDefault();
     const formData = new FormData();
-    formData.set("name", user.name);
-    formData.set("email", user.email);
+    formData.set("name", name);
+    formData.set("email", email);
     formData.set("password", user.password);
     formData.set("avatar", avatar);
-    dispatch(requestRegisterUser(formData));
+    dispatch(requestUpdateUserProfile(formData));
   };
   React.useEffect(() => {
+    if (user) {
+      setName(user.name);
+      setEmail(user.email);
+      setAvatar(user.avatar.url);
+    }
     if (error) {
-      toast.error(error);
+      toast.error("Fail to update profile");
       dispatch(clearErrors());
     }
-
-    if (isAuthenticated) history.push("/");
-  }, [dispatch, isAuthenticated, toast, error]);
+    if (isUpdated) {
+      toast.success("Profile updated successfully");
+      dispatch(requestLoadUser());
+      history.push("/profile");
+      dispatch(requestUpdateUserProfileReset());
+    }
+  }, [dispatch, toast, error, history, isUpdated]);
 
   return (
-    <Container component="main" maxWidth="xs">
+    <Container component="main" maxWidth="sm">
       <CssBaseline />
       <Box
         sx={{
@@ -78,7 +89,7 @@ export default function SignUp({ history }) {
           <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
-          Sign up
+          Update Profile
         </Typography>
         <Box
           component="form"
@@ -89,56 +100,38 @@ export default function SignUp({ history }) {
           }}
         >
           <Grid container spacing={2}>
-            <Grid item xs={12} sm={6}>
+            <Grid item xs={12} sm={12}>
               <TextField
                 autoComplete="fname"
                 name="firstName"
                 required
                 fullWidth
                 id="name"
-                onChange={handleForm}
+                onChange={(e) => setName(e.target.value)}
                 label="First Name"
                 autoFocus
+                value={name}
               />
             </Grid>
-            {/* <Grid item xs={12} sm={6}>
-              <TextField
-                required
-                fullWidth
-                id="lastName"
-                label="Last Name"
-                name="lastName"
-                autoComplete="lname"
-              />
-            </Grid> */}
+
             <Grid item xs={12}>
               <TextField
                 required
                 fullWidth
-                onChange={handleForm}
+                onChange={(e) => setEmail(e.target.value)}
                 id="email"
                 label="Email Address"
                 name="email"
+                value={email}
                 autoComplete="email"
               />
             </Grid>
-            <Grid item xs={12}>
-              <TextField
-                required
-                fullWidth
-                name="password"
-                label="Password"
-                type="password"
-                onChange={handleForm}
-                id="password"
-                autoComplete="current-password"
-              />
-            </Grid>
-            <Grid item xs={6}>
+            <Grid item xs={12} md={5}>
               <input
                 color="primary"
                 accept="image/*"
                 type="file"
+                src={avatar}
                 onChange={onChange}
                 id="icon-button-file"
                 style={{ display: "none" }}
@@ -156,27 +149,23 @@ export default function SignUp({ history }) {
                 </Button>
               </label>
             </Grid>
-            <Grid item xs={6}>
-              <Avatar alt="Remy Sharp" src={avatar} className={classes.large} />
+            <Grid item xs={12} md={7}>
+              <Avatar
+                alt="Remy Sharp"
+                src={avatar}
+                style={{ height: "300px", width: "300px" }}
+              />
             </Grid>
           </Grid>
           <Button
             type="submit"
-            onClick={handleRegister}
+            onClick={handleUpdate}
             fullWidth
             variant="contained"
             sx={{ mt: 3, mb: 2 }}
-            disabled={loading ? true : false}
           >
-            Sign Up
+            Update
           </Button>
-          <Grid container justifyContent="flex-end">
-            <Grid item>
-              <Link to={"/login"} variant="body2">
-                Already have an account? Sign in
-              </Link>
-            </Grid>
-          </Grid>
         </Box>
       </Box>
     </Container>

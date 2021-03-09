@@ -8,13 +8,16 @@ import {
   requestLoadUserFail,
   requestLoadUserSuccess,
   requestLogoutUserFail,
-  requestLogoutUserSuccess
+  requestLogoutUserSuccess,
+  requestUpdateUserProfileSuccess,
+  requestUpdateUserProfileFail,
 } from "../actions/userActions";
 import {
   LOGIN_REQUEST,
   REGISTER_REQUEST,
   LOAD_USER_REQUEST,
-  LOGOUT_REQUEST
+  LOGOUT_REQUEST,
+  UPDATE_USER_PROFILE,
 } from "../constants/userConstants";
 
 import apiCall from "../helpers/apiCall";
@@ -29,7 +32,7 @@ function* loginUser(action) {
     const res = yield call(apiCall.post, "login", body, config);
     yield put(requestLoginUserSuccess(res));
   } catch (error) {
-    yield put(requestLoginUserFail(error));
+    yield put(requestLoginUserFail(error.response.data.message));
   }
 }
 export function* loginUserSaga() {
@@ -42,7 +45,7 @@ function* registerUser(action) {
     const res = yield call(apiCall.post, "register", action.payload, config);
     yield put(requestRegisterUserSuccess(res));
   } catch (error) {
-    yield put(requestRegisterUserFail(error));
+    yield put(requestRegisterUserFail(error.response.data.message));
   }
 }
 
@@ -55,7 +58,8 @@ function* loadUser() {
     const res = yield call(apiCall.get, "me");
     yield put(requestLoadUserSuccess(res));
   } catch (error) {
-    yield put(requestLoadUserFail(error));
+    console.log(error.response.data.message);
+    yield put(requestLoadUserFail(error.response.data.message));
   }
 }
 
@@ -65,12 +69,25 @@ export function* loadUserSaga() {
 
 function* logoutUser() {
   try {
-    yield call(apiCall.get, 'logout');
+    yield call(apiCall.get, "logout");
     yield put(requestLogoutUserSuccess());
   } catch (error) {
-    yield put(requestLogoutUserFail(error))
+    yield put(requestLogoutUserFail(error.response.data.message));
   }
 }
 export function* logoutUserSaga() {
-  yield takeEvery("LOGOUT_REQUEST", logoutUser)
+  yield takeEvery("LOGOUT_REQUEST", logoutUser);
+}
+
+function* updateUser(action) {
+  const config = { headers: { "Content-Type": "multipart/form-data" } };
+  try {
+    const res = yield call(apiCall.put, "me/update", action.payload, config);
+    yield put(requestUpdateUserProfileSuccess(res));
+  } catch (error) {
+    yield put(requestUpdateUserProfileFail(error.response.data.message));
+  }
+}
+export function* updateUserSaga() {
+  yield takeEvery("UPDATE_USER_PROFILE", updateUser);
 }
