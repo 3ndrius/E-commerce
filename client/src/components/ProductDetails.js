@@ -52,6 +52,7 @@ export default function SingleProduct(props) {
 
   const handleAddItem = () => {
     dispatch(requestAddToCart(id, currentQuantity))
+    toast.success("Product added to cart successfully")
   }
 
   React.useEffect(() => {
@@ -145,7 +146,7 @@ export default function SingleProduct(props) {
               </Grid>
 
               <Grid item xs={7}>
-                <Button color="secondary" fullWidth variant="contained" onClick={handleAddItem}>
+                <Button color="secondary" fullWidth variant="contained" disabled={product?.stock > 0 ? false : true} onClick={handleAddItem}>
                   Buy
                 </Button>
               </Grid>
