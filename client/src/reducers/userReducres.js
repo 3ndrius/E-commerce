@@ -31,34 +31,40 @@ const initialState = {};
 
 export const authReducer = (state = initialState, action) => {
   switch (action.type) {
-    case LOGIN_REQUEST:
-    case REGISTER_REQUEST:
-    case LOAD_USER_REQUEST:
+    case "LOGIN_REQUEST":
+    case "REGISTER_REQUEST":
+    case "LOAD_USER_REQUEST":
       return {
         ...state,
         loading: true,
         isAuthenticated: false,
         error: null,
       };
-    case LOGIN_SUCCESS:
-    case REGISTER_SUCCESS:
-    case LOAD_USER_SUCCESS:
+    case "LOGIN_SUCCESS":
+    case "REGISTER_SUCCESS":
+    case "LOAD_USER_SUCCESS":
       return {
         ...state,
         loading: false,
         isAuthenticated: true,
         user: action.payload.data.user,
       };
-    case LOGIN_FAIL:
-    case REGISTER_FAIL:
-    case LOAD_USER_FAIL:
+    case "LOGIN_FAIL":
+    case "REGISTER_FAIL":
       return {
         ...state,
         loading: false,
         isAuthenticated: false,
         error: action.payload,
       };
-    case LOGOUT_SUCCESS:
+    case "LOAD_USER_FAIL":
+      return {
+        ...state,
+        loading: false,
+        isAuthenticated: false,
+        user: null
+      }
+    case "LOGOUT_SUCCESS":
       return {
         ...state,
         user: null,
@@ -66,13 +72,13 @@ export const authReducer = (state = initialState, action) => {
         isAuthenticated: false,
         error: null,
       };
-    case LOGOUT_FAIL:
+    case "LOGOUT_FAIL":
       return {
         ...state,
         loading: false,
         error: action.payload.message,
       };
-    case CLEAR_ERROR:
+    case "CLEAR_ERROR":
       return {
         ...state,
         error: null,

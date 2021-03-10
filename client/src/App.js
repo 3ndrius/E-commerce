@@ -4,7 +4,6 @@ import { ThemeProvider } from "@material-ui/styles";
 import { theme } from "./theme/customTheme";
 import { requestLoadUser, clearErrors } from './actions/userActions'
 import store from './store'
-import { useDispatch, useSelector } from 'react-redux';
 import ProtectedRoute from "./components/route/ProtectedRoute"
 import Header from "./components/layout/Header";
 const Home = (lazy(() => (import('./components/Home'))))
@@ -19,10 +18,9 @@ const PasswordReset = (lazy(() => (import('./components/PasswordReset'))))
 
 function App() {
 
-  const dispatch = useDispatch();
   React.useEffect(() => {
     store.dispatch(requestLoadUser())
-  },[dispatch])
+  },[])
   return (
       <ThemeProvider theme={theme}>
         <Header />

@@ -67,7 +67,6 @@ function* loadUser() {
     const res = yield call(apiCall.get, "me");
     yield put(requestLoadUserSuccess(res));
   } catch (error) {
-    console.log(error.response.data.message);
     yield put(requestLoadUserFail(error.response.data.message));
   }
 }
