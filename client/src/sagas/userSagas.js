@@ -15,6 +15,8 @@ import {
   requestUpdateUserPasswordFail,
   requestPasswordForgotSuccess,
   requestPasswordForgotFail,
+  requestPasswordResetSuccess,
+  requestPasswordResetFail,
 } from "../actions/userActions";
 import {
   LOGIN_REQUEST,
@@ -24,6 +26,7 @@ import {
   UPDATE_USER_PROFILE,
   UPDATE_USER_PASSWORD,
   PASSWORD_FORGOT,
+  PASSWORD_RESET,
 } from "../constants/userConstants";
 
 import apiCall from "../helpers/apiCall";
@@ -129,4 +132,26 @@ function* passwordForgot(action) {
 }
 export function* passwordForgotSaga() {
   yield takeEvery("PASSWORD_FORGOT", passwordForgot);
+}
+
+function* passwordReset(action) {
+  const config = { headers: { "Content-Type": "application/json" } };
+  const body = {
+    password: action.payload.password,
+    confirmPassword: action.payload.confirmPassword,
+  };
+  try {
+    const res = yield call(
+      apiCall.put,
+      `password/reset/${action.payload.token}`,
+      body,
+      config
+    );
+    yield put(requestPasswordResetSuccess(res));
+  } catch (error) {
+    yield put(requestPasswordResetFail(error.response.data.message));
+  }
+}
+export function* passwordResetSaga() {
+  yield takeEvery("PASSWORD_RESET", passwordReset);
 }

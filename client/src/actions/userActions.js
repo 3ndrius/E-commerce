@@ -31,6 +31,9 @@ export const requestPasswordForgot = (email) => ({type: types.PASSWORD_FORGOT, p
 export const requestPasswordForgotSuccess = (message) => ({type: types.PASSWORD_FORGOT_SUCCESS, payload: message})
 export const requestPasswordForgotFail = (error) => ({type: types.PASSWORD_FORGOT_FAIL, payload: error})
 
+export const requestPasswordReset = (user) => ({type: types.PASSWORD_RESET, payload:user})
+export const requestPasswordResetSuccess = (message) => ({type: types.PASSWORD_RESET_SUCCESS, payload: message})
+export const requestPasswordResetFail = (error) => ({type: types.PASSWORD_RESET_FAIL, payload: error})
 
 
 export const clearErrors = () => ({type: types.CLEAR_ERROR})

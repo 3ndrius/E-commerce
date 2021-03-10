@@ -15,8 +15,10 @@ const  Profile= (lazy(() => (import('./components/Profile'))))
 const ProfileUpdate = (lazy(() => (import('./components/UpdateProfile'))))
 const UpdatePassword = (lazy(() => (import('./components/UpdatePassword'))))
 const PasswordForgot = (lazy(() => (import('./components/PasswordForgot'))))
+const PasswordReset = (lazy(() => (import('./components/PasswordReset'))))
 
 function App() {
+
   const dispatch = useDispatch();
   React.useEffect(() => {
     store.dispatch(requestLoadUser())
@@ -31,6 +33,7 @@ function App() {
         <Route path="/login" component={Login} />
         <Route path="/forgot/password" component={PasswordForgot} exact/>
         <Route path="/register" component={Register} />
+        <Route path="/password/reset/:token" component={PasswordReset} exact/>
         <ProtectedRoute path="/profile" component={Profile} exact/>
         <ProtectedRoute path="/profile/update" component={ProfileUpdate} exact />
         <ProtectedRoute path="/profile/password" component={UpdatePassword} exact />
