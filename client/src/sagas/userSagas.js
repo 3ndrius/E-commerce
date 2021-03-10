@@ -13,6 +13,8 @@ import {
   requestUpdateUserProfileFail,
   requestUpdateUserPasswordSuccess,
   requestUpdateUserPasswordFail,
+  requestPasswordForgotSuccess,
+  requestPasswordForgotFail,
 } from "../actions/userActions";
 import {
   LOGIN_REQUEST,
@@ -21,6 +23,7 @@ import {
   LOGOUT_REQUEST,
   UPDATE_USER_PROFILE,
   UPDATE_USER_PASSWORD,
+  PASSWORD_FORGOT,
 } from "../constants/userConstants";
 
 import apiCall from "../helpers/apiCall";
@@ -110,4 +113,20 @@ function* updatePassword(action) {
 }
 export function* updatePasswordSaga() {
   yield takeEvery("UPDATE_USER_PASSWORD", updatePassword);
+}
+
+function* passwordForgot(action) {
+  const config = { headers: { "Content-Type": "application/json" } };
+  const body = {
+    email: action.payload,
+  };
+  try {
+    const res = yield call(apiCall.post, "password/forgot", body, config);
+    yield put(requestPasswordForgotSuccess(res));
+  } catch (error) {
+    yield put(requestPasswordForgotFail(error.response.data.message));
+  }
+}
+export function* passwordForgotSaga() {
+  yield takeEvery("PASSWORD_FORGOT", passwordForgot);
 }

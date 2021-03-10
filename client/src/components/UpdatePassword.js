@@ -87,6 +87,7 @@ export default function UpdatePassword({ history }) {
                 onChange={handleSetPassword}
                 label="Old password"
                 autoFocus
+                type="password"
                 value={user.oldPassword}
               />
             </Grid>
@@ -95,6 +96,7 @@ export default function UpdatePassword({ history }) {
               <TextField
                 required
                 fullWidth
+                type='passowrd'
                 onChange={handleSetPassword}
                 id="password"
                 label="password"

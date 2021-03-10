@@ -19,7 +19,9 @@ import {
   UPDATE_USER_PASSWORD_SUCCESS,
   UPDATE_USER_PASSWORD_RESET,
   UPDATE_USER_PASSWORD_FAIL,
-
+  PASSWORD_FORGOT,
+  PASSWORD_FORGOT_FAIL,
+  PASSWORD_FORGOT_SUCCESS,
 } from "../constants/userConstants";
 const initialState = {};
 export const authReducer = (state = initialState, action) => {
@@ -104,11 +106,38 @@ export const userReducer = (state = {}, action) => {
         loading: false,
         error: action.payload,
       };
-      case "CLEAR_ERROR":
-        return {
-          ...state,
-          error: null
-        }
+    case "CLEAR_ERROR":
+      return {
+        ...state,
+        error: null,
+      };
+    default:
+      return state;
+  }
+};
+
+export const forgotPasswordReducer = (state = {}, action) => {
+  switch (action.type) {
+    case "PASSWORD_FORGOT":
+      return {
+        ...state,
+        error: null,
+        loading: true
+      };
+    case "PASSWORD_FORGOT_SUCCESS":
+      return {
+        ...state,
+        message: action.payload.data.message,
+        error: null,
+        loading:false
+      };
+    case "PASSWORD_FORGOT_FAIL":
+      return {
+        ...state,
+        loading: false,
+        message: null,
+        error: action.payload,
+      };
     default:
       return state;
   }

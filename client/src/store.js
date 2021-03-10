@@ -5,12 +5,13 @@ import { composeWithDevTools } from 'redux-devtools-extension'
 // imports
 import rootSaga from "./sagas";
 import { singleProductReducer, productReducer } from './reducers/productReducers'
-import { authReducer, userReducer } from './reducers/userReducres'
+import { authReducer, userReducer, forgotPasswordReducer } from './reducers/userReducres'
 const reducer = combineReducers({
   products: productReducer,
   product: singleProductReducer,
   auth: authReducer,
-  user: userReducer
+  user: userReducer,
+  forgotPassword: forgotPasswordReducer
 });
 
 const sagaMiddleware = createSagaMiddleware();

@@ -3,39 +3,34 @@ import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Checkbox from "@material-ui/core/Checkbox";
 import Grid from "@material-ui/core/Grid";
 import Box from "@material-ui/core/Box";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import Container from "@material-ui/core/Container";
-import { requestLoginUser, clearErrors } from "../actions/userActions";
+import { requestPasswordForgot, clearErrors } from "../actions/userActions";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { Link } from "react-router-dom";
 
-const Login = ({ history }) => {
-  const [user, setUser] = React.useState({ email: "", password: "" });
-  const { error, loading, isAuthenticated } = useSelector(
-    (state) => state.auth
-  );
+const PasswordForgot = ({ history }) => {
+  const { error, message, loading } = useSelector((state) => state.forgotPassword);
   const dispatch = useDispatch();
+  const [email, setEmail] = React.useState("");
 
   React.useEffect(() => {
-    if (isAuthenticated) history.push("/");
+    if (message) toast.success(message)
+      
+
     if (error) {
       toast.error(error);
       dispatch(clearErrors());
     }
-  }, [error, loading, isAuthenticated, toast, dispatch]);
+  }, [error, toast, dispatch, message]);
 
-  const handleChange = (e) => {
-    setUser({ ...user, [e.target.id]: e.target.value });
-  };
-  const handleLogin = (e) => {
+  const handlePasswordForgot = (e) => {
     e.preventDefault();
-    dispatch(requestLoginUser(user));
+    dispatch(requestPasswordForgot(email));
   };
   return (
     <Container component="main" maxWidth="xs">
@@ -51,8 +46,8 @@ const Login = ({ history }) => {
         <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
           <LockOutlinedIcon />
         </Avatar>
-        <Typography component="h1" variant="h5">
-          Sign In
+        <Typography component="h1" variant="h3">
+          Forgot Password
         </Typography>
         <Box
           component="form"
@@ -70,47 +65,24 @@ const Login = ({ history }) => {
                 id="email"
                 label="Email Address"
                 name="email"
+                value={email}
                 autoComplete="email"
-                onChange={(e) => handleChange(e)}
+                onChange={(e) => setEmail(e.target.value)}
               />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                required
-                fullWidth
-                onChange={(e) => handleChange(e)}
-                name="password"
-                label="Password"
-                type="password"
-                id="password"
-                autoComplete="current-password"
-              />
-            </Grid>
-            <Grid item>
-              <Link to={"/forgot/password"} variant="body2">
-                Forgot Password
-              </Link>
             </Grid>
           </Grid>
           <Button
-            onClick={handleLogin}
+            onClick={handlePasswordForgot}
             fullWidth
             variant="contained"
+            disabled={loading ? true : false}
             sx={{ mt: 3, mb: 2 }}
           >
-            Sign In
+            Restore
           </Button>
-          <Grid container justifyContent="flex-end">
-            <Grid item>
-              <Link to={"/register"} variant="body2">
-                Don't have an accout? Sign up
-              </Link>
-            </Grid>
-          </Grid>
         </Box>
       </Box>
     </Container>
   );
 };
-
-export default Login;
+export default PasswordForgot;
