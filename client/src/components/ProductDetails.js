@@ -47,10 +47,14 @@ export default function SingleProduct(props) {
   const { product, loading, error } = useSelector((state) => state.product);
   const [value, setValue] = React.useState(2);
   const dispatch = useDispatch();
+  const [ currentQuantity, setCurrentQuantity ] = React.useState(1)
+
+
   React.useEffect(() => {
     if (error) toast.error(error);
     dispatch(requestSingleProduct(id));
   }, [dispatch, toast, error]);
+
   return (
     <div className={classes.root}>
       {loading ? (
@@ -116,24 +120,34 @@ export default function SingleProduct(props) {
               </Grid>
               <Grid item xs={12}>
                 <Typography variant="h5">
-                  $ {product && product.price}{" "}
+                  $ {product && product.price}
                 </Typography>
               </Grid>
 
-              <Grid item xs={4}>
+              <Grid item xs={2}>
+                <Button color="secondary" variant="contained" disabled={currentQuantity > 1 ? false : true} onClick={() => setCurrentQuantity(currentQuantity -1)}>
+                  -
+                </Button>
+                </Grid>
+                <Grid item xs={1}>
                 <Typography variant="h5">
-                  Stock: {product && product.stock}{" "}
+                  {currentQuantity}
                 </Typography>
+                </Grid>
+                <Grid item xs={2}>
+                <Button color="primary" variant="contained" disabled={currentQuantity >= product?.stock ? true : false}   onClick={() => setCurrentQuantity(currentQuantity + 1)}>
+                 + 
+                </Button>
               </Grid>
 
-              <Grid item xs={8}>
-                <Button color="secondary" variant="outlined">
+              <Grid item xs={7}>
+                <Button color="secondary" fullWidth variant="contained">
                   Buy
                 </Button>
               </Grid>
 
               <Grid item xs={12}>
-                <Typography variant="paragraph">Status: InStock</Typography>
+                 {product && product.stock > 1 ? <Typography color="primary" variant="paragraph">InStock</Typography> : <Typography color="secondary">OutStock</Typography> }
               </Grid>
               <Grid item xs={4}>
                 <Link to="/">
