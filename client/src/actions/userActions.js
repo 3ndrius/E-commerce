@@ -22,6 +22,11 @@ export const requestUpdateUserProfileSuccess = (success) => ({type: types.UPDATE
 export const requestUpdateUserProfileReset = () => ({type: types.UPDATE_USER_PROFILE_RESET})
 export const requestUpdateUserProfileFail = (error) => ({type: types.UPDATE_USER_PROFILE_FAIL, payload: error})
 
+export const requestUpdateUserPassword = (user) => ({type: types.UPDATE_USER_PASSWORD, payload: user});
+export const requestUpdateUserPasswordSuccess = (success) => ({type: types.UPDATE_USER_PASSWORD_SUCCESS, payload: success})
+export const requestUpdateUserPasswordReset = () => ({type: types.UPDATE_USER_PASSWORD_RESET})
+export const requestUpdateUserPasswordFail = (error) => ({type: types.UPDATE_USER_PASSWORD_FAIL, payload: error})
+
 
 
 export const clearErrors = () => ({type: types.CLEAR_ERROR})

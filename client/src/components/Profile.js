@@ -60,7 +60,8 @@ export default function Profile() {
         </Grid>
         <Grid item xs={6} my={2}>
          {( user && user.role !== 'admin') &&  <Button variant="contained" mr={2} color="primary">My orders</Button>}
-         <Button color="primary" variant="contained">Update password</Button>
+        <Link to="/profile/password"> <Button color="primary" variant="contained">Update password</Button></Link>
+
         </Grid>
       </Grid>
     </Container>

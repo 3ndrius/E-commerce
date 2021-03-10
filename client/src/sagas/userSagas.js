@@ -11,6 +11,8 @@ import {
   requestLogoutUserSuccess,
   requestUpdateUserProfileSuccess,
   requestUpdateUserProfileFail,
+  requestUpdateUserPasswordSuccess,
+  requestUpdateUserPasswordFail,
 } from "../actions/userActions";
 import {
   LOGIN_REQUEST,
@@ -18,6 +20,7 @@ import {
   LOAD_USER_REQUEST,
   LOGOUT_REQUEST,
   UPDATE_USER_PROFILE,
+  UPDATE_USER_PASSWORD,
 } from "../constants/userConstants";
 
 import apiCall from "../helpers/apiCall";
@@ -90,4 +93,21 @@ function* updateUser(action) {
 }
 export function* updateUserSaga() {
   yield takeEvery("UPDATE_USER_PROFILE", updateUser);
+}
+
+function* updatePassword(action) {
+  const config = { headers: { "Content-Type": "application/json" } };
+  const body = {
+    oldPassword: action.payload.oldPassword,
+    password: action.payload.password,
+  };
+  try {
+    const res = yield call(apiCall.put, "password/update", body, config);
+    yield put(requestUpdateUserPasswordSuccess(res));
+  } catch (error) {
+    yield put(requestUpdateUserPasswordFail(error.response.data.message));
+  }
+}
+export function* updatePasswordSaga() {
+  yield takeEvery("UPDATE_USER_PASSWORD", updatePassword);
 }

@@ -15,6 +15,11 @@ import {
   UPDATE_USER_PROFILE_SUCCESS,
   UPDATE_USER_PROFILE_RESET,
   UPDATE_USER_PROFILE_FAIL,
+  UPDATE_USER_PASSWORD,
+  UPDATE_USER_PASSWORD_SUCCESS,
+  UPDATE_USER_PASSWORD_RESET,
+  UPDATE_USER_PASSWORD_FAIL,
+
 } from "../constants/userConstants";
 const initialState = {};
 export const authReducer = (state = initialState, action) => {
@@ -73,29 +78,37 @@ export const authReducer = (state = initialState, action) => {
 export const userReducer = (state = {}, action) => {
   switch (action.type) {
     case "UPDATE_USER_PROFILE":
+    case "UPDATE_USER_PASSWORD":
       return {
         ...state,
         loading: true,
       };
     case "UPDATE_USER_PROFILE_SUCCESS":
+    case "UPDATE_USER_PASSWORD_SUCCESS":
       return {
         ...state,
         loading: false,
         isUpdated: action.payload.data.success,
       };
     case "UPDATE_USER_PROFILE_RESET":
+    case "UPDATE_USER_PASSWORD_RESET":
       return {
         ...state,
         isUpdated: false,
       };
 
     case "UPDATE_USER_PROFILE_FAIL":
+    case "UPDATE_USER_PASSWORD_FAIL":
       return {
         ...state,
         loading: false,
         error: action.payload,
       };
-
+      case "CLEAR_ERROR":
+        return {
+          ...state,
+          error: null
+        }
     default:
       return state;
   }

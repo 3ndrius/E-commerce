@@ -13,6 +13,7 @@ const Login = (lazy(() => (import('./components/Login'))))
 const Register = (lazy(() => (import('./components/Register'))))
 const  Profile= (lazy(() => (import('./components/Profile'))))
 const ProfileUpdate = (lazy(() => (import('./components/UpdateProfile'))))
+const UpdatePassword = (lazy(() => (import('./components/UpdatePassword'))))
 
 function App() {
   const dispatch = useDispatch();
@@ -30,6 +31,7 @@ function App() {
         <Route path="/register" component={Register} />
         <ProtectedRoute path="/profile" component={Profile} exact/>
         <ProtectedRoute path="/profile/update" component={ProfileUpdate} exact />
+        <ProtectedRoute path="/profile/password" component={UpdatePassword} exact />
         </Suspense>
       </ThemeProvider>
  
