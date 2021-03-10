@@ -35,6 +35,7 @@ export default function ProfileUpdate({ history }) {
   const [name, setName] = React.useState("");
   const [email, setEmail] = React.useState("");
   const [avatar, setAvatar] = React.useState("");
+  const [prevAvatar, setPrevAvatar] = React.useState("");
 
   const dispatch = useDispatch();
 
@@ -42,7 +43,8 @@ export default function ProfileUpdate({ history }) {
     const reader = new FileReader();
     reader.onload = () => {
       if (reader.readyState === 2) {
-        setAvatar(reader.result);
+        setPrevAvatar(reader.result);
+        setAvatar(reader.result)
       }
     };
     reader.readAsDataURL(e.target.files[0]);
@@ -52,7 +54,6 @@ export default function ProfileUpdate({ history }) {
     const formData = new FormData();
     formData.set("name", name);
     formData.set("email", email);
-    formData.set("password", user.password);
     formData.set("avatar", avatar);
     dispatch(requestUpdateUserProfile(formData));
   };
@@ -60,7 +61,7 @@ export default function ProfileUpdate({ history }) {
     if (user) {
       setName(user.name);
       setEmail(user.email);
-      setAvatar(user.avatar.url);
+      setPrevAvatar(user.avatar.url)
     }
     if (error) {
       toast.error("Fail to update profile");
@@ -131,7 +132,7 @@ export default function ProfileUpdate({ history }) {
                 color="primary"
                 accept="image/*"
                 type="file"
-                src={avatar}
+                src={prevAvatar}
                 onChange={onChange}
                 id="icon-button-file"
                 style={{ display: "none" }}
@@ -152,7 +153,7 @@ export default function ProfileUpdate({ history }) {
             <Grid item xs={12} md={7}>
               <Avatar
                 alt="Remy Sharp"
-                src={avatar}
+                src={prevAvatar}
                 style={{ height: "300px", width: "300px" }}
               />
             </Grid>
@@ -163,6 +164,7 @@ export default function ProfileUpdate({ history }) {
             fullWidth
             variant="contained"
             sx={{ mt: 3, mb: 2 }}
+            disabled={loading ? true : false}
           >
             Update
           </Button>
