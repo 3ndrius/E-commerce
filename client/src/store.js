@@ -19,7 +19,7 @@ const reducer = combineReducers({
 const sagaMiddleware = createSagaMiddleware();
 const initState = {
   cart: {
-    cartItem: localStorage.getItem('cartItems') ? JSON.parse(localStorage.getItem('cartItems')) : []
+    cartItems: localStorage.getItem('cartItems') ? JSON.parse(localStorage.getItem('cartItems')) : []
   }
 };
 const composedEnhancer = composeWithDevTools(applyMiddleware(sagaMiddleware))

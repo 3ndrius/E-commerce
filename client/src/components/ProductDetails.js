@@ -14,6 +14,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { requestSingleProduct } from "../actions/productActions";
 import { toast } from "react-toastify";
 import Loader from "./layout/Loader";
+import { requestAddToCart } from '../actions/cartActions'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -49,6 +50,9 @@ export default function SingleProduct(props) {
   const dispatch = useDispatch();
   const [ currentQuantity, setCurrentQuantity ] = React.useState(1)
 
+  const handleAddItem = () => {
+    dispatch(requestAddToCart(id, currentQuantity))
+  }
 
   React.useEffect(() => {
     if (error) toast.error(error);
@@ -141,7 +145,7 @@ export default function SingleProduct(props) {
               </Grid>
 
               <Grid item xs={7}>
-                <Button color="secondary" fullWidth variant="contained">
+                <Button color="secondary" fullWidth variant="contained" onClick={handleAddItem}>
                   Buy
                 </Button>
               </Grid>
