@@ -35,7 +35,6 @@ export const cartReducer = (state = initialState, action) => {
         ),
       };
       case "SAVE_SHIPPING_INFO":
-        console.log("Reducer shipping", action);
         return {
           ...state,
           shippingInfo: action.payload

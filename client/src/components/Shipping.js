@@ -8,6 +8,11 @@ import Container from "@material-ui/core/Container";
 import Button from "@material-ui/core/Button";
 import { useDispatch, useSelector } from "react-redux";
 import { requestSaveShippingInfo } from "../actions/cartActions";
+import countryList from "country-list";
+import InputLabel from "@material-ui/core/InputLabel";
+import MenuItem from "@material-ui/core/MenuItem";
+import FormControl from "@material-ui/core/FormControl";
+import Select from "@material-ui/core/Select";
 
 export default function Shipping() {
   const { shippingInfo } = useSelector((state) => state.cart);
@@ -17,7 +22,7 @@ export default function Shipping() {
     city: shippingInfo.city || "",
     phoneNo: shippingInfo.phoneNo || "",
     zip: shippingInfo.zip || "",
-    country: shippingInfo.country || "",
+    country: shippingInfo.country || "Andora",
   });
 
   const dispatch = useDispatch();
@@ -88,24 +93,21 @@ export default function Shipping() {
             />
           </Grid>
           <Grid item xs={12} sm={6}>
-            <TextField
-              required
-              id="country"
-              name="country"
-              onChange={handleCustomer}
-              value={customer.country}
-              label="Country"
-              fullWidth
-              autoComplete="shipping country"
-              variant="standard"
-            />
+            <FormControl fullWidth>
+              <InputLabel id="demo-simple-select-label">Country</InputLabel>
+              <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                value={customer.country}
+                onChange={handleCustomer}
+                name="country"
+              >
+                {countryList.getNames().map((country, index) => {
+                  return <MenuItem key={index} value={country}>{country}</MenuItem>
+                })}
+              </Select>
+            </FormControl>
           </Grid>
-          {/* <Grid item xs={12}>
-          <FormControlLabel
-            control={<Checkbox color="secondary" name="saveAddress" value="yes" />}
-            label="Use this address for payment details"
-          />
-        </Grid> */}
           <Grid item xs={12}>
             <Button
               variant="contained"
