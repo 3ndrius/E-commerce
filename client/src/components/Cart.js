@@ -9,6 +9,7 @@ import Button from "@material-ui/core/Button";
 import Box from "@material-ui/core/Box";
 import Divider from "@material-ui/core/Divider";
 import { useSelector, useDispatch } from "react-redux";
+import { toast } from "react-toastify";
 import {
   requestAddToCart,
   requestRemoveFromCart,
@@ -48,6 +49,7 @@ export default function Cart() {
 
   const handleRemoveItem = (productId) => {
     dispatch(requestRemoveFromCart(productId));
+    toast.info("Successfully removed product from cart")
   };
 
   return (
@@ -144,10 +146,11 @@ export default function Cart() {
           </Typography>
           <Divider />
           <Typography my={2} mx={2} variant="h5">
-            Subtotal:3 parts
+            Subtotal: { cartItems.reduce((acc, val) => (acc + +val.quantity),0)}
           </Typography>
           <Typography variant="h5" mx={2} my={2}>
-            Total: $774. 00
+            {/* Total: $ {cartItems.map(item => item.quantity * item.price).reduce((acc, val) => (acc + +val), 0)} */}
+            Total: $ {cartItems.reduce((acc, val) => (acc + +val.quantity * val.price), 0)}
           </Typography>
         </Grid>
       </Grid>
