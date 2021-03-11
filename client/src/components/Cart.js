@@ -132,8 +132,8 @@ export default function Cart() {
                       </Button>
                     </Grid>
                   </Grid>
-                  <Grid item xs={12} my={2}>
-                    <Divider />
+                  <Grid item xs={12} my={2} pr={4}>
+                    <Divider/>
                   </Grid>
                 </React.Fragment>
               );
@@ -152,6 +152,7 @@ export default function Cart() {
             {/* Total: $ {cartItems.map(item => item.quantity * item.price).reduce((acc, val) => (acc + +val), 0)} */}
             Total: $ {cartItems.reduce((acc, val) => (acc + +val.quantity * val.price), 0)}
           </Typography>
+          <Button variant="contained" color="primary" px={2} fullWidth>Checkout</Button>
         </Grid>
       </Grid>
     </Container>
