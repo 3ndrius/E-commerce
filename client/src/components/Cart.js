@@ -9,7 +9,10 @@ import Button from "@material-ui/core/Button";
 import Box from "@material-ui/core/Box";
 import Divider from "@material-ui/core/Divider";
 import { useSelector, useDispatch } from "react-redux";
-import { requestAddToCart } from "../actions/cartActions";
+import {
+  requestAddToCart,
+  requestRemoveFromCart,
+} from "../actions/cartActions";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -41,6 +44,10 @@ export default function Cart() {
   const handleQuantity = (item, val) => {
     let newQuantity = item.quantity + val;
     dispatch(requestAddToCart(item.productId, newQuantity));
+  };
+
+  const handleRemoveItem = (productId) => {
+    dispatch(requestRemoveFromCart(productId));
   };
 
   return (
@@ -114,7 +121,11 @@ export default function Cart() {
                       </Box>
                     </Grid>
                     <Grid item xs>
-                      <Button variant="contained" color="primary">
+                      <Button
+                        variant="contained"
+                        color="primary"
+                        onClick={() => handleRemoveItem(item.productId)}
+                      >
                         Delete
                       </Button>
                     </Grid>
