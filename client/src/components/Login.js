@@ -13,15 +13,17 @@ import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { Link } from "react-router-dom";
 
-const Login = ({ history }) => {
+const Login = ({ history, location }) => {
   const [user, setUser] = React.useState({ email: "", password: "" });
   const { error, loading, isAuthenticated } = useSelector(
     (state) => state.auth
   );
   const dispatch = useDispatch();
+  
+  const redirect = location.search ? location.search.split('=')[1] : '/';
 
   React.useEffect(() => {
-    if (isAuthenticated) history.push("/");
+    if (isAuthenticated) history.push(redirect);
     if (error) {
       toast.error(error); 
       dispatch(clearErrors());

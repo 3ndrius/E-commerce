@@ -16,6 +16,7 @@ const UpdatePassword = (lazy(() => (import('./components/UpdatePassword'))))
 const PasswordForgot = (lazy(() => (import('./components/PasswordForgot'))))
 const PasswordReset = (lazy(() => (import('./components/PasswordReset'))))
 const Cart = (lazy(() => (import('./components/Cart'))))
+const Shipping = (lazy(() => (import('./components/Shipping'))))
 
 function App() {
 
@@ -35,6 +36,7 @@ function App() {
         <Route path="/password/reset/:token" component={PasswordReset} exact/>
         <Route path="/cart" component={Cart} />
         <ProtectedRoute path="/profile" component={Profile} exact/>
+        <ProtectedRoute path="/shipping" component={Shipping} exact/>
         <ProtectedRoute path="/profile/update" component={ProfileUpdate} exact />
         <ProtectedRoute path="/profile/password" component={UpdatePassword} exact />
         </Suspense>

@@ -17,3 +17,13 @@ export const removeFromCart = (productId) => ({
   type: types.REMOVE_CART_ITEM,
   payload: productId,
 });
+
+export const saveShippingInfo = (customer) => ({
+  type: types.SAVE_SHIPPING_INFO,
+  payload: customer,
+});
+export const requestSaveShippingInfo = (customer) => ({
+  type: types.REQUEST_SAVE_SHIPPING_INFO,
+  payload: customer,
+});
+

@@ -36,7 +36,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Cart() {
+export default function Cart({ history }) {
   const classes = useStyles();
 
   const { cartItems } = useSelector((state) => state.cart);
@@ -46,6 +46,10 @@ export default function Cart() {
     let newQuantity = item.quantity + val;
     dispatch(requestAddToCart(item.productId, newQuantity));
   };
+
+  const handleCheckout = () => {
+    history.push('/login?redirect=shipping')
+  }
 
   const handleRemoveItem = (productId) => {
     dispatch(requestRemoveFromCart(productId));
@@ -152,7 +156,7 @@ export default function Cart() {
             {/* Total: $ {cartItems.map(item => item.quantity * item.price).reduce((acc, val) => (acc + +val), 0)} */}
             Total: $ {cartItems.reduce((acc, val) => (acc + +val.quantity * val.price), 0)}
           </Typography>
-          <Button variant="contained" color="primary" px={2} fullWidth>Checkout</Button>
+          <Button variant="contained" color="primary" px={2} fullWidth onClick={handleCheckout}>Checkout</Button>
         </Grid>
       </Grid>
     </Container>

@@ -1,9 +1,10 @@
 import {
   ADD_TO_CART,
   REQUEST_REMOVE_CART_ITEM,
+  SAVE_SHIPPING_INFO
 } from "../constants/cartConstants";
 
-const initialState = { cartItems: [1] };
+const initialState = { cartItems: [], shippingInfo:{} };
 
 export const cartReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -33,6 +34,12 @@ export const cartReducer = (state = initialState, action) => {
           (item) => item.productId !== action.payload
         ),
       };
+      case "SAVE_SHIPPING_INFO":
+        console.log("Reducer shipping", action);
+        return {
+          ...state,
+          shippingInfo: action.payload
+        }
 
     default:
       return state;
