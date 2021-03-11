@@ -13,6 +13,7 @@ import InputLabel from "@material-ui/core/InputLabel";
 import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
+import CheckoutSteps from "./layout/CheckoutSteps";
 
 export default function Shipping() {
   const { shippingInfo } = useSelector((state) => state.cart);
@@ -38,9 +39,10 @@ export default function Shipping() {
 
   return (
     <Container>
+        <CheckoutSteps stepNo={0}/>
       <React.Fragment>
         <Typography variant="h4" py={4}>
-          Shipping address
+          Shipping 
         </Typography>
         <Grid container spacing={4}>
           <Grid item xs={12}>
