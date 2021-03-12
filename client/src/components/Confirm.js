@@ -62,7 +62,7 @@ export default function Confirm({ history }) {
           totalPrice
       }
       sessionStorage.setItem('orderInfo', JSON.stringify(data));
-      history.push("/")
+      history.push("/payment")
   };
 
   const handleRemoveItem = (productId) => {
@@ -71,8 +71,9 @@ export default function Confirm({ history }) {
   };
 
   return (
-    <Container maxWidth="lg">
+    <React.Fragment>
       <CheckoutSteps stepNo={1} />
+    <Container maxWidth="lg">
 
       <Grid container my={4}>
         <Grid item xs={12} my={4}>
@@ -192,5 +193,6 @@ export default function Confirm({ history }) {
         </Grid>
       </Grid>
     </Container>
+    </React.Fragment>
   );
 }

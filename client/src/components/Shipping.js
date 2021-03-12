@@ -39,8 +39,9 @@ export default function Shipping({history}) {
   };
 
   return (
-    <Container>
+  <React.Fragment>
         <CheckoutSteps stepNo={0}/>
+    <Container maxWidth="md">
       <React.Fragment>
         <Typography variant="h4" py={4}>
           Shipping 
@@ -124,5 +125,6 @@ export default function Shipping({history}) {
         </Grid>
       </React.Fragment>
     </Container>
+</React.Fragment>
   );
 }
