@@ -15,7 +15,7 @@ import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 import CheckoutSteps from "./layout/CheckoutSteps";
 
-export default function Shipping() {
+export default function Shipping({history}) {
   const { shippingInfo } = useSelector((state) => state.cart);
 
   const [customer, setCustomer] = React.useState({
@@ -35,6 +35,7 @@ export default function Shipping() {
   const submitCustomer = (e) => {
     e.preventDefault();
     dispatch(requestSaveShippingInfo(customer));
+    history.push("/confirm")
   };
 
   return (
