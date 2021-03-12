@@ -22,10 +22,12 @@ app.use(fileUpload())
 const products = require("./src/routes/product")
 const user = require("./src/routes/user")
 const order = require("./src/routes/order")
+const payment = require("./src/routes/payment")
 // define routes
 app.use("/api/v1", products)
 app.use("/api/v1", user)
 app.use("/api/v1", order)
+app.use("/api/v1", payment)
 app.use(errors)
 
 module.exports = app

@@ -28,6 +28,7 @@
     "nodemailer": "^6.4.18",
     "nodemon": "^2.0.7",
     "react-dev-utils": "^10.2.1",
+    "stripe": "^8.138.0",
     "validator": "^13.5.2"
   },
   "devDependencies": {
