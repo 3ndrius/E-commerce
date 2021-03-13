@@ -11,6 +11,7 @@ import Button from "@material-ui/core/Button";
 import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
 import apiCall from "../helpers/apiCall";
+import { orderCreateRequest, clearErrors } from "../actions/orderActions";
 import {
   CardNumberElement,
   CardExpiryElement,
@@ -38,7 +39,15 @@ export default function Payment({ history }) {
   const { cartItems, shippingInfo } = useSelector((state) => state.cart);
 
   const orderInfo = JSON.parse(sessionStorage.getItem("orderInfo"));
-
+  
+  const order = {
+    orderItems: cartItems,
+    shippingInfo,
+    itemsPrice: orderInfo?.itemsPrice,
+    taxPrice: orderInfo?.taxPrice,
+    shippingPrice: orderInfo?.deliveryPrice,
+    totalPrice: orderInfo?.totalPrice,
+  };
   const paymentData = {
     amount: Math.round(orderInfo?.totalPrice * 100),
   };
@@ -67,13 +76,16 @@ export default function Payment({ history }) {
           },
         },
       });
-      console.log(result);
 
       if (result.error) {
         toast.error(result.error.message);
       } else {
         if (result.paymentIntent.status === "succeeded") {
-          // to do = update order in db
+          order.paymentInfo = {
+            id: result.paymentIntent.id,
+            status: result.paymentIntent.status
+          }
+          dispatch(orderCreateRequest(order))
           history.push("/success");
         } else {
           toast.error("The error ocurr during payment processing!");
@@ -84,7 +96,12 @@ export default function Payment({ history }) {
     }
   };
 
-  React.useEffect(() => {}, []);
+  const { error, loading } = useSelector((state) => state.newOrder);
+
+  React.useEffect(() => {
+    error && toast.error(error);
+    dispatch(clearErrors());
+  }, [dispatch, error, loading]);
 
   return (
     <React.Fragment>

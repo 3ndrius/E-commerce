@@ -5,8 +5,9 @@ const Order = require("../models/order.model");
 const createError = require("http-errors");
 const catchErrorAsync = require("../../middlewares/catchErrorAsync");
 
-// new order  /api/v1/order POST
+// new order  /api/v1/orders POST
 exports.newOrder = catchErrorAsync(async (req, res, next) => {
+  console.log(req.body)
   const {
     orderItems,
     shippingInfo,
