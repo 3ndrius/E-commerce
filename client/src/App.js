@@ -23,6 +23,7 @@ const Shipping = lazy(() => import("./components/Shipping"));
 const Confirm = lazy(() => import("./components/Confirm"));
 const Payment = lazy(() => import("./components/Payment"));
 const OrderSuccess = lazy(() => import("./components/OrderSuccess"));
+const showOrders = lazy(() => import("./components/showOrders"));
 
 const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_API_KEY);
 
@@ -49,6 +50,7 @@ function App() {
           <ProtectedRoute path="/payment" component={Payment} exact />
         </Elements>
         <ProtectedRoute path="/confirm" component={Confirm} exact />
+        <ProtectedRoute path="/orders" component={showOrders} exact />
         <ProtectedRoute path="/success" component={OrderSuccess} exact />
         <ProtectedRoute path="/shipping" component={Shipping} exact />
         <ProtectedRoute path="/profile/update" component={ProfileUpdate} exact/>
