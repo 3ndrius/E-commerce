@@ -7,9 +7,11 @@ import ButtonBase from "@material-ui/core/ButtonBase";
 import Container from "@material-ui/core/Container";
 import Button from "@material-ui/core/Button";
 import Box from "@material-ui/core/Box";
+import { Link } from 'react-router-dom'
 import Divider from "@material-ui/core/Divider";
 import { useSelector, useDispatch } from "react-redux";
 import { toast } from "react-toastify";
+import { singleOrderRequest, clearErrors } from "../actions/orderActions";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -32,44 +34,91 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function OrderDetails({ history }) {
- 
+export default function OrderDetails({ history, match }) {
+  const id = match.params.id;
+  const dispatch = useDispatch();
+  const classes =useStyles();
+
+  const { order, loading, error } = useSelector((state) => state.singleOrder);
+
+  React.useEffect(() => {
+    if (error) {
+      toast.error(error);
+      dispatch(clearErrors());
+    }
+    dispatch(singleOrderRequest(id));
+  }, [error, dispatch]);
 
   return (
     <React.Fragment>
-      <CheckoutSteps stepNo={1} />
-    <Container maxWidth="lg">
-
-      <Grid container my={4}>
-        <Grid item xs={12} my={4}>
-          <Divider />
-        </Grid>
-
-        <Grid container item spacing={1} xs={12} md={8}>
+      <Container maxWidth="lg">
+        <Grid container my={4}>
           <Grid item xs={12} mr={2} mb={4}>
             <Typography variant="h4" component="div" pb={2}>
-              Order Details
+              Order Summary:
             </Typography>
-
-            <Typography variant="h6">
-Detail 1
-            </Typography>
-            <Typography variant="h6">
-              detail2
-            </Typography>
-            <Typography variant="h6">
-              detal 3
-            </Typography>
-          </Grid>
-          <Grid item xs={12} mr={4} pb={2}>
-            <Typography variant="h5">Your cart</Typography>
             <Divider />
+            <Typography variant="h6" mt={2}>
+              Name: <b>{order?.user.name}</b>
+            </Typography>
+            <Typography variant="h6">
+              Phone: <b>{order?.shippingInfo.phoneNo}</b>
+            </Typography>
+            <Typography variant="h6">
+              Address: <b>{order?.shippingInfo.address}</b>
+            </Typography>
+            <Typography variant="h6">Amount: <b>{order?.totalPrice} </b></Typography>
           </Grid>
-          {/* {cartItems.length >= 0 &&
-            cartItems.map((item) => {
+          <Grid item xs={12}>
+            <Typography mb={2} variant="h4">
+             Status Summary:
+            </Typography>
+            <Divider />
+            <Box display="flex" mt={2}>
+              <Typography variant="h5">OrderId:</Typography>
+              <Typography variant="h5"># {order?._id}</Typography>
+            </Box>
+            <Box display="flex">
+              <Typography variant="h5" component="div">
+                Status:
+              </Typography>
+              <Typography
+                variant="h5"
+                style={{
+                  color:
+                    order?.paymentInfo.status.toLowerCase() === "succeeded" ? "green" : "red",
+                }}
+              >
+                {order?.paymentInfo.status.toLowerCase() === "succeeded"
+                  ? "Paid"
+                  : "Not paid yet"}
+              </Typography>
+            </Box>
+
+            <Box display="flex">
+              <Typography variant="h5">Order Status:</Typography>
+              <Typography
+                variant="h5"
+                style={{
+                  color: order?.orderStatus === "Delivered" ? "green" : "red",
+                }}
+              >
+                {order?.orderStatus}
+              </Typography>
+            </Box>
+          </Grid>
+        </Grid>
+        <Grid>
+          <Typography variant="h4" component="div" py={2}>
+            Product summary:
+          </Typography>
+          <Divider />
+           {order && order?.orderItems.length >= 0 &&
+            order?.orderItems.map((item) => {
               return (
-                <React.Fragment key={item.productId}>
+                <React.Fragment key={item.productId} py={2}>
                   <Grid
+                  pt={2}
                     container
                     item
                     spacing={6}
@@ -104,58 +153,12 @@ Detail 1
                   </Grid>
                 </React.Fragment>
               );
-            })} */}
+            })}
         </Grid>
-
-        <Grid item xs={12} md={4} px={3}>
-          <Typography mb={2} mx={2} variant="h4">
-            Summary:
-          </Typography>
-          <Divider />
-          <Box m={2} display="flex" justifyContent="space-between">
-            <Typography variant="h5">Subtotal:</Typography>{" "}
-            <Typography variant="h5">
-              count
-            </Typography>
-          </Box>
-          <Box m={2} display="flex" justifyContent="space-between">
-            <Typography variant="h5" component="div">
-              Delivery:
-            </Typography>
-            <Typography variant="h5">
-              del
-            </Typography>
-          </Box>
-
-          <Box m={2} display="flex" justifyContent="space-between">
-            <Typography variant="h5">
-              Tax:
-            </Typography>
-            <Typography variant="h5">
-              tax
-            </Typography>
-          </Box>
-          <Divider />
-
-          <Box m={2} display="flex" justifyContent="space-between" alignItems="flex-end">
-            <Typography variant="h4" >
-              Total:
-            </Typography>
-            <Typography variant="h5">
-              tot
-            </Typography>
-          </Box>
-          <Button
-            variant="contained"
-            color="primary"
-            fullWidth
-          >
-          Back 
-          </Button>
+        <Grid py={6}>
+          <Link to={'/orders'}><Button color="primary" variant="contained">Back to orders</Button></Link>
         </Grid>
-      </Grid>
-    </Container>
+      </Container>
     </React.Fragment>
   );
 }
-

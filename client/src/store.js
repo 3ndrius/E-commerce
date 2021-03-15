@@ -7,7 +7,7 @@ import rootSaga from "./sagas";
 import { singleProductReducer, productReducer } from './reducers/productReducers'
 import { authReducer, userReducer, forgotPasswordReducer } from './reducers/userReducres';
 import { cartReducer } from './reducers/cartReducers'
-import { newOrderReducer, myOrderReducer } from './reducers/orderReducers';
+import { newOrderReducer, myOrderReducer, orderDetailsReducer } from './reducers/orderReducers';
 
 const reducer = combineReducers({
   products: productReducer,
@@ -17,7 +17,8 @@ const reducer = combineReducers({
   forgotPassword: forgotPasswordReducer,
   cart: cartReducer,
   newOrder: newOrderReducer,
-  myOrder: myOrderReducer
+  myOrder: myOrderReducer,
+  singleOrder: orderDetailsReducer
 });
 
 const sagaMiddleware = createSagaMiddleware();

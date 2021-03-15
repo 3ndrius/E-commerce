@@ -1,8 +1,8 @@
 import { takeEvery, put, call } from "redux-saga/effects";
 import apiCall from "../helpers/apiCall";
-import { orderCreateSuccess, orderCreateFail, showOrderSuccess, showOrderFail } from "../actions/orderActions";
+import { orderCreateSuccess, orderCreateFail, showOrderSuccess, showOrderFail, singleOrderSuccess, singleOrderFail } from "../actions/orderActions";
 
-import { CREATE_ORDER_REQUEST, SHOW_ORDER_REQUEST } from "../constants/orderConstants";
+import { CREATE_ORDER_REQUEST, SHOW_ORDER_REQUEST, SINGLE_ORDER_REQUEST} from "../constants/orderConstants";
 
 function* createOrder(action) {
   const config = { headers: { "Content-Type": "application/json" } };
@@ -29,4 +29,19 @@ function* showOrder() {
 
 export function* showOrderSaga() {
   yield takeEvery("SHOW_ORDER_REQUEST", showOrder);
+}
+
+
+
+function* singleOrder(action) {
+  try {
+    const res = yield call(apiCall.get, `order/${action.payload}`);
+    yield put(singleOrderSuccess(res));
+  } catch (error) {
+    yield put(singleOrderFail(error.response.data.message));
+  }
+}
+
+export function* singleOrderSaga() {
+  yield takeEvery("SINGLE_ORDER_REQUEST", singleOrder);
 }
