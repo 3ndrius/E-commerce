@@ -6,8 +6,10 @@ import {
   requestAllProduct,
   requestSingleProductSuccess,
   requestSingleProductFail,
+  submitReviewSuccess,
+  submitReviewFail
 } from "../actions/productActions";
-import { ALL_PRODUCT_REQUEST, SINGLE_PRODUCT_REQUEST } from "../constants/productConstants";
+import { ALL_PRODUCT_REQUEST, SINGLE_PRODUCT_REQUEST, SUBMIT_REVIEW_REQUEST } from "../constants/productConstants";
 
 function* getProducts(action) {
   try {
@@ -31,7 +33,6 @@ export function* getProductsSaga() {
 function* getProduct(action) {
   try {
     const { data } = yield call(apiCall.get, `products/${action.payload}`);
-    yield delay(1000);
     yield put(requestSingleProductSuccess(data));
   } catch (error) {
     yield put(requestSingleProductFail(error));
@@ -41,3 +42,21 @@ function* getProduct(action) {
 export function* getProductSaga() {
     yield takeEvery("SINGLE_PRODUCT_REQUEST", getProduct)
 }
+
+function* submitReview(action) {
+  const config = { headers: { "Content-Type": "application/json" }}
+
+  try {
+    console.log(action.payload)
+    const { data } = yield call(apiCall.put, `reviews`, action.payload, config);
+    yield put(submitReviewSuccess(data));
+
+  } catch (error) {
+    yield put(submitReviewFail(error.response.data.message));
+  }
+}
+
+export function* submitReviewSaga() {
+    yield takeEvery("SUBMIT_REVIEW_REQUEST", submitReview)
+}
+

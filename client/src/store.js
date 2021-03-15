@@ -4,7 +4,7 @@ import { createStore, applyMiddleware, compose, combineReducers } from "redux";
 import { composeWithDevTools } from 'redux-devtools-extension'
 // imports
 import rootSaga from "./sagas";
-import { singleProductReducer, productReducer } from './reducers/productReducers'
+import { singleProductReducer, productReducer, submitReviewReducer } from './reducers/productReducers'
 import { authReducer, userReducer, forgotPasswordReducer } from './reducers/userReducres';
 import { cartReducer } from './reducers/cartReducers'
 import { newOrderReducer, myOrderReducer, orderDetailsReducer } from './reducers/orderReducers';
@@ -18,7 +18,8 @@ const reducer = combineReducers({
   cart: cartReducer,
   newOrder: newOrderReducer,
   myOrder: myOrderReducer,
-  singleOrder: orderDetailsReducer
+  singleOrder: orderDetailsReducer,
+  submitReview: submitReviewReducer
 });
 
 const sagaMiddleware = createSagaMiddleware();

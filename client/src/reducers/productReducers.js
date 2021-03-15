@@ -5,7 +5,10 @@ import {
   CLEAR_ERRORS,
   SINGLE_PRODUCT_REQUEST,
   SINGLE_PRODUCT_SUCCESS,
-  SINGLE_PRODUCT_FAIL
+  SINGLE_PRODUCT_FAIL,
+  SUBMIT_REVIEW_REQUEST,
+  SUBMIT_REVIEW_SUCCESS,
+  SUBMIT_REVIEW_FAIL
 } from "../constants/productConstants";
 
 const initState = { products: [], error: null, loading: false, productsCount: 0 };
@@ -66,6 +69,30 @@ export const  singleProductReducer = ( state ={}, action) => {
 
 }
 
+export const submitReviewReducer = (state = {}, action) => {
+  switch (action.type) {
+    case "SUBMIT_REVIEW_REQUEST":
+      return {
+        ...state,
+        loading: true,
+      }
+
+      case "SUBMIT_REVIEW_SUCCESS":
+        return {
+          ...state,
+          loading: false,
+          review: action.payload
+          
+        }
+        case "SUBMIT_REVIEW_FAIL":
+          return {
+            loading: false,
+            error: action.payload
+          }
+    default:
+      return state;
+  }
+}
 
 
 

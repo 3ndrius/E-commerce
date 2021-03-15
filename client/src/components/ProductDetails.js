@@ -15,6 +15,7 @@ import { requestSingleProduct } from "../actions/productActions";
 import { toast } from "react-toastify";
 import Loader from "./layout/Loader";
 import { requestAddToCart } from '../actions/cartActions'
+import ReviewDialog from "./layout/ReviewDialog";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -46,9 +47,9 @@ export default function SingleProduct(props) {
   const classes = useStyles();
   const { id } = props.match?.params;
   const { product, loading, error } = useSelector((state) => state.product);
-  const [value, setValue] = React.useState(2);
   const dispatch = useDispatch();
   const [ currentQuantity, setCurrentQuantity ] = React.useState(1)
+
 
   const handleAddItem = () => {
     dispatch(requestAddToCart(id, currentQuantity))
@@ -103,10 +104,7 @@ export default function SingleProduct(props) {
                   <Rating
                     name="simple-controlled"
                     value={product && product.ratings}
-                    onChange={(event, newValue) => {
-                      console.log(event, newValue, "ratings");
-                      setValue(newValue);
-                    }}
+                    readOnly
                   />
                 </Box>
               </Grid>
@@ -162,7 +160,13 @@ export default function SingleProduct(props) {
                   </Button>
                 </Link>
               </Grid>
-              <Grid item xs={4}></Grid>
+              <Grid item xs={4}>
+
+              </Grid>
+              <Grid xs={12} item>
+
+      <ReviewDialog />
+              </Grid>
             </Grid>
           </Grid>
         </Container>

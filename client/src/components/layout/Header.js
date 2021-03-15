@@ -211,11 +211,11 @@ export default function PrimarySearchAppBar({history}) {
               color="inherit"
             >
 
-          { isAuthenticated ? <Avatar src={user.avatar.url} alt={`avatar-${user.name}`} />  : <AccountCircleOutlinedIcon /> }
+          { isAuthenticated ? <Avatar src={user.avatar.url} alt={`avatar-${user.name}`} style={{height:"28px", width:"28px"}}/>  : <AccountCircleOutlinedIcon /> }
             </IconButton>
 
                <Link to="/cart">
-            <IconButton aria-label="show 4 new mails" color="inherit">
+            <IconButton aria-label="show 4 new mails" color="inherit" style={{height:"56px", color:"white" ,padding:"0 10px"}}>
               <Badge badgeContent={cartItems?.length} color="secondary">
                  <ShoppingCartOutlinedIcon />
               </Badge>

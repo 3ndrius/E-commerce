@@ -10,4 +10,7 @@ export const requestSingleProduct = id => ({type: types.SINGLE_PRODUCT_REQUEST, 
 export const requestSingleProductSuccess = product => ({type: types.SINGLE_PRODUCT_SUCCESS, payload: product}) 
 export const requestSingleProductFail = error => ({type: types.SINGLE_PRODUCT_FAIL, payload: error})
 
+export const submitReviewRequest = reviews => ({type: types.SUBMIT_REVIEW_REQUEST, payload: reviews})
+export const submitReviewSuccess = success => ({type: types.SUBMIT_REVIEW_SUCCESS, payload: success})
+export const submitReviewFail = error => ({type: types.SUBMIT_REVIEW_FAIL, payload: error})
 
