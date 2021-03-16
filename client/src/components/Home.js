@@ -43,8 +43,8 @@ const useStyles = makeStyles((theme) => ({
   },
   slide: {
     maxWidth: "100%",
-    paddingTop: 20,
-    paddingLeft: "15%",
+    paddingTop: 10,
+    paddingLeft: "10%",
     paddingRight: "15%",
     height: 100,
   },
@@ -52,7 +52,7 @@ const useStyles = makeStyles((theme) => ({
     height: 150,
   },
   itemText: {
-    padding: "2px 0 0 15px",
+    padding: "0px 0 0 15px",
     cursor: "pointer",
   },
   loading: {
@@ -123,7 +123,7 @@ export default function Home({ match }) {
   let count = productsCount;
   if (keyword) count = filteredProductsCount;
   return (
-    <Container maxWidth="xl" my={4}>
+    <Container maxWidth="xl" mt={2}>
       <Meta title="Best store" />
       
         {loading && (
@@ -138,7 +138,7 @@ export default function Home({ match }) {
           </div>
         )}
         {keyword ? (
-          <Grid container>
+          <Grid container my={4}>
             <Grid item xs={12} md={3} lg={2}>
               <div className={classes.slide}>
                 <Typography id="track-inverted-range-slider">
@@ -175,7 +175,7 @@ export default function Home({ match }) {
                 {[5, 4, 3, 2, 1].map((item) => {
                   return (
                     <ListItem key={item} onClick={() => setRating(item)}>
-                      <Box component="fieldset" borderColor="transparent">
+                      <Box component="fieldset" borderColor="transparent" style={{cursor: 'pointer', height:10}}>
                         <Rating name="read-only" value={item} readOnly />
                       </Box>
                     </ListItem>
@@ -183,7 +183,7 @@ export default function Home({ match }) {
                 })}
               </List>
             </Grid>
-            <Grid item container xs={12} md={9} lg={10}>
+            <Grid item container xs={12} md={9} lg={10} spacing={1}>
               {products &&
                 products.map((product) => {
                   return (
@@ -194,6 +194,7 @@ export default function Home({ match }) {
                       lg={4}
                       align="center"
                       key={product._id}
+
                     >
                       <Product product={product} />
                     </Grid>
@@ -203,7 +204,7 @@ export default function Home({ match }) {
           </Grid>
         ) : (
           
-          <Grid item container xs={12} align="center">
+          <Grid item container xs={12} align="center" spacing={1} my={4}>
             {products &&
               products.map((product) => {
                 return (

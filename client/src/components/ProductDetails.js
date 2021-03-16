@@ -186,9 +186,11 @@ export default function SingleProduct(props) {
               </Link>
             </Grid>
             <Grid item xs={4}></Grid>
-           {isAuthenticated &&  <Grid xs={12} item>
-              <ReviewDialog productId={product?._id} />
-            </Grid>}
+            {isAuthenticated && (
+              <Grid xs={12} item>
+                <ReviewDialog productId={product?._id} />
+              </Grid>
+            )}
           </Grid>
         </Grid>
       )}
@@ -200,34 +202,37 @@ export default function SingleProduct(props) {
           <Divider />
         </Grid>
         {product && product.reviews?.length < 1 ? (
-          <Typography variant="h6">No reviews posted yet!</Typography>
+          <Typography variant="h6" py={4}>No reviews posted yet!</Typography>
         ) : (
-        product && product.reviews?.map(item => {
-          return (
-              <Grid item xs={12} my={2}>
-            <Box mb={1}>
-              <Typography ml={1} variant="paragraph">Author:</Typography>
-              <Typography variant="paragraph">{item.name}</Typography>
-            </Box>
-              <Box
-                component="fieldset"
-                borderColor="transparent"
-                className={classes.rate}
-              >
-                <Rating
-                  name="simple-controlled"
-                  value={item.ratings}
-                  readOnly
-                />
-              </Box>
-            <Box>
-              <Typography variant="h6" ml={1}>
-{ item.comment}
-              </Typography>
-            </Box>
-          </Grid>
-          )
-        })
+          product &&
+          product.reviews?.map((item) => {
+            return (
+              <Grid item xs={12} my={2} key={item._id}>
+                <Box mb={1}>
+                  <Typography ml={1} variant="paragraph">
+                    Author:
+                  </Typography>
+                  <Typography variant="paragraph">{item.name}</Typography>
+                </Box>
+                <Box
+                  component="fieldset"
+                  borderColor="transparent"
+                  className={classes.rate}
+                >
+                  <Rating
+                    name="simple-controlled"
+                    value={item.ratings}
+                    readOnly
+                  />
+                </Box>
+                <Box>
+                  <Typography variant="h6" ml={1}>
+                    {item.comment}
+                  </Typography>
+                </Box>
+              </Grid>
+            );
+          })
         )}
       </Grid>
     </Container>

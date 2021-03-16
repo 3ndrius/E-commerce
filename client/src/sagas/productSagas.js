@@ -47,7 +47,6 @@ function* submitReview(action) {
   const config = { headers: { "Content-Type": "application/json" }}
 
   try {
-    console.log(action.payload)
     const { data } = yield call(apiCall.put, `reviews`, action.payload, config);
     yield put(submitReviewSuccess(data));
 

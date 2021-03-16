@@ -1,6 +1,6 @@
 import * as React from "react";
-import { alpha, makeStyles } from "@material-ui/core/styles";
-import { Route , Link} from 'react-router-dom'
+import { makeStyles } from "@material-ui/core/styles";
+import { Route, Link } from "react-router-dom";
 import Avatar from "@material-ui/core/Avatar";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
@@ -10,17 +10,16 @@ import Badge from "@material-ui/core/Badge";
 import MenuItem from "@material-ui/core/MenuItem";
 import Menu from "@material-ui/core/Menu";
 import MenuIcon from "@material-ui/icons/Menu";
-import MailIcon from "@material-ui/icons/Mail";
 import AccountCircleOutlinedIcon from "@material-ui/icons/AccountCircleOutlined";
-import NotificationsIcon from "@material-ui/icons/Notifications";
-import Box from "@material-ui/core/Box"
+import Container from "@material-ui/core/Container";
+import Box from "@material-ui/core/Box";
 import MoreIcon from "@material-ui/icons/MoreVert";
 import FavoriteBorderOutlinedIcon from "@material-ui/icons/FavoriteBorderOutlined";
 import ShoppingCartOutlinedIcon from "@material-ui/icons/ShoppingCartOutlined";
-import Search from './Search'
-import { useDispatch, useSelector } from 'react-redux';
-import { requestLogoutUser } from '../../actions/userActions'
-import { toast } from 'react-toastify'
+import Search from "./Search";
+import { useDispatch, useSelector } from "react-redux";
+import { requestLogoutUser } from "../../actions/userActions";
+import { toast } from "react-toastify";
 
 const useStyles = makeStyles((theme) => ({
   grow: {
@@ -32,7 +31,6 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.up("sm")]: {
       display: "block",
     },
-    paddingRight: 50,
   },
   sectionDesktop: {
     display: "none",
@@ -48,14 +46,13 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function PrimarySearchAppBar({history}) {
-
+export default function PrimarySearchAppBar({ history }) {
   const classes = useStyles();
   const dispatch = useDispatch();
 
-  const { loading, user, isAuthenticated } = useSelector(state => state.auth)
+  const { loading, user, isAuthenticated } = useSelector((state) => state.auth);
 
-  const { cartItems } = useSelector(state => state.cart) 
+  const { cartItems } = useSelector((state) => state.cart);
 
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
@@ -71,9 +68,9 @@ export default function PrimarySearchAppBar({history}) {
   };
 
   const handleLogout = () => {
-    dispatch(requestLogoutUser())
+    dispatch(requestLogoutUser());
     toast.success("Logout success");
-  }
+  };
   const handleMenuClose = () => {
     setAnchorEl(null);
     handleMobileMenuClose();
@@ -82,7 +79,7 @@ export default function PrimarySearchAppBar({history}) {
   const handleMobileMenuOpen = (event) => {
     setMobileMoreAnchorEl(event.currentTarget);
   };
-   const menuId = "primary-search-account-menu";
+  const menuId = "primary-search-account-menu";
   const renderMenu = (
     <Menu
       anchorEl={anchorEl}
@@ -99,20 +96,33 @@ export default function PrimarySearchAppBar({history}) {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      {isAuthenticated ?  
-    <Box>
-      <MenuItem onClick={handleMenuClose}><Link to={'/profile'}>Profile</Link></MenuItem>
-      <MenuItem onClick={handleMenuClose}><Link to={'/orders'}>Orders</Link></MenuItem>
-      {(user && user.role === 'admin')  &&
-      <MenuItem onClick={handleMenuClose}><Link to={'/dashboard'}>Dashboard</Link></MenuItem> }
-      <MenuItem onClick={handleMenuClose} onClick={handleLogout}>Logout</MenuItem>
-      </Box>
-      :
-      <Box>
-      <MenuItem onClick={handleMenuClose}><Link to={'/login'}>Login</Link></MenuItem>
-      <MenuItem onClick={handleMenuClose}><Link to={'/register'}>Register</Link></MenuItem>
-    </Box>
- }
+      {isAuthenticated ? (
+        <Box>
+          <MenuItem onClick={handleMenuClose}>
+            <Link to={"/profile"}>Profile</Link>
+          </MenuItem>
+          <MenuItem onClick={handleMenuClose}>
+            <Link to={"/orders"}>Orders</Link>
+          </MenuItem>
+          {user && user.role === "admin" && (
+            <MenuItem onClick={handleMenuClose}>
+              <Link to={"/dashboard"}>Dashboard</Link>
+            </MenuItem>
+          )}
+          <MenuItem onClick={handleMenuClose} onClick={handleLogout}>
+            Logout
+          </MenuItem>
+        </Box>
+      ) : (
+        <Box>
+          <MenuItem onClick={handleMenuClose}>
+            <Link to={"/login"}>Login</Link>
+          </MenuItem>
+          <MenuItem onClick={handleMenuClose}>
+            <Link to={"/register"}>Register</Link>
+          </MenuItem>
+        </Box>
+      )}
     </Menu>
   );
 
@@ -134,41 +144,31 @@ export default function PrimarySearchAppBar({history}) {
       onClose={handleMobileMenuClose}
     >
       <MenuItem>
-      
-      <IconButton
-          color="inherit"
-          >
-             <Badge badgeContent={17} color="secondary">
-                <FavoriteBorderOutlinedIcon />
-              </Badge>
+        <IconButton color="inherit">
+          <Badge badgeContent={17} color="secondary">
+            <FavoriteBorderOutlinedIcon />
+          </Badge>
         </IconButton>
-              <Typography variant="paragraph">
-                Favorites
-              </Typography>
-            
+        <Typography variant="paragraph">Favorites</Typography>
       </MenuItem>
 
       <MenuItem>
-      <IconButton
-          color="inherit"
-          >
-            <Badge badgeContent={cartItems?.length} color="secondary">
-                <ShoppingCartOutlinedIcon />
-              </Badge>
+        <IconButton color="inherit">
+          <Badge badgeContent={cartItems?.length} color="secondary">
+            <ShoppingCartOutlinedIcon />
+          </Badge>
         </IconButton>
-              <Typography variant="paragraph">
-                ShopCart
-              </Typography>
-            </MenuItem>
+        <Typography variant="paragraph">ShopCart</Typography>
+      </MenuItem>
       <MenuItem onClick={handleProfileMenuOpen}>
-        <IconButton
-          color="inherit"
-          >
-             { isAuthenticated ? <Avatar src={user.avatar.url} alt={`avatar-${user.name}`} />  : <AccountCircleOutlinedIcon /> }
+        <IconButton color="inherit">
+          {isAuthenticated ? (
+            <Avatar src={user.avatar.url} alt={`avatar-${user.name}`} />
+          ) : (
+            <AccountCircleOutlinedIcon />
+          )}
         </IconButton>
-          <Typography variant="paragraph">
-            Account
-          </Typography>
+        <Typography variant="paragraph">Account</Typography>
       </MenuItem>
     </Menu>
   );
@@ -178,27 +178,24 @@ export default function PrimarySearchAppBar({history}) {
       <AppBar
         position="static"
         style={{ boxShadow: "none" }}
-        className={classes.appbar}
       >
+       <Container maxWidth="xl">
         <Toolbar>
-          <IconButton
-            edge="start"
-            className={classes.menuButton}
-            color="inherit"
-            aria-label="open drawer"
-          >
-            <MenuIcon />
-          </IconButton>
-          <Typography
-            className={classes.title}
-            variant="h6"
-            
-            component="div"
-          >
-            E-commerce
+          <Link to={"/"}>
+            <IconButton
+              edge="start"
+              className={classes.menuButton}
+              color="inherit"
+              aria-label="open drawer"
+            >
+              <MenuIcon />
+            </IconButton>
+          </Link>
+          <Typography className={classes.title} variant="h6" component="div">
+           Store
           </Typography>
 
-          <Route render={({history}) => (<Search history={history} />)} />
+          <Route render={({ history }) => <Search history={history} />} />
 
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
@@ -210,17 +207,28 @@ export default function PrimarySearchAppBar({history}) {
               onClick={handleProfileMenuOpen}
               color="inherit"
             >
-
-          { isAuthenticated ? <Avatar src={user.avatar.url} alt={`avatar-${user.name}`} style={{height:"28px", width:"28px"}}/>  : <AccountCircleOutlinedIcon /> }
+              {isAuthenticated ? (
+                <Avatar
+                  src={user.avatar.url}
+                  alt={`avatar-${user.name}`}
+                  style={{ height: "28px", width: "28px", marginRight: 10 }}
+                />
+              ) : (
+                <AccountCircleOutlinedIcon />
+              )}
             </IconButton>
 
-               <Link to="/cart">
-            <IconButton aria-label="show 4 new mails" color="inherit" style={{height:"56px", color:"white" ,padding:"0 10px"}}>
-              <Badge badgeContent={cartItems?.length} color="secondary">
-                 <ShoppingCartOutlinedIcon />
-              </Badge>
-            </IconButton>
-                 </Link> 
+            <Link to="/cart">
+              <IconButton
+                aria-label="show 4 new mails"
+                color="inherit"
+                style={{ height: "56px", color: "white", padding: "0 10px" }}
+              >
+                <Badge badgeContent={cartItems?.length} color="secondary">
+                  <ShoppingCartOutlinedIcon />
+                </Badge>
+              </IconButton>
+            </Link>
 
             <IconButton aria-label="show 17 new notifications" color="inherit">
               <Badge badgeContent={17} color="secondary">
@@ -240,6 +248,7 @@ export default function PrimarySearchAppBar({history}) {
             </IconButton>
           </div>
         </Toolbar>
+      </Container>
       </AppBar>
       {renderMobileMenu}
       {renderMenu}

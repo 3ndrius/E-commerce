@@ -17,6 +17,7 @@ const useStyles = makeStyles({
   root: {
     maxWidth: "580px",
     minWidth: "280px",
+    height:550,
     marginBottom: 20,
     backgroundColor: "#f00",
   },
@@ -24,6 +25,10 @@ const useStyles = makeStyles({
     padding: 0,
     margin: 0,
   },
+  cardContent: {
+    height:200,
+    border:"1px solid blue"
+  }
 
 });
 
@@ -33,25 +38,26 @@ export default function ImgMediaCard({ product }) {
   const [value, setValue] = React.useState(2);
 
   return (
-    <Card className={classes.root} elevation={0} outlined="true" >
+    <Card className={classes.root} elevation={0} outlined="true" mt={2} >
       <CardActionArea>
         <CardMedia
           component="img"
-          alt="Contemplative Reptile"
+          alt={product.name}
           height="280"
           image={product && product.images[0].url}
-          title="Contemplative Reptile"
+          title={product.name}
         />
-        <CardContent>
-          <Typography gutterBottom variant="h5" component="h2">
-            <Link to={`/product/${product._id}`}>{product.name}</Link>
+        <CardContent align="start">
+          <Typography variant="h5" component="h2">
+            {product.name.substring(0, 30)}
           </Typography>
         </CardContent>
       </CardActionArea>
-      <CardActions>
+
+      <CardActions align="start">
         <Box
           component="fieldset"
-          mb={3}
+          mb={1}
           borderColor="transparent"
           className={classes.rate}
         >
@@ -64,19 +70,19 @@ export default function ImgMediaCard({ product }) {
           />
         </Box>
       </CardActions>
-      <CardContent>
-        <Typography variant="h5" component="h6" gutterBottom>
-          {" "}
-          $ {product.price}
+      <CardContent align="start">
+        <Typography variant="h5" component="h6">
+          ${product.price}
         </Typography>
       </CardContent>
-      <CardActions>
-       <Link to={`/product/${product._id}`} >
-         <Button color="secondary" variant="outlined">
+
+      <CardActions >
+       <Link to={`/product/${product._id}`} pr={1}>
+         <Button color="primary" variant="contained">
           View details
         </Button>
          </Link>
-        <Button color="secondary" variant="outlined">
+        <Button color="primary" variant="contained">
           Add to cart
         </Button>
       </CardActions>
