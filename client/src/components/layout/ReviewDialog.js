@@ -27,10 +27,11 @@ const useStyles = makeStyles((theme) => ({
     height: 10,
   },
 }));
-export default function ReviewDialog({match}) {
-  const [open, setOpen] = React.useState(false);
-  const [reviews, setReviews] = React.useState({ ratings: 2, comment: "" });
+export default function ReviewDialog({productId}) {
 
+  const [open, setOpen] = React.useState(false);
+  const [value, setValue] = React.useState(2);
+  const [reviews, setReviews] = React.useState({productId, ratings: value, comment: "" });
   const dispatch = useDispatch();
 
   const classes = useStyles();
@@ -39,11 +40,11 @@ export default function ReviewDialog({match}) {
   };
 
   const handleClose = () => {
-    setReviews({...reviews, ratings:value})
-    dispatch(submitReviewRequest(reviews));
+    
+    dispatch(submitReviewRequest({...reviews, ratings:value}));
     setOpen(false);
+    console.log(reviews)
   };
-   const [value, setValue] = React.useState(2);
 
   const handleChange = (e) => {
     setReviews({ ...reviews, [e.target.id]: e.target.value });
@@ -58,7 +59,7 @@ export default function ReviewDialog({match}) {
         open={open}
         TransitionComponent={Transition}
         keepMounted
-        onClose={handleClose}
+        onClose={() => setOpen(false)}
         aria-labelledby="alert-dialog-slide-title"
         aria-describedby="alert-dialog-slide-description"
       >

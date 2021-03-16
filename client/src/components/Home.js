@@ -123,9 +123,9 @@ export default function Home({ match }) {
   let count = productsCount;
   if (keyword) count = filteredProductsCount;
   return (
-    <div className={classes.root}>
+    <Container maxWidth="xl" my={4}>
       <Meta title="Best store" />
-      <Grid className={classes.container} container alignItems="center">
+      
         {loading && (
           <div className={classes.loading}>
             <Loader
@@ -137,16 +137,11 @@ export default function Home({ match }) {
             />
           </div>
         )}
-        {products?.length < 1 && !loading && (
-          <Grid item sm={12} align="center">
-            No products...
-          </Grid>
-        )}
         {keyword ? (
-          <Grid container spacing={10}>
+          <Grid container>
             <Grid item xs={12} md={3} lg={2}>
               <div className={classes.slide}>
-                <Typography id="track-inverted-range-slider" gutterBottom>
+                <Typography id="track-inverted-range-slider">
                   Price range:
                 </Typography>
                 <Slider
@@ -207,6 +202,7 @@ export default function Home({ match }) {
             </Grid>
           </Grid>
         ) : (
+          
           <Grid item container xs={12} align="center">
             {products &&
               products.map((product) => {
@@ -216,6 +212,7 @@ export default function Home({ match }) {
                     sm={12}
                     md={6}
                     lg={4}
+                    xl={3}
                     key={product._id}
                     align="center"
                   >
@@ -243,7 +240,6 @@ export default function Home({ match }) {
             />
           </Box>
         )}
-      </Grid>
-    </div>
+    </Container>
   );
 }

@@ -11,20 +11,22 @@ import Box from "@material-ui/core/Box";
 import ShoppingCartOutlinedIcon from "@material-ui/icons/ShoppingCartOutlined";
 import { Rating } from "@material-ui/core";
 import { useDispatch, useSelector } from "react-redux";
-import { requestSingleProduct } from "../actions/productActions";
+import {
+  requestSingleProduct,
+  clearReviewStatus,
+} from "../actions/productActions";
+import Divider from "@material-ui/core/Divider";
 import { toast } from "react-toastify";
 import Loader from "./layout/Loader";
-import { requestAddToCart } from '../actions/cartActions'
+import { requestAddToCart } from "../actions/cartActions";
 import ReviewDialog from "./layout/ReviewDialog";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    flexGrow: 1,
-    marginTop: 30,
+    // flexGrow: 1,
+    // marginTop: 30,
   },
-  container: {
-    margin: "auto",
-  },
+
   image: {
     width: "auto",
     height: "100%",
@@ -47,130 +49,187 @@ export default function SingleProduct(props) {
   const classes = useStyles();
   const { id } = props.match?.params;
   const { product, loading, error } = useSelector((state) => state.product);
+  const { review } = useSelector((state) => state.submitReview);
   const dispatch = useDispatch();
-  const [ currentQuantity, setCurrentQuantity ] = React.useState(1)
-
-
+  const [currentQuantity, setCurrentQuantity] = React.useState(1);
+  const { isAuthenticated } = useSelector((state) => state.auth);
   const handleAddItem = () => {
-    dispatch(requestAddToCart(id, currentQuantity))
-    toast.success("Product added to cart successfully")
-  }
+    dispatch(requestAddToCart(id, currentQuantity));
+    toast.success("Product successfuly added to cart");
+  };
 
   React.useEffect(() => {
     if (error) toast.error(error);
     dispatch(requestSingleProduct(id));
-  }, [dispatch, toast, error]);
+    if (review === true) {
+      toast.success("Review added successfully");
+      dispatch(clearReviewStatus());
+    }
+  }, [dispatch, toast, error, review]);
 
   return (
-    <div className={classes.root}>
+    <Container maxWidth="xl">
       {loading ? (
         <Loader />
       ) : (
-        <Container className={classes.container}>
-          <Grid container spacing={4}>
-            <Grid item md={6}>
-              <ButtonBase className={classes.image}>
-                <img
-                  className={classes.img}
-                  alt="complex"
-                  src={product && product.images[0].url}
-                />
-              </ButtonBase>
-            </Grid>
-
-            <Grid container item spacing={2} md={6}>
-              <Grid item xs={9}>
-                <Typography variant="h3">{product?.name}</Typography>
-              </Grid>
-              <Grid item xs={2}></Grid>
-              <Grid item xs={1}>
-                <Typography variant="paragraph">
-                  <FavoriteBorderIcon />
-                </Typography>
-              </Grid>
-
-              <Grid item xs={12}>
-                <Typography variant="paragraph">
-                  {product && product.description}
-                </Typography>
-              </Grid>
-              <Grid item xs={4}>
-                <Box
-                  component="fieldset"
-                  mb={3}
-                  borderColor="transparent"
-                  className={classes.rate}
-                >
-                  <Rating
-                    name="simple-controlled"
-                    value={product && product.ratings}
-                    readOnly
-                  />
-                </Box>
-              </Grid>
-              <Grid item xs={8}>
-                ({product && product.numOfReviews}) Reviews
-              </Grid>
-              <Grid item xs={6}>
-                <Typography variant="paragraph">
-                  Seller: {product && product.seller}
-                </Typography>
-              </Grid>
-              <Grid item xs={6}>
-                <Typography variant="paragraph">
-                  Category: {product && product.category}
-                </Typography>
-              </Grid>
-              <Grid item xs={12}>
-                <Typography variant="h5">
-                  $ {product && product.price}
-                </Typography>
-              </Grid>
-
-              <Grid item xs={2}>
-                <Button color="secondary" variant="contained" disabled={currentQuantity > 1 ? false : true} onClick={() => setCurrentQuantity(currentQuantity -1)}>
-                  -
-                </Button>
-                </Grid>
-                <Grid item xs={1}>
-                <Typography variant="h5">
-                  {currentQuantity}
-                </Typography>
-                </Grid>
-                <Grid item xs={2}>
-                <Button color="primary" variant="contained" disabled={currentQuantity >= product?.stock ? true : false}   onClick={() => setCurrentQuantity(currentQuantity + 1)}>
-                 + 
-                </Button>
-              </Grid>
-
-              <Grid item xs={7}>
-                <Button color="secondary" fullWidth variant="contained" disabled={product?.stock > 0 ? false : true} onClick={handleAddItem}>
-                  Buy
-                </Button>
-              </Grid>
-
-              <Grid item xs={12}>
-                 {product && product.stock > 1 ? <Typography color="primary" variant="paragraph">InStock</Typography> : <Typography color="secondary">OutStock</Typography> }
-              </Grid>
-              <Grid item xs={4}>
-                <Link to="/">
-                  {" "}
-                  <Button color="secondary" variant="outlined">
-                    Go back
-                  </Button>
-                </Link>
-              </Grid>
-              <Grid item xs={4}>
-
-              </Grid>
-              <Grid xs={12} item>
-
-      <ReviewDialog />
-              </Grid>
-            </Grid>
+        <Grid container spacing={4} my={4}>
+          <Grid item md={6} align="end">
+            <ButtonBase className={classes.image}>
+              <img
+                className={classes.img}
+                alt="complex"
+                src={product && product.images[0].url}
+              />
+            </ButtonBase>
           </Grid>
-        </Container>
+
+          <Grid container item md={6} spacing={3} pr={6}>
+            <Grid
+              item
+              xs={12}
+              display="flex"
+              alignItems="flex-start"
+              justifyContent="space-between"
+            >
+              <Typography variant="h3">{product?.name}</Typography>
+              <Typography variant="paragraph" pt={1}>
+                <FavoriteBorderIcon />
+              </Typography>
+            </Grid>
+
+            <Grid item xs={12}>
+              <Typography variant="paragraph">
+                {product && product.description}
+              </Typography>
+            </Grid>
+
+            <Grid item xs={12} display="flex" alignItems="flex-start">
+              <Box
+                component="fieldset"
+                borderColor="transparent"
+                className={classes.rate}
+                paddingRight={2}
+              >
+                <Rating
+                  name="simple-controlled"
+                  value={product && product.ratings}
+                  readOnly
+                />
+              </Box>
+              <Typography variant="h6" component="div">
+                ({product && product.numOfReviews}) Reviews
+              </Typography>
+            </Grid>
+            <Grid item xs={12} display="flex" justifyContent="space-between">
+              <Typography variant="h6">
+                Seller: {product && product.seller}
+              </Typography>
+              <Typography variant="h6">
+                Category: {product && product.category}
+              </Typography>
+            </Grid>
+            <Grid item xs={12}>
+              <Typography variant="h5">$ {product && product.price}</Typography>
+            </Grid>
+
+            <Grid item xs={2}>
+              <Button
+                color="secondary"
+                variant="contained"
+                disabled={currentQuantity > 1 ? false : true}
+                onClick={() => setCurrentQuantity(currentQuantity - 1)}
+              >
+                -
+              </Button>
+            </Grid>
+            <Grid item xs={1}>
+              <Typography variant="h5">{currentQuantity}</Typography>
+            </Grid>
+            <Grid item xs={2}>
+              <Button
+                color="primary"
+                variant="contained"
+                disabled={currentQuantity >= product?.stock ? true : false}
+                onClick={() => setCurrentQuantity(currentQuantity + 1)}
+              >
+                +
+              </Button>
+            </Grid>
+
+            <Grid item xs={7}>
+              <Button
+                color="secondary"
+                fullWidth
+                variant="contained"
+                disabled={product?.stock > 0 ? false : true}
+                onClick={handleAddItem}
+              >
+                Add to cart
+              </Button>
+            </Grid>
+
+            <Grid item xs={12}>
+              {product && product.stock > 1 ? (
+                <Typography color="primary" variant="paragraph">
+                  InStock
+                </Typography>
+              ) : (
+                <Typography color="secondary">OutStock</Typography>
+              )}
+            </Grid>
+            <Grid item xs={4}>
+              <Link to="/">
+                {" "}
+                <Button color="secondary" variant="outlined">
+                  Go back
+                </Button>
+              </Link>
+            </Grid>
+            <Grid item xs={4}></Grid>
+           {isAuthenticated &&  <Grid xs={12} item>
+              <ReviewDialog productId={product?._id} />
+            </Grid>}
+          </Grid>
+        </Grid>
       )}
-    </div>
+      <Grid container>
+        <Grid xs={12} item>
+          <Typography variant="h4" component="div">
+            Reviews:
+          </Typography>
+          <Divider />
+        </Grid>
+        {product && product.reviews?.length < 1 ? (
+          <Typography variant="h6">No reviews posted yet!</Typography>
+        ) : (
+        product && product.reviews?.map(item => {
+          return (
+              <Grid item xs={12} my={2}>
+            <Box mb={1}>
+              <Typography ml={1} variant="paragraph">Author:</Typography>
+              <Typography variant="paragraph">{item.name}</Typography>
+            </Box>
+              <Box
+                component="fieldset"
+                borderColor="transparent"
+                className={classes.rate}
+              >
+                <Rating
+                  name="simple-controlled"
+                  value={item.ratings}
+                  readOnly
+                />
+              </Box>
+            <Box>
+              <Typography variant="h6" ml={1}>
+{ item.comment}
+              </Typography>
+            </Box>
+          </Grid>
+          )
+        })
+        )}
+      </Grid>
+    </Container>
   );
 }

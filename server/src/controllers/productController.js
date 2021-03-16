@@ -102,7 +102,7 @@ exports.updateReviews = catchErrorAsync(async (req, res, next) => {
     product.numOfReviews = product.reviews.length;
   }
   product.ratings =
-    product.reviews.reduce((acc, item) => item.rating + acc, 0) /
+    product.reviews.reduce((acc, item) => item.ratings + acc, 0) /
     product.reviews.length;
 
   await product.save({ validateBeforeSave: false });
