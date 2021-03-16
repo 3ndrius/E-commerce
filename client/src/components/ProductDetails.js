@@ -8,7 +8,6 @@ import ButtonBase from "@material-ui/core/ButtonBase";
 import Button from "@material-ui/core/Button";
 import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
 import Box from "@material-ui/core/Box";
-import ShoppingCartOutlinedIcon from "@material-ui/icons/ShoppingCartOutlined";
 import { Rating } from "@material-ui/core";
 import { useDispatch, useSelector } from "react-redux";
 import {

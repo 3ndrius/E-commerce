@@ -1,6 +1,7 @@
 import React, { lazy, Suspense } from "react";
 import { Route } from "react-router-dom";
 import { ThemeProvider } from "@material-ui/styles";
+import { makeStyles } from '@material-ui/core/styles';
 import { theme } from "./theme/customTheme";
 import { requestLoadUser, clearErrors } from "./actions/userActions";
 import store from "./store";

@@ -3,7 +3,6 @@ import { alpha, makeStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 import InputBase from "@material-ui/core/InputBase";
 import SearchIcon from "@material-ui/icons/Search";
-import CssBaseline from "@material-ui/core/CssBaseline";
 
 const useStyle = makeStyles((theme) => ({
   search: {

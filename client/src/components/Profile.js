@@ -8,7 +8,6 @@ import Avatar from "@material-ui/core/Avatar";
 import Container from "@material-ui/core/Container";
 import Button from "@material-ui/core/Button";
 import { useSelector } from "react-redux";
-import { toast } from "react-toastify";
 import Box from "@material-ui/core/Box";
 import { Link } from "react-router-dom";
 
