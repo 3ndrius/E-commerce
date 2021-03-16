@@ -33,7 +33,7 @@ export default function Payment({ history }) {
   const stripe = useStripe();
   const elements = useElements();
   const dispatch = useDispatch();
-
+  const [load, setLoad] = React.useState(false)
   const { user } = useSelector((state) => state.auth);
 
   const { cartItems, shippingInfo } = useSelector((state) => state.cart);
@@ -53,7 +53,7 @@ export default function Payment({ history }) {
   };
   const handlePaymentProcess = async (e) => {
     e.preventDefault();
-    setOnStatus(true);
+    setLoad(true);
 
     let res;
 
@@ -64,7 +64,9 @@ export default function Payment({ history }) {
       const client_secret = res.data.client_secret;
 
       if (!stripe || !elements) {
+        setLoad(false);
         return;
+        
       }
 
       const result = await stripe.confirmCardPayment(client_secret, {
@@ -78,6 +80,7 @@ export default function Payment({ history }) {
       });
 
       if (result.error) {
+        setLoad(false)
         toast.error(result.error.message);
       } else {
         if (result.paymentIntent.status === "succeeded") {
@@ -92,6 +95,7 @@ export default function Payment({ history }) {
         }
       }
     } catch (error) {
+      setLoad(false)
       toast.error(error.response.data.message);
     }
   };
@@ -154,7 +158,7 @@ export default function Payment({ history }) {
               color="primary"
               fullWidth
               variant="contained"
-              disabled={!stripe}
+              disabled={load}
               onClick={handlePaymentProcess}
             >
               Proceed Pay - ${orderInfo.totalPrice}

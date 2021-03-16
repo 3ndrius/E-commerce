@@ -65,12 +65,12 @@ export default function Cart({ history }) {
         </Grid>
 
         <Grid my={1} container item spacing={1} xs={12} md={9}>
-          {cartItems.length <= 0 && (
+          {cartItems?.length <= 0 && (
             <Grid item xs={9}>
               No product
             </Grid>
           )}
-          {cartItems.length >= 0 &&
+          {cartItems?.length >= 0 &&
             cartItems.map((item) => {
               return (
                 <React.Fragment key={item.productId}>

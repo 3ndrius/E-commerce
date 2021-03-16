@@ -27,3 +27,4 @@ export const requestSaveShippingInfo = (customer) => ({
   payload: customer,
 });
 
+export const clearCartData = () => ({type: types.CLEAR_CART_DATA});
