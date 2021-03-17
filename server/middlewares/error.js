@@ -25,8 +25,7 @@ module.exports = (error, req, res, next) => {
       error.status = 400;
     }
     if(error.code = 11000) {
-
-      const message = `Duplicate ${Object.keys(error.keyValue)} entered `;
+      const message = `${Object.values(error)[0]}` || "Error occurred";
       error = new Error(message);
       error.status = 400;
     }

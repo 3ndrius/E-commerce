@@ -14,7 +14,6 @@ process.on("uncaughtException", (error) => {
 
 // Configuration
 app.use(logger("dev"));
-//app.use(cors()); // app.use(cors({origin: "http://localhost:3000", credentials: true}));
 
 // database import
 dotenv.config();
