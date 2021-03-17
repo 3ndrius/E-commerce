@@ -13,19 +13,19 @@ POST http://localhost:8080/api/v1/products/
 content-type: application/json
 
 {
-  "name": "Corstair Pro 3000",
-  "price": "389.00",
-  "description":"This element that is exposed in the accessibility tree. With the name option you can filter the returned elements by their accessible name. This should be your top preference for just about everything. ",
-  "ratings": 5,
+  "name":"TP-Link AC1750 Smart WiFi Router (Archer A4) -Dual Band1",
+  "price": "89.00",
+  "description":"TP-Link AC1750 Smart WiFi Router (Archer A7) -Dual Band Gigabit Wireless Internet Router for Home, Works with Alexa, VPN Server, Parental Control, QoS",
+  "ratings": 4,
   "images": [
       {
-          "public_id": "http://localhost:8080/jfdsjfjsdfjsdjfjsdfj",
-          "url": " https://media.gq-magazine.co.uk/photos/5eda54b0ed80d8890ee2ee4c/master/w_1920,c_limit/20200605-nike-06.jpg"
+          "public_id": "/media/cache/gallery/rc/ewec5vwq/images/10/1055917/3815c75987aeac53c28dddca4bef4a70.jpg",
+          "url": "https://images-na.ssl-images-amazon.com/images/I/51R2a9p-vNL._AC_SL1000_.jpg"
       }
   ],
-  "category": "Laptop",
-  "seller": "Tomas Edison",
-  "stock": 3,
+  "category": "Sports",
+  "seller": "Sport Addict",
+  "stock": 35,
   "reviews": []
 
 }

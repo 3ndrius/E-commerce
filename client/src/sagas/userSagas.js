@@ -54,7 +54,7 @@ function* registerUser(action) {
     const res = yield call(apiCall.post, "register", action.payload, config);
     yield put(requestRegisterUserSuccess(res));
   } catch (error) {
-    yield put(requestRegisterUserFail(error.response.data.message));
+    yield put(requestRegisterUserFail(error?.response?.data?.message));
   }
 }
 
@@ -67,7 +67,7 @@ function* loadUser() {
     const res = yield call(apiCall.get, "me");
     yield put(requestLoadUserSuccess(res));
   } catch (error) {
-    yield put(requestLoadUserFail(error.response.data.message));
+    yield put(requestLoadUserFail(error?.response?.data?.message));
   }
 }
 

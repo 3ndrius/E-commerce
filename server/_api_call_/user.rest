@@ -1,15 +1,14 @@
 
 
 POST http://localhost:8080/api/v1/register
-content-type: multipart/form-data
-
+content-type: application/json
 {
- "name": "RaphaldJunior",
- "email": "rpaJor@gmail.com",
- "password": "justpassword",
+ "name": "admin",
+ "email": "admin@gmail.com",
+ "password": "qwertyuiop",
  "avatar": {
-    
-     "url": "jfdjfsjk"
+     "public_id": "id_public",
+     "url": "http"
  }  
 }  
 ###
@@ -18,8 +17,8 @@ POST http://localhost:8080/api/v1/login
 content-type: application/json
 
 {
- "email": "rpa@email.com",
- "password": "justpassword"
+ "email": "janusz@o2.pl",
+ "password": "aaaaaaaaaa"
 
 }
 ###
@@ -29,7 +28,7 @@ content-type: application/json
 
 {
  "email": "admin@gmail.com",
- "password": "qwertyuio"
+ "password": "qwertyuiop"
 }
 
 ###

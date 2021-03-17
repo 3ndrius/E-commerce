@@ -1,7 +1,6 @@
 const app = require("./app");
 const dotenv = require("dotenv");
-//const cors = require("cors");
-const logger = require("morgan");
+
 var cloudinary = require('cloudinary').v2;
 // handle uncaught exeption
 process.on("uncaughtException", (error) => {
@@ -9,11 +8,6 @@ process.on("uncaughtException", (error) => {
   console.log("Somethig wrong due uncaughtException");
   process.exit(1);
 });
-
- const cookieParser = require('cookie-parser');
-
-// Configuration
-app.use(logger("dev"));
 
 // database import
 dotenv.config();
@@ -26,10 +20,11 @@ cloudinary.config({
   api_secret: process.env.CLOUDINARY_SECRET_KEY
 })
 
+
 // server running
-const server = app.listen(process.env.APP_PORT, function () {
+const server = app.listen(process.env.PORT, function () {
   console.log(
-    `%%%%%%%====== Server Listening on ${process.env.APP_PORT} and ${process.env.NODE_ENV} =======%%%%%%%%`
+    `%%%%%%%====== Server Listening on ${process.env.PORT} and ${process.env.NODE_ENV} =======%%%%%%%%`
   );
 });
 
