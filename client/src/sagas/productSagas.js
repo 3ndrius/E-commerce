@@ -3,19 +3,21 @@ import apiCall from "../helpers/apiCall";
 import {
   requestAllProductSuccess,
   requestAllProductFail,
-  requestAllProduct,
   requestSingleProductSuccess,
   requestSingleProductFail,
   submitReviewSuccess,
   submitReviewFail,
   adminAllProductsFail,
   adminAllProductsSuccess,
+  deleteProductSuccess,
+  deleteProductFail,
 } from "../actions/productActions";
 import {
   ALL_PRODUCT_REQUEST,
   SINGLE_PRODUCT_REQUEST,
   SUBMIT_REVIEW_REQUEST,
   ADMIN_ALL_PRODUCTS_REQUEST,
+  DELETE_PRODUCT_REQUEST,
 } from "../constants/productConstants";
 
 function* getProducts(action) {
@@ -82,4 +84,20 @@ function* adminAllProduct(action) {
 
 export function* adminAllProductSaga() {
   yield takeEvery("ADMIN_ALL_PRODUCTS_REQUEST", adminAllProduct)
+}
+
+
+function* deleteProduct(action) {
+
+  const config = { headers: { "Content-Type": "application/json" }}
+  try {
+    const { data } = yield call(apiCall.delete, `admin/products/${action.payload}`);
+    yield put(deleteProductSuccess(data, action.payload))
+  } catch (error) {
+    yield put(deleteProductFail(error));
+  }
+}
+
+export function* deleteProductSaga() {
+  yield takeEvery("DELETE_PRODUCT_REQUEST", deleteProduct);
 }

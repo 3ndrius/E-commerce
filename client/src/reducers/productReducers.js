@@ -2,7 +2,7 @@ import {
   ALL_PRODUCT_REQUEST,
   ALL_PRODUCT_SUCCESS,
   ALL_PRODUCT_FAIL,
-  CLEAR_ERRORS,
+  CLEAR_ERROR,
   SINGLE_PRODUCT_REQUEST,
   SINGLE_PRODUCT_SUCCESS,
   SINGLE_PRODUCT_FAIL,
@@ -12,7 +12,10 @@ import {
   CLEAR_REVIEW_STATUS,
   ADMIN_ALL_PRODUCTS_REQUEST,
   ADMIN_ALL_PRODUCTS_FAIL,
-  ADMIN_ALL_PRODUCTS_SUCCESS
+  ADMIN_ALL_PRODUCTS_SUCCESS,
+  DELETE_PRODUCT_FAIL,
+  DELETE_PRODUCT_SUCCESS,
+  DELETE_PRODUCT_REQUEST,
 } from "../constants/productConstants";
 
 const initState = {
@@ -25,7 +28,8 @@ const initState = {
 export const productReducer = (state = initState, action) => {
   switch (action.type) {
     case "ALL_PRODUCT_REQUEST":
-    case "ADMIN_ALL_PRODUCT_REQUEST":
+    case "ADMIN_ALL_PRODUCTS_REQUEST":
+    case "DELETE_PRODUCT_REQUEST":
       return {
         ...state,
         loading: true,
@@ -39,21 +43,32 @@ export const productReducer = (state = initState, action) => {
         resPerPage: action.payload.resPerPage,
         filteredProductsCount: action.payload.filteredProductsCount,
       };
-    case "ADMIN_ALL_PRODUCT_SUCCESS":
+    case "ADMIN_ALL_PRODUCTS_SUCCESS":
       return {
         ...state,
         loading: false,
-        products: action.payload.products
+        products: action.payload.products,
+      };
+    case "DELETE_PRODUCT_SUCCESS":
+      return {
+        ...state,
+        loading: false,
+        message:action.payload.message.message,
+        products: state.products.filter(product => product._id !== action.payload.id) 
       }
     case "ALL_PRODUCT_FAIL":
-    case "ADMIN_ALL_PRODUCT_FAIL":
+    case "ADMIN_ALL_PRODUCTS_FAIL":
+    case "DELETE_PRODUCT_FAIL":
       return {
+        ...state,
+        products:null,
         loading: false,
         error: action.payload.message,
       };
-    case "CLEAR_ERRORS":
+    case "CLEAR_ERROR":
       return {
         ...state,
+        message: null,
         error: null,
       };
     default:
@@ -103,10 +118,11 @@ export const submitReviewReducer = (state = {}, action) => {
       return {
         ...state,
         review: null,
-        err: null
+        err: null,
       };
     case "SUBMIT_REVIEW_FAIL":
       return {
+        ...state,
         loading: false,
         err: action.payload,
       };

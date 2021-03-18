@@ -10,9 +10,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { Link } from "react-router-dom";
 import Button from "@material-ui/core/Button";
-import { adminAllProductsRequest } from "../../actions/productActions";
+import { adminAllProductsRequest, deleteProductRequest, clearErrors } from "../../actions/productActions";
 import clsx from "clsx";
-
+let handleDeleteProduct;
 const columns = [
   {
     field: "id",
@@ -67,11 +67,11 @@ const columns = [
     headerName: "Edit",
     headerClassName: "super-app-theme--header",
     cellClassName: "super-app-theme--cell",
-    width: 100,
+    width: 120,
     renderCell: (params) => (
       <Link to={`${params.value}`}>
         <Button variant="contained" color="primary" size="small">
-          Open
+         Edit
         </Button>
       </Link>
     ),
@@ -83,11 +83,9 @@ const columns = [
     cellClassName: "super-app-theme--cell",
     width: 120,
     renderCell: (params) => (
-      <Link to={`${params.value}`}>
-        <Button variant="contained" color="primary" size="small">
-          Open
+        <Button variant="contained" onClick={() => handleDeleteProduct(params.value)} color="secondary" size="small">
+         Delete 
         </Button>
-      </Link>
     ),
   },
 ];
@@ -95,7 +93,6 @@ const columns = [
 const useStyles = makeStyles({
   root: {
     "& .super-app-theme--cell": {
-      fontSize: "16px",
     },
     "& .super-app.positive": {
       color: "rgba(62, 117, 89, 0.8)",
@@ -106,12 +103,12 @@ const useStyles = makeStyles({
       fontWeight: "600",
     },
     "& .super-app-theme--header": {
-      fontSize: "18px",
+      fontSize: "16px",
     },
   },
   content: {
     flexGrow: 1,
-    padding: 10,
+    padding: "20px 40px",
   },
 });
 
@@ -122,7 +119,7 @@ export default function ProductsList() {
 
   const dispatch = useDispatch();
 
-  const { products, loading, error } = useSelector((state) => state.products);
+  const { products, loading, error, message } = useSelector((state) => state.products);
   let rows = [];
   products &&
     products.forEach((product) => {
@@ -134,17 +131,22 @@ export default function ProductsList() {
         price: product.price,
         category: product.category,
         edit: `/admin/products/${product._id}`,
-        delete: `/admin/products/${product._id}`,
+        delete:product._id,
       });
     });
+     handleDeleteProduct = (id) => {
+      dispatch(deleteProductRequest(id));
+    }
 
   React.useEffect(() => {
     dispatch(adminAllProductsRequest());
-  }, [dispatch]);
+    if(message) toast.success(message);
+    dispatch(clearErrors())
+  }, [dispatch, toast, message]);
 
   return (
     <div className={classes.root}>
-      <Grid container mt={5}>
+      <Grid container mt={2}>
         <CssBaseline />
         <Sidebar />
         <main className={classes.content}>
@@ -153,13 +155,13 @@ export default function ProductsList() {
           </Typography>
           <Grid item xs={12}>
             <div
-              style={{ height: 560, width: "100%", marginTop: "10px" }}
+              style={{ height: 570, width: "100%"}}
               className={classes.root}
             >
               <DataGrid
                 rows={rows}
                 columns={columns}
-                pageSize={5}
+                pageSize={8}
                 checkboxSelection
               />
             </div>
