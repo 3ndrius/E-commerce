@@ -42,6 +42,7 @@ export default function ImgMediaCard({ product }) {
           component="img"
           alt={product.name}
           height="280"
+          style={{objectFit: "contain"}}
           image={product && product.images[0].url}
           title={product.name}
         />

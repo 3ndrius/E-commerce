@@ -35,7 +35,8 @@ const useStyles = makeStyles((theme) => ({
     margin: "auto",
     display: "block",
     maxWidth: "100%",
-    maxHeight: "100%",
+    maxHeight: "600px",
+    objectFit:"cover",
     border: "1px solid gray",
   },
   rate: {

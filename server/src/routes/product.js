@@ -9,7 +9,8 @@ const {
   deleteProduct,
   updateReviews,
   getProductReviews,
-  deleteReview
+  deleteReview,
+  allProducts
 } = require("../controllers/productController");
 
 const {
@@ -18,9 +19,9 @@ const {
 } = require("../../middlewares/isAuth");
 
 router.route("/products").get(getProducts);
-router
-  .route("/products")
-  .post(isUserAuthenticated, authorizeRoles("admin"), newProduct);
+router.route("/admin/products")
+  .post(isUserAuthenticated, authorizeRoles("admin"), newProduct)
+  .get(isAuthenticated, authorizeRoles("admin"), allProducts)
 router.route("/products/:id").get(getSingleProduct);
 router.route("/admin/products/:id").put(isUserAuthenticated, updateProduct);
 router.route("/admin/products/:id").delete(isUserAuthenticated, deleteProduct);

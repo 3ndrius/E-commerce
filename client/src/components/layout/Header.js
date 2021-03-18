@@ -177,7 +177,8 @@ export default function PrimarySearchAppBar({ history }) {
     <div className={classes.grow}>
       <AppBar
         position="static"
-        style={{ boxShadow: "none" }}
+        style={{ boxShadow: "none"}}
+        
       >
        <Container maxWidth="xl">
         <Toolbar>

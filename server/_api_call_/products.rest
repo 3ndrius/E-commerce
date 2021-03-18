@@ -13,19 +13,19 @@ POST http://localhost:8080/api/v1/products/
 content-type: application/json
 
 {
-  "name":"TP-Link AC1750 Smart WiFi Router (Archer A4) -Dual Band1",
-  "price": "89.00",
-  "description":"TP-Link AC1750 Smart WiFi Router (Archer A7) -Dual Band Gigabit Wireless Internet Router for Home, Works with Alexa, VPN Server, Parental Control, QoS",
+  "name":"MSI GS75 - Laptop do gier 17,3" ,
+  "price": "649.00",
+  "description":"MSI GS75 - Laptop do gier 17,3 144 Hz Full HD (Intel I7-9550H, 16 GB RAM, 512 GB SSD, Nvidia GTX 1660Ti 6 GB DDR6, Windows 10) QWERTY",
   "ratings": 4,
   "images": [
       {
           "public_id": "/media/cache/gallery/rc/ewec5vwq/images/10/1055917/3815c75987aeac53c28dddca4bef4a70.jpg",
-          "url": "https://images-na.ssl-images-amazon.com/images/I/51R2a9p-vNL._AC_SL1000_.jpg"
+          "url": "https://images-na.ssl-images-amazon.com/images/I/51d7mcrKn7L._SL1024_.jpg"
       }
   ],
-  "category": "Sports",
-  "seller": "Sport Addict",
-  "stock": 35,
+  "category": "Electronic",
+  "seller": "Geek",
+  "stock": 15,
   "reviews": []
 
 }

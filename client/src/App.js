@@ -6,6 +6,7 @@ import { theme } from "./theme/customTheme";
 import { requestLoadUser, clearErrors } from "./actions/userActions";
 import store from "./store";
 import ProtectedRoute from "./components/route/ProtectedRoute";
+import AdminRoute from "./components/route/AdminRoute";
 import Header from "./components/layout/Header";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
@@ -26,6 +27,8 @@ const Payment = lazy(() => import("./components/Payment"));
 const OrderSuccess = lazy(() => import("./components/OrderSuccess"));
 const showOrders = lazy(() => import("./components/showOrders"));
 const OrderDetails = lazy(() => import("./components/OrderDetails"));
+const Dashboard = lazy(() => import("./components/admin/Dashboard"))
+
 
 const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_API_KEY);
 
@@ -58,6 +61,7 @@ function App() {
         <ProtectedRoute path="/shipping" component={Shipping} exact />
         <ProtectedRoute path="/profile/update" component={ProfileUpdate} exact/>
         <ProtectedRoute path="/profile/password" component={UpdatePassword} exact />
+        <AdminRoute path="/dashboard" component={Dashboard} exact />
       </Suspense>
     </ThemeProvider>
   );
