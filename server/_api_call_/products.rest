@@ -9,23 +9,23 @@ GET http://localhost:8080/api/v1/products?keyword=Mac&price[gte]=11&price[lte]=2
 
 ###
 
-POST http://localhost:8080/api/v1/products/
+POST http://localhost:8080/api/v1/admin/products/
 content-type: application/json
 
 {
-  "name":"MSI GS75 - Laptop do gier 17,3" ,
-  "price": "649.00",
+  "name":"Laptop MSI GS75 - Laptop do gier 14" ,
+  "price": "149.00",
   "description":"MSI GS75 - Laptop do gier 17,3 144 Hz Full HD (Intel I7-9550H, 16 GB RAM, 512 GB SSD, Nvidia GTX 1660Ti 6 GB DDR6, Windows 10) QWERTY",
-  "ratings": 4,
+  "ratings": 5,
   "images": [
       {
           "public_id": "/media/cache/gallery/rc/ewec5vwq/images/10/1055917/3815c75987aeac53c28dddca4bef4a70.jpg",
           "url": "https://images-na.ssl-images-amazon.com/images/I/51d7mcrKn7L._SL1024_.jpg"
       }
   ],
-  "category": "Electronic",
+  "category": "Laptop",
   "seller": "Geek",
-  "stock": 15,
+  "stock": 25,
   "reviews": []
 
 }

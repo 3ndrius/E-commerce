@@ -9,6 +9,7 @@ import Divider from '@material-ui/core/Divider';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
+import { Link } from 'react-router-dom'
 
 import Collapse from '@material-ui/core/Collapse';
 import ExpandLess from '@material-ui/icons/ExpandLess';
@@ -66,12 +67,14 @@ const [open, setOpen] = React.useState(true);
         <div className={classes.drawerContainer}>
           <List 
             component="nav" >
+          <Link to="/admin/dashboard">
       <ListItem button>
         <ListItemIcon>
           <DashboardCustomizeOutlinedIcon />
         </ListItemIcon>
         <ListItemText primary="Dashboard" />
       </ListItem>
+        </Link>
       <ListItem button>
         <ListItemIcon>
           <ShoppingCartOutlinedIcon />
@@ -87,12 +90,14 @@ const [open, setOpen] = React.useState(true);
       </ListItem>
       <Collapse in={open} timeout="auto" unmountOnExit>
         <List component="div" disablePadding>
+            <Link to="/admin/products" >
           <ListItem button style={{paddingLeft: 30}}>
             <ListItemIcon>
               <ClearAllOutlinedIcon />
             </ListItemIcon>
             <ListItemText primary="All" />
           </ListItem>
+</Link>
           <ListItem button style={{paddingLeft: 30}} >
             <ListItemIcon>
               <AddToPhotosOutlinedIcon />

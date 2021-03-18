@@ -28,6 +28,7 @@ const OrderSuccess = lazy(() => import("./components/OrderSuccess"));
 const showOrders = lazy(() => import("./components/showOrders"));
 const OrderDetails = lazy(() => import("./components/OrderDetails"));
 const Dashboard = lazy(() => import("./components/admin/Dashboard"))
+const ProductsList = lazy(() => import("./components/admin/ProductsList"))
 
 
 const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_API_KEY);
@@ -61,7 +62,8 @@ function App() {
         <ProtectedRoute path="/shipping" component={Shipping} exact />
         <ProtectedRoute path="/profile/update" component={ProfileUpdate} exact/>
         <ProtectedRoute path="/profile/password" component={UpdatePassword} exact />
-        <AdminRoute path="/dashboard" component={Dashboard} exact />
+        <AdminRoute path="/admin/dashboard" component={Dashboard} exact />
+        <AdminRoute path="/admin/products" component={ProductsList} exact />
       </Suspense>
     </ThemeProvider>
   );

@@ -106,7 +106,7 @@ export default function PrimarySearchAppBar({ history }) {
           </MenuItem>
           {user && user.role === "admin" && (
             <MenuItem onClick={handleMenuClose}>
-              <Link to={"/dashboard"}>Dashboard</Link>
+              <Link to={"/admin/dashboard"}>Dashboard</Link>
             </MenuItem>
           )}
           <MenuItem onClick={handleMenuClose} onClick={handleLogout}>
