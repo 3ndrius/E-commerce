@@ -21,7 +21,7 @@ const {
 router.route("/products").get(getProducts);
 router.route("/admin/products")
   .post(isUserAuthenticated, authorizeRoles("admin"), newProduct)
-  .get(isAuthenticated, authorizeRoles("admin"), allProducts)
+  .get(isUserAuthenticated, authorizeRoles("admin"), allProducts)
 router.route("/products/:id").get(getSingleProduct);
 router.route("/admin/products/:id").put(isUserAuthenticated, updateProduct);
 router.route("/admin/products/:id").delete(isUserAuthenticated, deleteProduct);

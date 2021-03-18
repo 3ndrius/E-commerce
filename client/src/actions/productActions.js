@@ -14,5 +14,9 @@ export const submitReviewRequest = reviews => ({type: types.SUBMIT_REVIEW_REQUES
 export const submitReviewSuccess = success => ({type: types.SUBMIT_REVIEW_SUCCESS, payload: success})
 export const submitReviewFail = error => ({type: types.SUBMIT_REVIEW_FAIL, payload: error})
 
+export const adminAllProductsRequest = () => ({type: types.ADMIN_ALL_PRODUCTS_REQUEST});
+export const adminAllProductsSuccess = (products) => ({type: types.ADMIN_ALL_PRODUCTS_SUCCESS, payload: products})
+export const adminAllProductsFail = error => ({type: types.ADMIN_ALL_PRODUCTS_FAIL, payload: error})
+
 export const clearReviewStatus = () => ({type: types.CLEAR_REVIEW_STATUS})
 

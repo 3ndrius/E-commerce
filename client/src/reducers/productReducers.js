@@ -9,7 +9,10 @@ import {
   SUBMIT_REVIEW_REQUEST,
   SUBMIT_REVIEW_SUCCESS,
   SUBMIT_REVIEW_FAIL,
-  CLEAR_REVIEW_STATUS
+  CLEAR_REVIEW_STATUS,
+  ADMIN_ALL_PRODUCTS_REQUEST,
+  ADMIN_ALL_PRODUCTS_FAIL,
+  ADMIN_ALL_PRODUCTS_SUCCESS
 } from "../constants/productConstants";
 
 const initState = {
@@ -22,6 +25,7 @@ const initState = {
 export const productReducer = (state = initState, action) => {
   switch (action.type) {
     case "ALL_PRODUCT_REQUEST":
+    case "ADMIN_ALL_PRODUCT_REQUEST":
       return {
         ...state,
         loading: true,
@@ -35,7 +39,14 @@ export const productReducer = (state = initState, action) => {
         resPerPage: action.payload.resPerPage,
         filteredProductsCount: action.payload.filteredProductsCount,
       };
+    case "ADMIN_ALL_PRODUCT_SUCCESS":
+      return {
+        ...state,
+        loading: false,
+        products: action.payload.products
+      }
     case "ALL_PRODUCT_FAIL":
+    case "ADMIN_ALL_PRODUCT_FAIL":
       return {
         loading: false,
         error: action.payload.message,
@@ -67,7 +78,7 @@ export const singleProductReducer = (state = {}, action) => {
     case "SINGLE_PRODUCT_FAIL":
       return {
         ...state,
-        error: action.payload.error,
+        error: action.payload.message,
       };
     default:
       return state;
