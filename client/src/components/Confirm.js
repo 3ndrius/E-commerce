@@ -1,6 +1,7 @@
 import * as React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
+import Meta from './layout/Meta';
 import Typography from "@material-ui/core/Typography";
 import ButtonBase from "@material-ui/core/ButtonBase";
 import Container from "@material-ui/core/Container";
@@ -71,6 +72,7 @@ export default function Confirm({ history }) {
 
   return (
     <React.Fragment>
+      <Meta title="Confirm" />
       <CheckoutSteps stepNo={1} />
     <Container maxWidth="lg">
 

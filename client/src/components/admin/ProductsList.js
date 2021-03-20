@@ -145,7 +145,7 @@ export default function ProductsList() {
   }, [dispatch, toast, message]);
 
   return (
-    <div className={classes.root}>
+    <div >
       <Grid container mt={2}>
         <CssBaseline />
         <Sidebar />

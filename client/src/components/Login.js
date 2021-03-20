@@ -1,5 +1,6 @@
 import * as React from "react";
 import Avatar from "@material-ui/core/Avatar";
+import Meta from './layout/Meta';
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
@@ -39,6 +40,7 @@ const Login = ({ history, location }) => {
   };
   return (
     <Container component="main" maxWidth="xs">
+      <Meta title="Login" />
       <CssBaseline />
       <Box
         sx={{

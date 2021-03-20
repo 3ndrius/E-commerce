@@ -9,6 +9,7 @@ import Box from "@material-ui/core/Box";
 import Divider from "@material-ui/core/Divider";
 import { useSelector, useDispatch } from "react-redux";
 import { toast } from "react-toastify";
+import Meta from './layout/Meta'
 import {
   requestAddToCart,
   requestRemoveFromCart,
@@ -57,6 +58,7 @@ export default function Cart({ history }) {
 
   return (
     <Container maxWidth="lg">
+      <Meta title="Cart" />
       <Grid container my={4}>
         <Grid item xs={12} mb={4}>
           <Typography variant="h3">Your cart:</Typography>
