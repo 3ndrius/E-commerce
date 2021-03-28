@@ -14,6 +14,8 @@ const dispatch = useDispatch();
     },[])
     
     return (
+        <>
+        
         <Container align="center" style={{paddingTop: "50px"}}>
             <Avatar src="https://cdn.onlinewebfonts.com/svg/img_237729.png" style={{height:"300px", width:"300px"}}  />
             <Typography variant="h3" component="div" pt={4}>Your order has been successfully completed!</Typography>

@@ -12,6 +12,7 @@ import Divider from "@material-ui/core/Divider";
 import { useSelector, useDispatch } from "react-redux";
 import { toast } from "react-toastify";
 import { singleOrderRequest, clearErrors } from "../actions/orderActions";
+import Meta from '../components/layout/Meta'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -51,6 +52,8 @@ export default function OrderDetails({ history, match }) {
 
   return (
     <React.Fragment>
+ <Meta title="Order Details" />
+      <CssBaseline />
       <Container maxWidth="lg">
         <Grid container my={4}>
           <Grid item xs={12} mr={2} mb={4}>
