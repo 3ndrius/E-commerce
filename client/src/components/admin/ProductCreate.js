@@ -6,6 +6,7 @@ import InputLabel from "@material-ui/core/InputLabel";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Typography from "@material-ui/core/Typography";
 import Sidebar from "../layout/Sidebar";
+import Meta from '../layout/Meta';
 import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import MenuItem from "@material-ui/core/MenuItem";
@@ -48,14 +49,18 @@ function ProductCreate() {
   const [seller, setSeller] = React.useState("");
   const [images, setImages] = React.useState([]);
   const [imagesPrev, setImagesPrev] = React.useState([]);
+
   const handleUploadImage = () => {
-    // const files = new FileReader();
-    // files.onload = () => {
-    //   if (files.readyState === 2) {
-    //     setImages(files.result);
-    //   }
-    // };
-    // reader.readAsDataURL(e.target.files[0]);
+
+    setImages([])
+    setImagesPrev([])
+    const rader = new FileReader();
+    rader.onload = () => {
+      if (rader.readyState === 2) {
+        setImages(rader.result);
+      }
+    };
+    reader.readAsDataURL(file);
  
   };
 
@@ -68,16 +73,16 @@ function ProductCreate() {
     formData.set("seller", seller);
     formData.set("category", category);
     formData.set("price", price);
-
-    images.forEach((image) => {
-      formData.append("images", image);
-    });
+    // images.forEach((image) => {
+    //   formData.append("images", image);
+    // });
   };
 
   return (
     <div>
       <Grid container mt={2}>
         <CssBaseline />
+        <Meta title="Product Create" />
         <Sidebar />
         <main className={classes.content}>
           <Typography variant="h3" pb={4}>
