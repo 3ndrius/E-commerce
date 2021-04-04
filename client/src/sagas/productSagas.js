@@ -11,6 +11,8 @@ import {
   adminAllProductsSuccess,
   deleteProductSuccess,
   deleteProductFail,
+  adminAddProductFail,
+  adminAddProductSuccess,
 } from "../actions/productActions";
 import {
   ALL_PRODUCT_REQUEST,
@@ -18,6 +20,7 @@ import {
   SUBMIT_REVIEW_REQUEST,
   ADMIN_ALL_PRODUCTS_REQUEST,
   DELETE_PRODUCT_REQUEST,
+  ADMIN_ADD_PRODUCT_REQUEST
 } from "../constants/productConstants";
 
 function* getProducts(action) {
@@ -100,4 +103,18 @@ function* deleteProduct(action) {
 
 export function* deleteProductSaga() {
   yield takeEvery("DELETE_PRODUCT_REQUEST", deleteProduct);
+}
+
+function* addProduct(action) {
+  const config = { headers: { "Content-Type": "multipart/form-data" } };
+  try {
+    const res = yield call(apiCall.post, 'admin/product', action.payload, config)
+    yield put(adminAddProductSuccess(res));
+  } catch (error) {
+    yield put(adminAddProductFail(error))
+  }
+}
+
+export function* addProductSaga(){
+  yield takeEvery('ADMIN_ADD_PRODUCT_REQUEST', addProduct)
 }
