@@ -108,7 +108,7 @@ export function* deleteProductSaga() {
 function* addProduct(action) {
   const config = { headers: { "Content-Type": "multipart/form-data" } };
   try {
-    const res = yield call(apiCall.post, 'admin/product', action.payload, config)
+    const res = yield call(apiCall.post, 'admin/products/', action.payload, config)
     yield put(adminAddProductSuccess(res));
   } catch (error) {
     yield put(adminAddProductFail(error))

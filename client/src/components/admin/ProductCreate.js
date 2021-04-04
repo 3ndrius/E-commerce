@@ -13,6 +13,8 @@ import MenuItem from "@material-ui/core/MenuItem";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import Button from "@material-ui/core/Button";
 import Avatar from "@material-ui/core/Avatar";
+import { adminAddProductRequest } from '../../actions/productActions'
+import { useDispatch, useSelector } from 'react-redux'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -45,6 +47,7 @@ const categories = [
 
 function ProductCreate() {
   const classes = useStyles();
+  const dispatch = useDispatch();
 
   const [category, setCategory] = React.useState("Computers");
   const [price, setPrice] = React.useState(0);
@@ -85,6 +88,7 @@ function ProductCreate() {
     images.forEach((image) => {
       formData.append("images", image);
     });
+    dispatch(adminAddProductRequest(formData))
   };
 
   return (
