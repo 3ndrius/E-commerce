@@ -71,11 +71,10 @@ function ProductCreate() {
       };
       reader.readAsDataURL(file);
     });
-    console.log(e.target.files)
   };
 
-  const handleCreateProduct = () => {
-    console.log("click");
+  const handleCreateProduct = (e) => {
+    e.preventDefault();
     const formData = new FormData();
     formData.set("name", name);
     formData.set("description", description);
@@ -83,9 +82,9 @@ function ProductCreate() {
     formData.set("seller", seller);
     formData.set("category", category);
     formData.set("price", price);
-    // images.forEach((image) => {
-    //   formData.append("images", image);
-    // });
+    images.forEach((image) => {
+      formData.append("images", image);
+    });
   };
 
   return (

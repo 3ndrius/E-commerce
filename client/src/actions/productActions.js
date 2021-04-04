@@ -18,6 +18,10 @@ export const adminAllProductsRequest = () => ({type: types.ADMIN_ALL_PRODUCTS_RE
 export const adminAllProductsSuccess = (products) => ({type: types.ADMIN_ALL_PRODUCTS_SUCCESS, payload: products})
 export const adminAllProductsFail = error => ({type: types.ADMIN_ALL_PRODUCTS_FAIL, payload: error})
 
+export const adminAddProductRequest = data => ({type: types.ADMIN_ADD_PRODUCT_REQUEST, payload: data})
+export const adminAddProductSuccess = data => ({type: types.ADMIN_ADD_PRODUCT_SUCCESS, payload: data})
+export const adminAddProductFail = error => ({type: types.ADMIN_ADD_PRODUCT_FAIL, payload: error})
+
 export const deleteProductRequest = productId => ({type: types.DELETE_PRODUCT_REQUEST, payload: productId})
 export const deleteProductSuccess = (message, id) => ({type: types.DELETE_PRODUCT_SUCCESS, payload: {message, id}})
 export const deleteProductFail = error => ({type: types.DELETE_PRODUCT_FAIL, payload: error})
