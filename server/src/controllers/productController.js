@@ -2,10 +2,31 @@ const Product = require("../models/product.model");
 const createError = require("http-errors");
 const catchErrorAsync = require("../../middlewares/catchErrorAsync");
 const APIFeatures = require("../../utils/apiFeatures");
+const cloudinary = require("cloudinary").v2;
 
-// Create new product => /api/v1/product/ GET
+// Create new product => /api/v1/admin/products/ POST
 exports.newProduct = catchErrorAsync(async (req, res, next) => {
+  let images = [];
+  if (typeof req.body.images === "string") {
+    images = [...images, req.body.images];
+  } else {
+    images = req.body.images;
+  }
+
+  let imageLinks = [];
+
+  for (let i = 0; i < images.length; i++) {
+    const result = await cloudinary.uploader.upload(images[i], {
+      folder: "products",
+    });
+    imageLinks.push({
+      public_id: result.public_id,
+      url: result.secure_url,
+    });
+  }
+  req.body.images = imageLinks;
   req.body.user = req.user.id;
+
   const product = await Product.create(req.body);
   if (!product) throw createError.NotFound("Products not found");
   res.status(201).json({
@@ -14,7 +35,7 @@ exports.newProduct = catchErrorAsync(async (req, res, next) => {
   });
 });
 
-// Get all Products  => /api/v1/product/ POST
+// Get all Products  => /api/v1/product/ GET
 
 exports.getProducts = catchErrorAsync(async (req, res, next) => {
   let resPerPage = 6;
@@ -23,12 +44,10 @@ exports.getProducts = catchErrorAsync(async (req, res, next) => {
     .search()
     .filter();
 
-    let products = await apiFeatures.query;
-    const filteredProductsCount = products.length;
+  let products = await apiFeatures.query;
+  const filteredProductsCount = products.length;
 
-    apiFeatures.pagination(resPerPage);
-    
-
+  apiFeatures.pagination(resPerPage);
 
   products = await apiFeatures.query;
 
@@ -123,16 +142,16 @@ exports.getProductReviews = catchErrorAsync(async (req, res, next) => {
 
 // allProduct -admin /api/v1/admin/products GET
 
-exports.allProducts =catchErrorAsync(async (req, res, next) => {
+exports.allProducts = catchErrorAsync(async (req, res, next) => {
   const products = await Product.find();
 
- if(!products) return next(createError.NotFound("Product not found"));
+  if (!products) return next(createError.NotFound("Product not found"));
 
   res.status(200).json({
     success: true,
-    products
-  })
-})
+    products,
+  });
+});
 
 // delete review  /api/v1/reviews DELETE
 exports.deleteReview = catchErrorAsync(async (req, res, next) => {
