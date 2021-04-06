@@ -5,7 +5,7 @@ GET http://localhost:8080/api/v1/products
 
 ###
 
-GET http://localhost:8080/api/v1/products?keyword=Mac&price[gte]=11&price[lte]=29
+GET http://localhost:8080/api/v1/products?keyword=&price[gte]=1&price[lte]=1129
 
 ###
 

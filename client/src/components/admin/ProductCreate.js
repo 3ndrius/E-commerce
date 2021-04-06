@@ -84,11 +84,13 @@ function ProductCreate() {
     formData.set("stock", stock);
     formData.set("seller", seller);
     formData.set("category", category);
+    formData.set('ratings',1)
     formData.set("price", price);
     images.forEach((image) => {
       formData.append("images", image);
     });
     dispatch(adminAddProductRequest(formData))
+    history.push('/admin/products')
   };
 
   return (
