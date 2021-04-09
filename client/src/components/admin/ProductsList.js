@@ -160,6 +160,7 @@ export default function ProductsList() {
             >
               <DataGrid
                 rows={rows}
+                loading={loading}
                 columns={columns}
                 pageSize={8}
                 checkboxSelection

@@ -13,6 +13,7 @@ import MenuItem from "@material-ui/core/MenuItem";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import Button from "@material-ui/core/Button";
 import Avatar from "@material-ui/core/Avatar";
+import { toast } from 'react-toastify'
 import { adminAddProductRequest } from '../../actions/productActions'
 import { useDispatch, useSelector } from 'react-redux'
 
@@ -49,6 +50,7 @@ function ProductCreate( {history} ) {
   const classes = useStyles();
   const dispatch = useDispatch();
 
+  const { loading, error, success } = useSelector((state) => state.newProduct)
   const [category, setCategory] = React.useState("Computers");
   const [price, setPrice] = React.useState(0);
   const [name, setName] = React.useState("");
@@ -91,6 +93,15 @@ function ProductCreate( {history} ) {
     });
     dispatch(adminAddProductRequest(formData))
   };
+
+  React.useEffect(() =>{
+
+    if(error) {toast.error("Added product failed!"); dispatch(clearErrors());}
+    if(success) history.push('/admin/products'); toast.success("Added product succeeded!");
+
+
+    
+  },[history, success, error, toast])
 
   return (
     <div>
