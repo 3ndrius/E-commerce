@@ -81,12 +81,19 @@ exports.updateProduct = catchErrorAsync(async (req, res, next) => {
   });
 });
 
-// delete product  => /admin/api/product/{id}  DELETE
+// delete product  => /api/v1/admin/product/{id}  DELETE
 
 exports.deleteProduct = catchErrorAsync(async (req, res) => {
-  let product = await Product.findByIdAndDelete(req.params.id);
+  let product = await Product.findById(req.params.id);
   if (!product) throw createError.NotFound("Product cannot be deleted");
 
+  for (let i = 0; i < product.images.length; i++) {
+    const result = await cloudinary.uploader.destroy(
+      product.images[i].public_id
+    );
+  }
+
+  await product.remove();
   res.status(200).json({
     success: true,
     message: "Product deleted successfully",

@@ -45,7 +45,7 @@ const categories = [
   "Home",
 ];
 
-function ProductCreate() {
+function ProductCreate( {history} ) {
   const classes = useStyles();
   const dispatch = useDispatch();
 
@@ -90,7 +90,6 @@ function ProductCreate() {
       formData.append("images", image);
     });
     dispatch(adminAddProductRequest(formData))
-    history.push('/admin/products')
   };
 
   return (
