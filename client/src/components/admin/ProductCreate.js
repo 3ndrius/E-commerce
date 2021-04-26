@@ -13,9 +13,12 @@ import MenuItem from "@material-ui/core/MenuItem";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import Button from "@material-ui/core/Button";
 import Avatar from "@material-ui/core/Avatar";
-import { toast } from 'react-toastify'
-import { adminAddProductRequest } from '../../actions/productActions'
-import { useDispatch, useSelector } from 'react-redux'
+import { toast } from "react-toastify";
+import {
+  adminAddProductRequest,
+  clearErrors,
+} from "../../actions/productActions";
+import { useDispatch, useSelector } from "react-redux";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -31,7 +34,7 @@ const useStyles = makeStyles((theme) => ({
   large: {
     width: theme.spacing(8),
     height: theme.spacing(8),
-  }
+  },
 }));
 
 const categories = [
@@ -46,11 +49,11 @@ const categories = [
   "Home",
 ];
 
-function ProductCreate( {history} ) {
+function ProductCreate({ history }) {
   const classes = useStyles();
   const dispatch = useDispatch();
 
-  const { loading, error, success } = useSelector((state) => state.newProduct)
+  const { loading, error, success } = useSelector((state) => state.newProduct);
   const [category, setCategory] = React.useState("Computers");
   const [price, setPrice] = React.useState(0);
   const [name, setName] = React.useState("");
@@ -61,7 +64,7 @@ function ProductCreate( {history} ) {
   const [imagesPrev, setImagesPrev] = React.useState([]);
 
   const handleUploadImage = (e) => {
-    const files =  [...e.target.files];
+    const files = [...e.target.files];
 
     setImages([]);
     setImagesPrev([]);
@@ -86,22 +89,22 @@ function ProductCreate( {history} ) {
     formData.set("stock", stock);
     formData.set("seller", seller);
     formData.set("category", category);
-    formData.set('ratings',1)
+    formData.set("ratings", 1);
     formData.set("price", price);
     images.forEach((image) => {
       formData.append("images", image);
     });
-    dispatch(adminAddProductRequest(formData))
+    dispatch(adminAddProductRequest(formData));
   };
 
-  React.useEffect(() =>{
-
-    if(error) {toast.error("Added product failed!"); dispatch(clearErrors());}
-    if(success) history.push('/admin/products'); toast.success("Added product succeeded!");
-
-
-    
-  },[history, success, error, toast])
+  React.useEffect(() => {
+    if (error) {
+      toast.error("Added product failed!");
+      dispatch(clearErrors());
+    }
+    if (success) history.push("/admin/products");
+    toast.success("Added product succeeded!");
+  }, [history, success, error, toast]);
 
   return (
     <div>
@@ -193,30 +196,34 @@ function ProductCreate( {history} ) {
             </FormControl>
           </Grid>
           <Grid item container mt={4}>
-          <Grid item xs={2}>
-            <FormControl >
-              <input
-                accept="image/*"
-                className={classes.input}
-                id="contained-button-file"
-                multiple={true}
-                onChange={handleUploadImage}
-                type="file"
-              />
-              <label htmlFor="contained-button-file">
-                <Button
-                  variant="contained"
-                  color="primary"
-                  component="div"
-                >
-                  Upload
-                </Button>
-              </label>
-            </FormControl>
-          </Grid>
-          <Grid item xs={10} display="flex" alignItems="center">
-            {images && images.map((image, key) => <Avatar alt="Remy Sharp" key={key} src={image} className={classes.large} />)}
-          </Grid>
+            <Grid item xs={2}>
+              <FormControl>
+                <input
+                  accept="image/*"
+                  className={classes.input}
+                  id="contained-button-file"
+                  multiple={true}
+                  onChange={handleUploadImage}
+                  type="file"
+                />
+                <label htmlFor="contained-button-file">
+                  <Button variant="contained" color="primary" component="div">
+                    Upload
+                  </Button>
+                </label>
+              </FormControl>
+            </Grid>
+            <Grid item xs={10} display="flex" alignItems="center">
+              {images &&
+                images.map((image, key) => (
+                  <Avatar
+                    alt="Remy Sharp"
+                    key={key}
+                    src={image}
+                    className={classes.large}
+                  />
+                ))}
+            </Grid>
           </Grid>
           <Grid item xs={12} lg={8} mt={4}>
             <Button

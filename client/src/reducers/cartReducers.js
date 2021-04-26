@@ -2,10 +2,10 @@ import {
   ADD_TO_CART,
   REQUEST_REMOVE_CART_ITEM,
   SAVE_SHIPPING_INFO,
-  CLEAR_CART_DATA
+  CLEAR_CART_DATA,
 } from "../constants/cartConstants";
 
-const initialState = { cartItems: [], shippingInfo:{} };
+const initialState = { cartItems: [], shippingInfo: {} };
 
 export const cartReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -35,17 +35,17 @@ export const cartReducer = (state = initialState, action) => {
           (item) => item.productId !== action.payload
         ),
       };
-      case "SAVE_SHIPPING_INFO":
-        return {
-          ...state,
-          shippingInfo: action.payload
-        }
-      case "CLEAR_CART_DATA":
-        return {
-          ...state,
-          cartItems: null,
-          shippingInfo: null
-        }
+    case "SAVE_SHIPPING_INFO":
+      return {
+        ...state,
+        shippingInfo: action.payload,
+      };
+    case "CLEAR_CART_DATA":
+      return {
+        ...state,
+        cartItems: null,
+        shippingInfo: null,
+      };
     default:
       return state;
   }

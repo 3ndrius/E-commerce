@@ -20,7 +20,7 @@ import {
   SUBMIT_REVIEW_REQUEST,
   ADMIN_ALL_PRODUCTS_REQUEST,
   DELETE_PRODUCT_REQUEST,
-  ADMIN_ADD_PRODUCT_REQUEST
+  ADMIN_ADD_PRODUCT_REQUEST,
 } from "../constants/productConstants";
 
 function* getProducts(action) {
@@ -86,16 +86,17 @@ function* adminAllProduct(action) {
 }
 
 export function* adminAllProductSaga() {
-  yield takeEvery("ADMIN_ALL_PRODUCTS_REQUEST", adminAllProduct)
+  yield takeEvery("ADMIN_ALL_PRODUCTS_REQUEST", adminAllProduct);
 }
 
-
 function* deleteProduct(action) {
-
-  const config = { headers: { "Content-Type": "application/json" }}
+  const config = { headers: { "Content-Type": "application/json" } };
   try {
-    const { data } = yield call(apiCall.delete, `admin/products/${action.payload}`);
-    yield put(deleteProductSuccess(data, action.payload))
+    const { data } = yield call(
+      apiCall.delete,
+      `admin/products/${action.payload}`
+    );
+    yield put(deleteProductSuccess(data, action.payload));
   } catch (error) {
     yield put(deleteProductFail(error));
   }
@@ -108,13 +109,18 @@ export function* deleteProductSaga() {
 function* addProduct(action) {
   const config = { headers: { "Content-Type": "multipart/form-data" } };
   try {
-    const res = yield call(apiCall.post, 'admin/products/', action.payload, config)
+    const res = yield call(
+      apiCall.post,
+      "admin/products/",
+      action.payload,
+      config
+    );
     yield put(adminAddProductSuccess(res));
   } catch (error) {
-    yield put(adminAddProductFail(error))
+    yield put(adminAddProductFail(error));
   }
 }
 
-export function* addProductSaga(){
-  yield takeEvery('ADMIN_ADD_PRODUCT_REQUEST', addProduct)
+export function* addProductSaga() {
+  yield takeEvery("ADMIN_ADD_PRODUCT_REQUEST", addProduct);
 }

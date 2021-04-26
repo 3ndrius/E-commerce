@@ -1,7 +1,7 @@
 import React, { lazy, Suspense } from "react";
 import { Route } from "react-router-dom";
 import { ThemeProvider } from "@material-ui/styles";
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles } from "@material-ui/core/styles";
 import { theme } from "./theme/customTheme";
 import { requestLoadUser, clearErrors } from "./actions/userActions";
 import store from "./store";
@@ -27,15 +27,13 @@ const Payment = lazy(() => import("./components/Payment"));
 const OrderSuccess = lazy(() => import("./components/OrderSuccess"));
 const showOrders = lazy(() => import("./components/showOrders"));
 const OrderDetails = lazy(() => import("./components/OrderDetails"));
-const Dashboard = lazy(() => import("./components/admin/Dashboard"))
-const ProductsList = lazy(() => import("./components/admin/ProductsList"))
-const ProductCreate = lazy(() => import("./components/admin/ProductCreate"))
-
+const Dashboard = lazy(() => import("./components/admin/Dashboard"));
+const ProductsList = lazy(() => import("./components/admin/ProductsList"));
+const ProductCreate = lazy(() => import("./components/admin/ProductCreate"));
 
 const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_API_KEY);
 
 function App() {
-  
   React.useEffect(() => {
     store.dispatch(requestLoadUser());
   }, []);
@@ -61,8 +59,16 @@ function App() {
         <ProtectedRoute path="/orders" component={showOrders} exact />
         <ProtectedRoute path="/success" component={OrderSuccess} exact />
         <ProtectedRoute path="/shipping" component={Shipping} exact />
-        <ProtectedRoute path="/profile/update" component={ProfileUpdate} exact/>
-        <ProtectedRoute path="/profile/password" component={UpdatePassword} exact />
+        <ProtectedRoute
+          path="/profile/update"
+          component={ProfileUpdate}
+          exact
+        />
+        <ProtectedRoute
+          path="/profile/password"
+          component={UpdatePassword}
+          exact
+        />
         <AdminRoute path="/admin/dashboard" component={Dashboard} exact />
         <AdminRoute path="/admin/products" component={ProductsList} exact />
         <AdminRoute path="/admin/create" component={ProductCreate} exact />
