@@ -137,11 +137,11 @@ export default function ShowOrders() {
           checkboxSelection
         />
       </div>
-          <Link to="/profile" >
-            <Button variant="contained" my={4} color="primary">
-              Back to profile
-            </Button>
-          </Link>
+      <Link to="/profile">
+        <Button variant="contained" my={4} color="primary">
+          Back to profile
+        </Button>
+      </Link>
     </Container>
   );
 }
