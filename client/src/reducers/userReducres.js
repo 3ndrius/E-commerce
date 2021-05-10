@@ -24,7 +24,7 @@ import {
   PASSWORD_FORGOT_SUCCESS,
   PASSWORD_RESET,
   PASSWORD_RESET_FAIL,
-  PASSWORD_RESET_SUCCESS
+  PASSWORD_RESET_SUCCESS,
 } from "../constants/userConstants";
 
 const initialState = {};
@@ -62,8 +62,8 @@ export const authReducer = (state = initialState, action) => {
         ...state,
         loading: false,
         isAuthenticated: false,
-        user: null
-      }
+        user: null,
+      };
     case "LOGOUT_SUCCESS":
       return {
         ...state,
@@ -147,8 +147,8 @@ export const forgotPasswordReducer = (state = {}, action) => {
       return {
         ...state,
         message: action.payload.data.success,
-        error: null
-      }
+        error: null,
+      };
     case "PASSWORD_FORGOT_FAIL":
     case "PASSWORD_RESET_FAIL":
       return {

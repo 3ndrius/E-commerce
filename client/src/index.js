@@ -9,6 +9,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import store from "./store";
 import { Provider } from "react-redux";
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
+
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
