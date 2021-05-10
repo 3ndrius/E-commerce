@@ -96,7 +96,7 @@ export default function UpdatePassword({ history }) {
               <TextField
                 required
                 fullWidth
-                type='passowrd'
+                type="passowrd"
                 onChange={handleSetPassword}
                 id="password"
                 label="password"

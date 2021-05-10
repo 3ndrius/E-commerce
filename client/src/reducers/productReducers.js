@@ -53,15 +53,17 @@ export const productReducer = (state = initState, action) => {
       return {
         ...state,
         loading: false,
-        message:action.payload.message.message,
-        products: state.products.filter(product => product._id !== action.payload.id) 
-      }
+        message: action.payload.message.message,
+        products: state.products.filter(
+          (product) => product._id !== action.payload.id
+        ),
+      };
     case "ALL_PRODUCT_FAIL":
     case "ADMIN_ALL_PRODUCTS_FAIL":
     case "DELETE_PRODUCT_FAIL":
       return {
         ...state,
-        products:null,
+        products: null,
         loading: false,
         error: action.payload.message,
       };

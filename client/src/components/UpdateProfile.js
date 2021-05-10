@@ -41,7 +41,7 @@ export default function ProfileUpdate({ history }) {
     reader.onload = () => {
       if (reader.readyState === 2) {
         setPrevAvatar(reader.result);
-        setAvatar(reader.result)
+        setAvatar(reader.result);
       }
     };
     reader.readAsDataURL(e.target.files[0]);
@@ -58,7 +58,7 @@ export default function ProfileUpdate({ history }) {
     if (user) {
       setName(user.name);
       setEmail(user.email);
-      setPrevAvatar(user.avatar.url)
+      setPrevAvatar(user.avatar.url);
     }
     if (error) {
       toast.error("Fail to update profile");
