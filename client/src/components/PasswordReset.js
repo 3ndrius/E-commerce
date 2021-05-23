@@ -9,17 +9,10 @@ import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import { useDispatch, useSelector } from "react-redux";
 import Typography from "@material-ui/core/Typography";
 import Container from "@material-ui/core/Container";
-import { makeStyles } from "@material-ui/core/styles";
 import { toast } from "react-toastify";
 import { requestPasswordReset, clearErrors } from "../actions/userActions";
-const useStyles = makeStyles((theme) => ({
-  large: {
-    width: theme.spacing(7),
-    height: theme.spacing(7),
-  },
-}));
+
 export default function PasswordReset({ history, match }) {
-  const classes = useStyles();
   const { error, message } = useSelector((state) => state.forgotPassword);
 
   const [user, setUser] = React.useState({
@@ -45,7 +38,7 @@ export default function PasswordReset({ history, match }) {
       toast.success("Password reset successfully");
       history.push("/login");
     }
-  }, [dispatch, toast, error, message, history, match]);
+  }, [dispatch, error, message, history, match, user]);
 
   return (
     <Container component="main" maxWidth="sm">

@@ -12,7 +12,7 @@ function OrderSuccess() {
   React.useEffect(() => {
     dispatch(clearCartData());
     localStorage.removeItem("cartItems");
-  }, []);
+  }, [dispatch]);
 
   return (
     <>

@@ -1,7 +1,6 @@
 import * as React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
-import Paper from "@material-ui/core/Paper";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Typography from "@material-ui/core/Typography";
 import ButtonBase from "@material-ui/core/ButtonBase";
@@ -41,7 +40,7 @@ export default function OrderDetails({ history, match }) {
   const dispatch = useDispatch();
   const classes =useStyles();
 
-  const { order, loading, error } = useSelector((state) => state.singleOrder);
+  const { order, error } = useSelector((state) => state.singleOrder);
 
   React.useEffect(() => {
     if (error) {
@@ -49,7 +48,7 @@ export default function OrderDetails({ history, match }) {
       dispatch(clearErrors());
     }
     dispatch(singleOrderRequest(id));
-  }, [error, dispatch]);
+  }, [error, dispatch, id]);
 
   return (
     <React.Fragment>

@@ -29,7 +29,7 @@ const Login = ({ history, location }) => {
       toast.error(error); 
       dispatch(clearErrors());
     }
-  }, [error, loading, isAuthenticated, history, toast, dispatch]);
+  }, [error, loading, isAuthenticated, history, dispatch, redirect]);
 
   const handleChange = (e) => {
     setUser({ ...user, [e.target.id]: e.target.value });

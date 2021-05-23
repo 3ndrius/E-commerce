@@ -11,7 +11,6 @@ import Container from "@material-ui/core/Container";
 import { requestPasswordForgot, clearErrors } from "../actions/userActions";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
-import { Link } from "react-router-dom";
 
 const PasswordForgot = ({ history }) => {
   const { error, message, loading } = useSelector((state) => state.forgotPassword);
@@ -26,7 +25,7 @@ const PasswordForgot = ({ history }) => {
       toast.error(error);
       dispatch(clearErrors());
     }
-  }, [error, toast, dispatch, message]);
+  }, [error, dispatch, message]);
 
   const handlePasswordForgot = (e) => {
     e.preventDefault();
