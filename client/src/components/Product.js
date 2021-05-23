@@ -33,6 +33,7 @@ const useStyles = makeStyles({
 export default function ImgMediaCard({ product }) {
   const classes = useStyles();
 
+  // eslint-disable-next-line no-unused-vars
   const [value, setValue] = React.useState(2);
 
   return (
