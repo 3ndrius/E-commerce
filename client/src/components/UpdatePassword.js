@@ -9,21 +9,14 @@ import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import { useDispatch, useSelector } from "react-redux";
 import Typography from "@material-ui/core/Typography";
 import Container from "@material-ui/core/Container";
-import { makeStyles } from "@material-ui/core/styles";
 import { toast } from "react-toastify";
 import {
   requestUpdateUserPassword,
   clearErrors,
   requestUpdateUserPasswordReset,
 } from "../actions/userActions";
-const useStyles = makeStyles((theme) => ({
-  large: {
-    width: theme.spacing(7),
-    height: theme.spacing(7),
-  },
-}));
+
 export default function UpdatePassword({ history }) {
-  const classes = useStyles();
 
   const { isUpdated, loading, error } = useSelector((state) => state.user);
 
@@ -49,7 +42,7 @@ export default function UpdatePassword({ history }) {
       history.push("/profile");
       dispatch(requestUpdateUserPasswordReset());
     }
-  }, [dispatch, toast, error, history, isUpdated]);
+  }, [dispatch, error, history, isUpdated]);
 
   return (
     <Container component="main" maxWidth="sm">

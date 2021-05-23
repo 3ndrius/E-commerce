@@ -59,7 +59,7 @@ export default function SignUp({ history }) {
     }
 
     if (isAuthenticated) history.push("/");
-  }, [dispatch, isAuthenticated, toast, error]);
+  }, [dispatch, isAuthenticated, error, history]);
 
   return (
     <Container component="main" maxWidth="xs">

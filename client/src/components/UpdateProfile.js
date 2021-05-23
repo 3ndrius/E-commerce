@@ -70,7 +70,7 @@ export default function ProfileUpdate({ history }) {
       history.push("/profile");
       dispatch(requestUpdateUserProfileReset());
     }
-  }, [dispatch, toast, error, history, isUpdated]);
+  }, [dispatch, error, history, isUpdated, user]);
 
   return (
     <Container component="main" maxWidth="sm">

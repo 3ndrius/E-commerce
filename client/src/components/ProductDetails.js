@@ -36,7 +36,6 @@ const useStyles = makeStyles((theme) => ({
     display: "block",
     maxWidth: "100%",
     maxHeight: "600px",
-    objectFit:"cover",
     border: "1px solid gray",
   },
   rate: {
@@ -65,7 +64,7 @@ export default function SingleProduct(props) {
       toast.success("Review added successfully");
       dispatch(clearReviewStatus());
     }
-  }, [dispatch, toast, error, review]);
+  }, [dispatch, error, review, id]);
 
   return (
     <Container maxWidth="xl">
