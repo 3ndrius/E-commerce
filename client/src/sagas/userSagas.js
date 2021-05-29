@@ -45,7 +45,7 @@ function* loginUser(action) {
   }
 }
 export function* loginUserSaga() {
-  yield takeEvery("LOGIN_REQUEST", loginUser);
+  yield takeEvery(LOGIN_REQUEST, loginUser);
 }
 
 function* registerUser(action) {
@@ -59,7 +59,7 @@ function* registerUser(action) {
 }
 
 export function* registerUserSaga() {
-  yield takeEvery("REGISTER_REQUEST", registerUser);
+  yield takeEvery(REGISTER_REQUEST, registerUser);
 }
 
 function* loadUser() {
@@ -72,7 +72,7 @@ function* loadUser() {
 }
 
 export function* loadUserSaga() {
-  yield takeEvery("LOAD_USER_REQUEST", loadUser);
+  yield takeEvery(LOAD_USER_REQUEST, loadUser);
 }
 
 function* logoutUser() {
@@ -84,7 +84,7 @@ function* logoutUser() {
   }
 }
 export function* logoutUserSaga() {
-  yield takeEvery("LOGOUT_REQUEST", logoutUser);
+  yield takeEvery(LOGOUT_REQUEST, logoutUser);
 }
 
 function* updateUser(action) {
@@ -97,7 +97,7 @@ function* updateUser(action) {
   }
 }
 export function* updateUserSaga() {
-  yield takeEvery("UPDATE_USER_PROFILE", updateUser);
+  yield takeEvery(UPDATE_USER_PROFILE, updateUser);
 }
 
 function* updatePassword(action) {
@@ -114,7 +114,7 @@ function* updatePassword(action) {
   }
 }
 export function* updatePasswordSaga() {
-  yield takeEvery("UPDATE_USER_PASSWORD", updatePassword);
+  yield takeEvery(UPDATE_USER_PASSWORD, updatePassword);
 }
 
 function* passwordForgot(action) {
@@ -130,7 +130,7 @@ function* passwordForgot(action) {
   }
 }
 export function* passwordForgotSaga() {
-  yield takeEvery("PASSWORD_FORGOT", passwordForgot);
+  yield takeEvery(PASSWORD_FORGOT, passwordForgot);
 }
 
 function* passwordReset(action) {
@@ -152,5 +152,5 @@ function* passwordReset(action) {
   }
 }
 export function* passwordResetSaga() {
-  yield takeEvery("PASSWORD_RESET", passwordReset);
+  yield takeEvery(PASSWORD_RESET, passwordReset);
 }
