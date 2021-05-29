@@ -9,7 +9,7 @@ const initialState = { cartItems: [], shippingInfo: {} };
 
 export const cartReducer = (state = initialState, action) => {
   switch (action.type) {
-    case "ADD_TO_CART":
+    case ADD_TO_CART:
       const item = action.payload;
       const itemExist = state.cartItems.find(
         (i) => i.productId === item.productId
@@ -28,19 +28,19 @@ export const cartReducer = (state = initialState, action) => {
         };
       }
 
-    case "REQUEST_REMOVE_CART_ITEM":
+    case REQUEST_REMOVE_CART_ITEM:
       return {
         ...state,
         cartItems: state.cartItems.filter(
           (item) => item.productId !== action.payload
         ),
       };
-    case "SAVE_SHIPPING_INFO":
+    case SAVE_SHIPPING_INFO:
       return {
         ...state,
         shippingInfo: action.payload,
       };
-    case "CLEAR_CART_DATA":
+    case CLEAR_CART_DATA:
       return {
         ...state,
         cartItems: null,

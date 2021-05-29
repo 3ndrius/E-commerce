@@ -36,7 +36,6 @@ const columns = [
     field: "status",
     headerName: "Status",
     headerClassName: "super-app-theme--header",
-    cellClassName: "super-app-theme--cell",
     width: 150,
     cellClassName: (params) =>
       clsx("super-app", {
@@ -98,7 +97,7 @@ export default function ShowOrders() {
   const dispatch = useDispatch();
   const classes = useStyles();
 
-  const { orders, loading, error } = useSelector((state) => state.myOrder);
+  const { orders, error } = useSelector((state) => state.myOrder);
 
   let rows = [];
   orders.forEach((order) => {
@@ -119,7 +118,7 @@ export default function ShowOrders() {
       toast.error(error);
       dispatch(clearErrors());
     }
-  }, [dispatch, error, toast]);
+  }, [dispatch, error]);
 
   return (
     <Container maxWidth="lg">

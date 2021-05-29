@@ -1,5 +1,4 @@
 import React from "react";
-import CssBaseline from "@material-ui/core/CssBaseline";
 import Typography from "@material-ui/core/Typography";
 import Container from "@material-ui/core/Container";
 import { makeStyles } from "@material-ui/core/styles";
@@ -116,7 +115,7 @@ export default function Home({ match }) {
   React.useEffect(() => {
     if (error) return toast.error(error);
     dispatch(requestAllProduct(currentPage, keyword, price, category, rating));
-  }, [dispatch, toast, error, keyword, price, currentPage, category, rating]);
+  }, [dispatch, error, keyword, price, currentPage, category, rating]);
 
   let count = productsCount;
   if (keyword) count = filteredProductsCount;

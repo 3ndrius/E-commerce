@@ -25,7 +25,6 @@ const options = {
 };
 
 export default function Payment({ history }) {
-  const [onStatus, setOnStatus] = React.useState(false);
   const stripe = useStripe();
   const elements = useElements();
   const dispatch = useDispatch();
@@ -50,8 +49,6 @@ export default function Payment({ history }) {
   const handlePaymentProcess = async (e) => {
     e.preventDefault();
     setLoad(true);
-
-    let res;
 
     try {
       const config = { headers: { "Content-Type": "application/json" } };

@@ -13,24 +13,24 @@ import {
 
 export const newOrderReducer = (state = {}, action) => {
   switch (action.type) {
-    case "CREATE_ORDER_REQUEST":
+    case CREATE_ORDER_REQUEST:
       return {
         ...state,
         loading: true,
       };
-    case "CREATE_ORDER_SUCCESS":
+    case CREATE_ORDER_SUCCESS:
       return {
         ...state,
         loading: false,
         order: action.payload.data.order,
       };
-    case "CREATE_ORDER_FAIL":
+    case CREATE_ORDER_FAIL:
       return {
         ...state,
         loading: false,
         error: action.payload,
       };
-    case "CLEAR_ERROR":
+    case CLEAR_ERROR:
       return {
         ...state,
         order: null,
@@ -43,26 +43,26 @@ export const newOrderReducer = (state = {}, action) => {
 
 export const myOrderReducer = (state = { orders: [] }, action) => {
   switch (action.type) {
-    case "SHOW_ORDER_REQUEST":
+    case SHOW_ORDER_REQUEST:
       return {
         ...state,
         loading: true,
       };
-    case "SHOW_ORDER_SUCCESS":
+    case SHOW_ORDER_SUCCESS:
       return {
         ...state,
         loading: false,
         orders: action.payload.data.orders,
         count: action.payload.data.count,
       };
-    case "SHOW_ORDER_FAIL":
+    case SHOW_ORDER_FAIL:
       return {
         ...state,
         loading: false,
         orders: null,
         error: action.payload,
       };
-    case "CLEAR_ERROR":
+    case CLEAR_ERROR:
       return {
         ...state,
         error: null,
@@ -74,20 +74,20 @@ export const myOrderReducer = (state = { orders: [] }, action) => {
 
 export const orderDetailsReducer = (state = {}, action) => {
   switch (action.type) {
-    case "SINGLE_ORDER_REQUEST":
+    case SINGLE_ORDER_REQUEST:
       return {
         ...state,
         loading: true,
       };
 
-    case "SINGLE_ORDER_SUCCESS":
+    case SINGLE_ORDER_SUCCESS:
       return {
         ...state,
         order: action.payload.data.order,
         loading: false,
       };
 
-    case "SINGLE_ORDER_FAIL":
+    case SINGLE_ORDER_FAIL:
       return {
         ...state,
         error: action.payload,

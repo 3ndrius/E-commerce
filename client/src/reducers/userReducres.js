@@ -31,40 +31,40 @@ const initialState = {};
 
 export const authReducer = (state = initialState, action) => {
   switch (action.type) {
-    case "LOGIN_REQUEST":
-    case "REGISTER_REQUEST":
-    case "LOAD_USER_REQUEST":
+    case LOGIN_REQUEST:
+    case REGISTER_REQUEST:
+    case LOAD_USER_REQUEST:
       return {
         ...state,
         loading: true,
         isAuthenticated: false,
         error: null,
       };
-    case "LOGIN_SUCCESS":
-    case "REGISTER_SUCCESS":
-    case "LOAD_USER_SUCCESS":
+    case LOGIN_SUCCESS:
+    case REGISTER_SUCCESS:
+    case LOAD_USER_SUCCESS:
       return {
         ...state,
         loading: false,
         isAuthenticated: true,
         user: action.payload.data.user,
       };
-    case "LOGIN_FAIL":
-    case "REGISTER_FAIL":
+    case LOGIN_FAIL:
+    case REGISTER_FAIL:
       return {
         ...state,
         loading: false,
         isAuthenticated: false,
         error: action.payload,
       };
-    case "LOAD_USER_FAIL":
+    case LOAD_USER_FAIL:
       return {
         ...state,
         loading: false,
         isAuthenticated: false,
         user: null,
       };
-    case "LOGOUT_SUCCESS":
+    case LOGOUT_SUCCESS:
       return {
         ...state,
         user: null,
@@ -72,13 +72,13 @@ export const authReducer = (state = initialState, action) => {
         isAuthenticated: false,
         error: null,
       };
-    case "LOGOUT_FAIL":
+    case LOGOUT_FAIL:
       return {
         ...state,
         loading: false,
         error: action.payload.message,
       };
-    case "CLEAR_ERROR":
+    case CLEAR_ERROR:
       return {
         ...state,
         error: null,
@@ -90,34 +90,34 @@ export const authReducer = (state = initialState, action) => {
 
 export const userReducer = (state = {}, action) => {
   switch (action.type) {
-    case "UPDATE_USER_PROFILE":
-    case "UPDATE_USER_PASSWORD":
+    case UPDATE_USER_PROFILE:
+    case UPDATE_USER_PASSWORD:
       return {
         ...state,
         loading: true,
       };
-    case "UPDATE_USER_PROFILE_SUCCESS":
-    case "UPDATE_USER_PASSWORD_SUCCESS":
+    case UPDATE_USER_PROFILE_SUCCESS:
+    case UPDATE_USER_PASSWORD_SUCCESS:
       return {
         ...state,
         loading: false,
         isUpdated: action.payload.data.success,
       };
-    case "UPDATE_USER_PROFILE_RESET":
-    case "UPDATE_USER_PASSWORD_RESET":
+    case UPDATE_USER_PROFILE_RESET:
+    case UPDATE_USER_PASSWORD_RESET:
       return {
         ...state,
         isUpdated: false,
       };
 
-    case "UPDATE_USER_PROFILE_FAIL":
-    case "UPDATE_USER_PASSWORD_FAIL":
+    case UPDATE_USER_PROFILE_FAIL:
+    case UPDATE_USER_PASSWORD_FAIL:
       return {
         ...state,
         loading: false,
         error: action.payload,
       };
-    case "CLEAR_ERROR":
+    case CLEAR_ERROR:
       return {
         ...state,
         error: null,
@@ -129,28 +129,28 @@ export const userReducer = (state = {}, action) => {
 
 export const forgotPasswordReducer = (state = {}, action) => {
   switch (action.type) {
-    case "PASSWORD_FORGOT":
-    case "PASSWORD_RESET":
+    case PASSWORD_FORGOT:
+    case PASSWORD_RESET:
       return {
         ...state,
         error: null,
         loading: true,
       };
-    case "PASSWORD_FORGOT_SUCCESS":
+    case PASSWORD_FORGOT_SUCCESS:
       return {
         ...state,
         message: action.payload.data.message,
         error: null,
         loading: false,
       };
-    case "PASSWORD_RESET_SUCCESS":
+    case PASSWORD_RESET_SUCCESS:
       return {
         ...state,
         message: action.payload.data.success,
         error: null,
       };
-    case "PASSWORD_FORGOT_FAIL":
-    case "PASSWORD_RESET_FAIL":
+    case PASSWORD_FORGOT_FAIL:
+    case PASSWORD_RESET_FAIL:
       return {
         ...state,
         loading: false,
