@@ -8,12 +8,12 @@ import Container from "@material-ui/core/Container";
 import Button from "@material-ui/core/Button";
 import Box from "@material-ui/core/Box";
 import Divider from "@material-ui/core/Divider";
-import { useSelector, useDispatch } from "react-redux";
-import { toast } from "react-toastify";
-import {
-  requestAddToCart,
-  requestRemoveFromCart,
-} from "../actions/cartActions";
+import { useSelector } from "react-redux";
+// import { toast } from "react-toastify";
+// import {
+//   requestAddToCart,
+//   requestRemoveFromCart,
+// } from "../actions/cartActions";
 import CheckoutSteps from "./layout/CheckoutSteps";
 
 const useStyles = makeStyles((theme) => ({
@@ -42,7 +42,7 @@ export default function Confirm({ history }) {
 
   const { cartItems, shippingInfo } = useSelector((state) => state.cart);
   const { user } = useSelector((state) => state.auth);
-  const dispatch = useDispatch();
+  //const dispatch = useDispatch();
 
   const itemsCount = cartItems.reduce((acc, val) => acc + val.quantity, 0);
   const itemsPrice = cartItems.reduce(
@@ -65,10 +65,10 @@ export default function Confirm({ history }) {
       history.push("/payment")
   };
 
-  const handleRemoveItem = (productId) => {
-    dispatch(requestRemoveFromCart(productId));
-    toast.info("Successfully removed product from cart");
-  };
+  // const handleRemoveItem = (productId) => {
+  //   dispatch(requestRemoveFromCart(productId));
+  //   toast.info("Successfully removed product from cart");
+  // };
 
   return (
     <React.Fragment>

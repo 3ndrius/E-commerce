@@ -26,7 +26,7 @@ function* createOrder(action) {
 }
 
 export function* createOrderSaga() {
-  yield takeEvery("CREATE_ORDER_REQUEST", createOrder);
+  yield takeEvery(CREATE_ORDER_REQUEST, createOrder);
 }
 
 function* showOrder() {
@@ -39,7 +39,7 @@ function* showOrder() {
 }
 
 export function* showOrderSaga() {
-  yield takeEvery("SHOW_ORDER_REQUEST", showOrder);
+  yield takeEvery(SHOW_ORDER_REQUEST, showOrder);
 }
 
 function* singleOrder(action) {
@@ -52,5 +52,5 @@ function* singleOrder(action) {
 }
 
 export function* singleOrderSaga() {
-  yield takeEvery("SINGLE_ORDER_REQUEST", singleOrder);
+  yield takeEvery(SINGLE_ORDER_REQUEST, singleOrder);
 }

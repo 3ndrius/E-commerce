@@ -36,7 +36,7 @@ function* addItemToCart(action) {
   }
 }
 export function* addItemCartSaga() {
-  yield takeEvery("REQUEST_ADD_TO_CART", addItemToCart);
+  yield takeEvery(REQUEST_ADD_TO_CART, addItemToCart);
 }
 
 function* removeItemFromCart(action) {
@@ -54,7 +54,7 @@ function* removeItemFromCart(action) {
   }
 }
 export function* removeItemFromCartSaga() {
-  yield takeEvery("REQUEST_REMOVE_CART_ITEM", removeItemFromCart);
+  yield takeEvery(REQUEST_REMOVE_CART_ITEM, removeItemFromCart);
 }
 
 function* saveShipping(action) {
@@ -66,5 +66,5 @@ function* saveShipping(action) {
 }
 
 export function* saveShippingSaga() {
-  yield takeEvery("REQUEST_SAVE_SHIPPING_INFO", saveShipping);
+  yield takeEvery(REQUEST_SAVE_SHIPPING_INFO, saveShipping);
 }
