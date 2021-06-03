@@ -53,7 +53,7 @@ function ProductCreate({ history }) {
   const classes = useStyles();
   const dispatch = useDispatch();
 
-  const { loading, error, success } = useSelector((state) => state.newProduct);
+  const { error, success } = useSelector((state) => state.newProduct);
   const [category, setCategory] = React.useState("Computers");
   const [price, setPrice] = React.useState(0);
   const [name, setName] = React.useState("");
@@ -104,7 +104,7 @@ function ProductCreate({ history }) {
     }
     if (success) history.push("/admin/products");
     toast.success("Added product succeeded!");
-  }, [history, success, error, toast]);
+  }, [history, success, error, dispatch]);
 
   return (
     <div>
