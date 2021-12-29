@@ -50,7 +50,7 @@ export default function PrimarySearchAppBar({ history }) {
   const classes = useStyles();
   const dispatch = useDispatch();
 
-  const { loading, user, isAuthenticated } = useSelector((state) => state.auth);
+  const { user, isAuthenticated } = useSelector((state) => state.auth);
 
   const { cartItems } = useSelector((state) => state.cart);
 
@@ -109,7 +109,7 @@ export default function PrimarySearchAppBar({ history }) {
               <Link to={"/admin/dashboard"}>Dashboard</Link>
             </MenuItem>
           )}
-          <MenuItem onClick={handleMenuClose} onClick={handleLogout}>
+          <MenuItem onClick={() => {handleMenuClose(); handleLogout()}} >
             Logout
           </MenuItem>
         </Box>

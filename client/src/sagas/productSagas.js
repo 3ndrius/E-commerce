@@ -38,7 +38,7 @@ function* getProducts(action) {
 }
 
 export function* getProductsSaga() {
-  yield takeLatest("ALL_PRODUCT_REQUEST", getProducts);
+  yield takeLatest(ALL_PRODUCT_REQUEST, getProducts);
 }
 
 // single product
@@ -52,7 +52,7 @@ function* getProduct(action) {
 }
 
 export function* getProductSaga() {
-  yield takeEvery("SINGLE_PRODUCT_REQUEST", getProduct);
+  yield takeEvery(SINGLE_PRODUCT_REQUEST, getProduct);
 }
 
 function* submitReview(action) {
@@ -67,7 +67,7 @@ function* submitReview(action) {
 }
 
 export function* submitReviewSaga() {
-  yield takeEvery("SUBMIT_REVIEW_REQUEST", submitReview);
+  yield takeEvery(SUBMIT_REVIEW_REQUEST, submitReview);
 }
 
 function* adminAllProduct(action) {
@@ -86,11 +86,10 @@ function* adminAllProduct(action) {
 }
 
 export function* adminAllProductSaga() {
-  yield takeEvery("ADMIN_ALL_PRODUCTS_REQUEST", adminAllProduct);
+  yield takeEvery(ADMIN_ALL_PRODUCTS_REQUEST, adminAllProduct);
 }
 
 function* deleteProduct(action) {
-  const config = { headers: { "Content-Type": "application/json" } };
   try {
     const { data } = yield call(
       apiCall.delete,
@@ -103,7 +102,7 @@ function* deleteProduct(action) {
 }
 
 export function* deleteProductSaga() {
-  yield takeEvery("DELETE_PRODUCT_REQUEST", deleteProduct);
+  yield takeEvery(DELETE_PRODUCT_REQUEST, deleteProduct);
 }
 
 function* addProduct(action) {
@@ -122,5 +121,5 @@ function* addProduct(action) {
 }
 
 export function* addProductSaga() {
-  yield takeEvery("ADMIN_ADD_PRODUCT_REQUEST", addProduct);
+  yield takeEvery(ADMIN_ADD_PRODUCT_REQUEST, addProduct);
 }
