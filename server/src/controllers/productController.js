@@ -48,7 +48,6 @@ exports.getProducts = catchErrorAsync(async (req, res, next) => {
   const filteredProductsCount = products.length;
 
   apiFeatures.pagination(resPerPage);
-
   products = await apiFeatures.query;
 
   if (!products) return next(createError.BadRequest());
@@ -61,10 +60,12 @@ exports.getProducts = catchErrorAsync(async (req, res, next) => {
     resPerPage,
   });
 });
+
 // get sinle product => /api/v1/product/{id} GET
 exports.getSingleProduct = catchErrorAsync(async (req, res, next) => {
   let product = await Product.findById(req.params.id);
   if (!product) return next(createError.NotFound());
+
   res.status(200).json({
     success: true,
     product,
@@ -116,6 +117,7 @@ exports.updateReviews = catchErrorAsync(async (req, res, next) => {
   const isReviewd = product.reviews.find(
     (r) => r.user.toString() === req.user._id.toString()
   );
+
   if (isReviewd) {
     product.reviews.forEach((review) => {
       if (review.user.toString() === req.user._id.toString()) {
@@ -123,16 +125,17 @@ exports.updateReviews = catchErrorAsync(async (req, res, next) => {
         review.ratings = ratings;
       }
     });
+
   } else {
     product.reviews.push(reviews);
     product.numOfReviews = product.reviews.length;
   }
+
   product.ratings =
     product.reviews.reduce((acc, item) => item.ratings + acc, 0) /
     product.reviews.length;
 
   await product.save({ validateBeforeSave: false });
-
   res.status(200).json({ success: true });
 });
 
@@ -151,7 +154,6 @@ exports.getProductReviews = catchErrorAsync(async (req, res, next) => {
 
 exports.allProducts = catchErrorAsync(async (req, res, next) => {
   const products = await Product.find();
-
   if (!products) return next(createError.NotFound("Product not found"));
 
   res.status(200).json({

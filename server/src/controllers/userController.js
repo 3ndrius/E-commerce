@@ -90,6 +90,7 @@ exports.updateProfile = catchErrorAsync(async (req, res, next) => {
     name: req.body.name,
     email: req.body.email,
   };
+
   if (req.body.avatar !== "") {
     const user = await User.findById(req.user.id);
     const image_id = user.avatar.public_id;
@@ -99,6 +100,7 @@ exports.updateProfile = catchErrorAsync(async (req, res, next) => {
       width: 150,
       crop: "scale",
     });
+
     newProfile.avatar = {
       public_id: result.public_id,
       url: result.secure_url,
@@ -110,6 +112,7 @@ exports.updateProfile = catchErrorAsync(async (req, res, next) => {
     runValidators: true,
     useFindAndModify: false,
   });
+
   res.status(200).json({
     success: true,
   });
@@ -122,7 +125,6 @@ exports.forgotPassword = catchErrorAsync(async (req, res, next) => {
     return next(createError.NotFound("User not found with this email"));
 
   const resetToken = user.getResetPasswordToken();
-
   await user.save({ validateBeforeSave: false });
 
   // create reset pass url
@@ -132,7 +134,6 @@ exports.forgotPassword = catchErrorAsync(async (req, res, next) => {
   // )}/api/v1/password/reset/${resetToken}`;
 
   const resetUrl = `${process.env.CLIENT_URL}/password/reset/${resetToken}`;
-
   const message = `Your password reset token is: \n\n${resetUrl}\n\n If u have not requested this email then ignore this message. `;
 
   try {
@@ -146,6 +147,7 @@ exports.forgotPassword = catchErrorAsync(async (req, res, next) => {
       success: true,
       message: `Email sent to: ${user.email}`,
     });
+
   } catch (error) {
     user.resetPasswordToken = undefined;
     user.resetPasswordExpires = undefined;
@@ -165,6 +167,7 @@ exports.resetPassword = catchErrorAsync(async (req, res, next) => {
     resetPasswordToken,
     resetPasswordExpires: { $gt: Date.now() },
   });
+
   if (!user) return next(createError.BadRequest("Token is invalid or expired"));
 
   if (req.body.password !== req.body.confirmPassword)
@@ -175,12 +178,12 @@ exports.resetPassword = catchErrorAsync(async (req, res, next) => {
   user.resetPasswordExpires = undefined;
 
   await user.save();
-
   sendToken(user, 200, res);
 });
 
 exports.getAllUsers = catchErrorAsync(async (req, res, next) => {
   const users = await User.find();
+
   res.status(200).json({
     success: true,
     users,
@@ -206,11 +209,13 @@ exports.updateUser = catchErrorAsync(async (req, res, next) => {
     email: req.body.email,
     role: req.body.role,
   };
+
   const user = await User.findByIdAndUpdate(req.params.id, newProfile, {
     new: true,
     runValidators: true,
     useFindAndModify: false,
   });
+  
   res.status(200).json({
     success: true,
   });
