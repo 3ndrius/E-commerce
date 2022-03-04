@@ -23,6 +23,7 @@ if (process.env.NODE_ENV === "production") {
     res.sendFile(path.join(CLIENT_BUILD_PATH, "index.html"));
   });
 }
+
 // routes imports
 const products = require("./src/routes/product");
 const user = require("./src/routes/user");
