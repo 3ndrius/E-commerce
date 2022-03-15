@@ -1,6 +1,6 @@
 # E-commerce MERN_SHOP
 
-## [demo](https://murmuring-fjord-30325.herokuapp.com/)
+[demo](https://murmuring-fjord-30325.herokuapp.com/)
 
 ## INSTALL GUIDE
 
